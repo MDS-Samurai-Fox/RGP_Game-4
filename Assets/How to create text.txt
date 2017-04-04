@@ -1,0 +1,7 @@
+When creating text fields, select 
+
+GameObject->UI->TextMeshPro - Text
+
+or
+
+Right click on the hierarchy->UI->TextMeshPro - Text
