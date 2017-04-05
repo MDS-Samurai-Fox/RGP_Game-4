@@ -77,7 +77,8 @@ public class BulletController : MonoBehaviour {
 
         if (hasCollided) {
 
-            explosionParticles.Play();
+            if (explosionParticles)
+                explosionParticles.Play();
 
         }
 
