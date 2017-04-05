@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39b236d87d740ee4fb29d2088cf3d946, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 100
+  health: 100
 --- !u!1 &486644460
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,13 +402,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c58c6f7c363a7f47bbbec88effa496c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 0.1
-  Health: 10
-  DamageDealt: 1
-  AttackFrequency: 1
-  DogCollisionMask:
+  dogCollisionMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 2048
+  speed: 0.1
+  health: 100
+  damageDealt: 1
+  dttackFrequency: 1
 --- !u!65 &1548007300
 BoxCollider:
   m_ObjectHideFlags: 0

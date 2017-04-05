@@ -22,8 +22,9 @@ GameObject:
   - component: {fileID: 33899122738392246}
   - component: {fileID: 23553134439237264}
   - component: {fileID: 65824285788041464}
+  - component: {fileID: 95590766329502090}
   - component: {fileID: 114529252297420446}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Dog - Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,6 +94,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!95 &95590766329502090
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1865055868155404}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1f9de85a0d348b64885a24511df789ff, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114529252297420446
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -108,4 +126,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   turretRadius: 15
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 1529026518673486, guid: ceda708c39f736144bbd57465e3a568b,
+    type: 2}
+  bulletSpawnOffset: {x: 0, y: 1, z: 0}
+  bulletSpawnDelay: 1
