@@ -19,7 +19,7 @@ public class MenuManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        if (SceneManager.GetActiveScene().name == "Menu")
+        if (SceneManager.GetActiveScene().name == "Test - Charmaine Menu")
         {
             CanvasGroup creditsPanel = GameObject.Find("Credits Panel").GetComponent<CanvasGroup>();
             creditsPanel.alpha = 0;
