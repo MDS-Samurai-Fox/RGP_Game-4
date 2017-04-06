@@ -6,7 +6,6 @@ using UnityEngine;
 public class TurretController : MonoBehaviour {
 
     // References
-    private AnimationController ac;
 
     [Header("Collision")]
     public LayerMask collisionMask;
@@ -39,8 +38,7 @@ public class TurretController : MonoBehaviour {
     private bool canSeek = false;
 
     private void Awake() {
-
-        ac = GetComponent<AnimationController> ();
+        
 
     }
 
