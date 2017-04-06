@@ -2,12 +2,19 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using System.Collections;
 
 public class MenuManager : MonoBehaviour {
 
     private AudioSource audioSource;
 
     private static int sceneToChange;
+
+    private int menuSelection = 0;
+
+    public bool canUpdate = true;
+
 
     void Awake()
     {
@@ -38,8 +45,9 @@ public class MenuManager : MonoBehaviour {
         {
 
             audioSource.PlayOneShot(audioSource.clip);
-            Invoke("ChangeScene", audioSource.clip.length / 2);
-
+            //Invoke("ChangeScene", audioSource.clip.length / 2);
+            //uncomment when audio is added to the game
+            Invoke("ChangeScene", 0);
         }
         else
         {
@@ -60,8 +68,9 @@ public class MenuManager : MonoBehaviour {
 
         audioSource.PlayOneShot(audioSource.clip);
 
-        Invoke("Quit", audioSource.clip.length - 0.2f);
-
+        //Invoke("Quit", audioSource.clip.length - 0.2f);
+        //uncomment when audio is added to the game
+        Invoke("Quit", 0);
     }
 
     void Quit()
@@ -94,4 +103,103 @@ public class MenuManager : MonoBehaviour {
 
     }
 
+    private void Update()
+    {
+        if (canUpdate)
+        {
+            CanvasGroup menuPanel = GameObject.Find("Menu Panel").GetComponent<CanvasGroup>();
+            CanvasGroup creditsPanel = GameObject.Find("Credits Panel").GetComponent<CanvasGroup>();
+            menuPanel.GetComponentsInChildren<Image>()[0].color = Color.grey;
+            menuPanel.GetComponentsInChildren<Image>()[1].color = Color.grey;
+            menuPanel.GetComponentsInChildren<Image>()[2].color = Color.grey;
+
+            if (menuSelection == 0)
+            {
+                menuPanel.GetComponentsInChildren<Image>()[menuSelection].color = Color.white;
+
+            }
+            else if (menuSelection == 1)
+            {
+                menuPanel.GetComponentsInChildren<Image>()[menuSelection].color = Color.white;
+
+            }
+            else if (menuSelection == 2)
+            {
+                menuPanel.GetComponentsInChildren<Image>()[menuSelection].color = Color.white;
+            }
+            else if (menuSelection == 3)
+            {
+
+            }
+
+            if (Input.GetButtonDown("A Button"))
+            {
+                if (menuSelection == 0)
+                {
+                    LoadScene(1);
+
+                }
+                else if (menuSelection == 1)
+                {
+                    menuSelection = 3;
+                    SetPanel(creditsPanel);
+
+                }
+                else if (menuSelection == 2)
+                {
+                    Exit();
+                }
+                else if (menuSelection == 3)
+                {
+                    SetPanel(menuPanel);
+                    menuSelection = 0;
+                }
+            }
+            if (Input.GetButtonDown("B Button"))
+            {
+                menuSelection++;
+                if (menuSelection > 2)
+                {
+                    menuSelection = 0;
+                }
+                Debug.Log("DPad UP");
+            }
+
+
+
+            if (Input.GetAxis("DPadVertical") > 0)
+            {
+                Debug.Log("DPad UP");
+
+                menuSelection--;
+
+                if (menuSelection < 0)
+                {
+                    menuSelection = 0;
+                }
+            }
+            if (Input.GetAxis("DPadVertical") < 0)
+            {
+                //CanvasGroup creditsPanel = GameObject.Find("Credits Panel").GetComponent<CanvasGroup>();
+                //SetPanel(creditsPanel);
+                Debug.Log(menuSelection);
+
+                menuSelection++;
+
+                if (menuSelection > 2)
+                {
+                    menuSelection = 2;
+                }
+
+            }
+            // AddDelay (5.0f);
+        }
+
+    }
+
+
+    IEnumerator AddDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+    }
 }
