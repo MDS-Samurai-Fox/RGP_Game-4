@@ -9,8 +9,6 @@ public class BulletController : MonoBehaviour {
 
     private bool hasFoundTarget = false;
 
-    private Vector3 targetPositionOffset;
-
     private float speed = 50f;
     private float currentLifetime = 0;
     private float lifetime = 50;
@@ -56,14 +54,12 @@ public class BulletController : MonoBehaviour {
     /// <param name="tc"> The turret that holds this bullet </param>
     /// <param name="targetPosition"></param>
     /// <param name="targetPositionOffset"></param>
-    public void SetTarget(TurretController tc, Vector3 targetPosition, Vector3 targetPositionOffset) {
-
-        this.targetPositionOffset = targetPositionOffset;
+    public void SetTarget(TurretController tc, Vector3 targetPosition) {
 
         lifetime = tc.bulletLifeTime;
         speed = tc.bulletSpeed;
 
-        transform.DOLookAt(targetPosition, 0);
+        transform.LookAt(targetPosition + new Vector3(0, 1, 0));
 
         hasFoundTarget = true;
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dog : MonoBehaviour {
+public class DogController : MonoBehaviour {
 
     public float health = 100;
 

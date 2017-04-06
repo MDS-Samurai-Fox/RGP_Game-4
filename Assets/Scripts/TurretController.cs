@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class TurretController : MonoBehaviour {
 
+    // References
+    private AnimationController ac;
+
     [Header("Collision")]
     public LayerMask collisionMask;
     public float turretRadius;
@@ -12,11 +15,15 @@ public class TurretController : MonoBehaviour {
     [Header("Bullet Information")]
     public GameObject bulletPrefab;
     public Vector3 bulletSpawnOffset;
+    private GameObject bullet;
+    private Transform bulletTransform;
+    private bool canShoot = true;
+    private float bulletSpawnTimer = 0;
 
     [Range(1, 2)]
     public float bulletAccuracy = 1.5f;
 
-    [Range(0.5f, 2)]
+    [Range(0.1f, 2)]
     public float bulletSpawnDelay = 1;
 
     [Range(2, 4)]
@@ -25,25 +32,30 @@ public class TurretController : MonoBehaviour {
     [Range(55, 85)]
     public float bulletSpeed = 70f;
 
-    private GameObject bullet;
-    private Transform bulletTransform;
-
-    private bool canShoot = true;
-    private float bulletSpawnTimer = 0;
+    [Header("Model parts to rotate")]
+    public Transform turretGun;
+    public Ease turretRotationEaseType;
+    public float timeToStartSeeking = 1;
+    private bool canSeek = false;
 
     private void Awake() {
 
-
+        ac = GetComponent<AnimationController> ();
 
     }
 
     // Use this for initialization
     void Start() {
 
+        StartCoroutine(EnableSeeking(timeToStartSeeking));
+
     }
 
     // Update is called once per frame
     void Update() {
+
+        if (!canSeek)
+            return;
 
         if (!canShoot) {
 
@@ -59,6 +71,9 @@ public class TurretController : MonoBehaviour {
     }
 
     private void FixedUpdate() {
+
+        if (!canSeek)
+            return;
 
         if (canShoot) {
 
@@ -93,11 +108,11 @@ public class TurretController : MonoBehaviour {
 
             RaycastHit hit;
 
+            // If a cat to shoot is found
             if (Physics.Raycast(catPosition, catDirection, out hit, turretRadius)) {
+                
+                StartCoroutine(Fire(hitColliders[i].transform.GetComponent<CatController>(), catPosition, catPosition - transform.position, bulletSpawnDelay));
 
-                Debug.DrawRay(catPosition, catDirection, Color.green);
-                Vector3 catVelocity = hitColliders[i].transform.GetComponent<Cat>().Velocity;
-                Fire(catPosition + (catVelocity * bulletAccuracy), catDirection);
                 break;
 
             }
@@ -114,23 +129,48 @@ public class TurretController : MonoBehaviour {
     /// <param name="position"></param>
     /// <param name="forward"></param>
     /// <param name="distance"></param>
-    private void Fire(Vector3 position, Vector3 forward) {
-
+    private IEnumerator Fire(CatController cat, Vector3 position, Vector3 forward, float delay) {
+        
+        canSeek = false;
+        
+        Vector3 catPosition = cat.transform.position;
+        
+        LockOnTarget(catPosition);
+        // Look at the cat
+        // turretGun.DOLookAt(position, delay).SetEase(turretRotationEaseType);
+        
+        yield return new WaitForSeconds(delay);
+        
+        
+        
+        // Stop shooting
         canShoot = false;
-
+        
+        // Create the bullet within the turret
         bullet = Instantiate(bulletPrefab);
-
         bulletTransform = bullet.transform;
-
-        Vector3 turretPos = transform.position;
-        turretPos.y++;
-
-        bulletTransform.position = turretPos + bulletSpawnOffset - (forward.normalized * 2);
-
+        bulletTransform.position = transform.position + bulletSpawnOffset + (forward.normalized * 2);
         bulletTransform.SetParent(transform);
 
-        bullet.GetComponent<BulletController>().SetTarget(this, position, bulletSpawnOffset);
+        bullet.GetComponent<BulletController> ().SetTarget(this, catPosition);
+        
+        // Start seeking again after the cat has been found
+        canSeek = true;
 
+    }
+
+    private IEnumerator EnableSeeking(float duration) {
+
+        yield return new WaitForSeconds(duration);
+        canSeek = true;
+        print("Seeking");
+
+    }
+    
+    private void LockOnTarget(Vector3 position) {
+        
+        turretGun.DOLookAt(position, 1).SetEase(turretRotationEaseType);
+        
     }
 
 }

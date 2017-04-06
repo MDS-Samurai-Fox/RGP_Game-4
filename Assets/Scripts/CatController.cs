@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cat : MonoBehaviour {
+public class CatController : MonoBehaviour {
 
     [Header("Collision")]
     public LayerMask dogCollisionMask;
@@ -12,7 +12,7 @@ public class Cat : MonoBehaviour {
     public float damageDealt = 1;
     public float attackFrequency = 1.0f;
 
-    private Dog[] DogArray;
+    private DogController[] DogArray;
     private float attackTimer;
 
 
@@ -43,7 +43,7 @@ public class Cat : MonoBehaviour {
             Velocity = Vector3.zero;
            // print("hit");
 
-            Dog DefenderDog = hit.transform.GetComponent<Dog>();
+            DogController DefenderDog = hit.transform.GetComponent<DogController>();
 
             if (DefenderDog)
             {
@@ -63,13 +63,13 @@ public class Cat : MonoBehaviour {
 
     private void FindNearestDog()
     {
-        DogArray = FindObjectsOfType<Dog>();
+        DogArray = FindObjectsOfType<DogController>();
         float distance = 10000.0f;
         Vector3 ClosestDogPosition = Vector3.zero;
 
         if (DogArray.Length > 0)
         {
-            foreach (Dog dog in DogArray)
+            foreach (DogController dog in DogArray)
             {
                 float tempDistance = Vector3.Magnitude(dog.transform.position - gameObject.transform.position);
 
