@@ -5,13 +5,14 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 
-public class MenuManager : MonoBehaviour {
+public class MenuManager : MonoBehaviour
+{
 
     private AudioSource audioSource;
 
     private static int sceneToChange;
 
-    private int menuSelection = 0;
+    private int menuSelection = -1;
 
     public bool canUpdate = true;
 
@@ -24,7 +25,8 @@ public class MenuManager : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
 
         if (SceneManager.GetActiveScene().name == "Test - Charmaine Menu")
         {
@@ -107,12 +109,20 @@ public class MenuManager : MonoBehaviour {
     {
         if (canUpdate)
         {
+
+
             CanvasGroup menuPanel = GameObject.Find("Menu Panel").GetComponent<CanvasGroup>();
             CanvasGroup creditsPanel = GameObject.Find("Credits Panel").GetComponent<CanvasGroup>();
             menuPanel.GetComponentsInChildren<Image>()[0].color = Color.grey;
             menuPanel.GetComponentsInChildren<Image>()[1].color = Color.grey;
             menuPanel.GetComponentsInChildren<Image>()[2].color = Color.grey;
 
+            if (menuSelection == -1)
+            {
+                menuPanel.GetComponentsInChildren<Image>()[0].color = Color.white;
+                menuPanel.GetComponentsInChildren<Image>()[1].color = Color.white;
+                menuPanel.GetComponentsInChildren<Image>()[2].color = Color.white;
+            }
             if (menuSelection == 0)
             {
                 menuPanel.GetComponentsInChildren<Image>()[menuSelection].color = Color.white;
@@ -131,6 +141,7 @@ public class MenuManager : MonoBehaviour {
             {
 
             }
+
 
             if (Input.GetButtonDown("A Button"))
             {

@@ -50,14 +50,14 @@ public class CatCopyWithDeath : MonoBehaviour
 
             Velocity = new Vector3(0.0f, 0.0f, 0.0f);
 
-            Dog DefenderDog = hit.transform.GetComponent<Dog>();
+            //Dog DefenderDog = hit.transform.GetComponent<Dog>();
 
-            if (DefenderDog)
-            {
+            //if (DefenderDog)
+            //{
 
-                DefenderDog.TakeDamage(damageDealt);
+            //    DefenderDog.TakeDamage(damageDealt);
 
-            }
+            //}
 
         }
 

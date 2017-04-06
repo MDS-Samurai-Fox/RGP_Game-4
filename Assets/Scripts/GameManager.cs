@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 
     // Classes
     //[HideInInspector]
-   // public SoundManager soundManager;
+    // public SoundManager soundManager;
     //[HideInInspector]
     //public FaceChecker faceChecker;
     //private Buoyancy buoyancy;
@@ -68,23 +68,23 @@ public class GameManager : MonoBehaviour
     void Start()
     {
 
-       // easeLength = soundManager.GetLength(ClipType.Join);
+        // easeLength = soundManager.GetLength(ClipType.Join);
 
         gameEndPanel.DOFade(0, 0);
         gameEndPanel.blocksRaycasts = false;
         resultPanel.DOFade(0, 0);
 
         roundNumberPanel.GetComponentInChildren<Text>().text = "Round " + Round;
-        roundNumberPanel.DOFade(0, 0);
-        roundNumberPanel.DOFade(1, 1).SetDelay(1);
-        roundNumberPanel.DOFade(0, 1).SetDelay(3);
+        //roundNumberPanel.DOFade(0, 0);
+        roundNumberPanel.DOFade(1, 1).SetDelay(0);
+        roundNumberPanel.DOFade(0, 1).SetDelay(1);
 
         hudPanel.GetComponentsInChildren<Text>()[0].text = "Number of Cats Alive : " + NumCatsAlive;
         hudPanel.GetComponentsInChildren<Text>()[1].text = "Number of Cats Alive : " + NumDogsAlive;
         hudPanel.GetComponentsInChildren<Text>()[2].text = "Player 1 Score : " + Player1Score;
         hudPanel.GetComponentsInChildren<Text>()[3].text = "Player 2 Score : " + Player2Score;
         hudPanel.DOFade(0, 0);
-        hudPanel.DOFade(1, 1).SetDelay(4);
+        hudPanel.DOFade(1, 1).SetDelay(2);
 
 
         //if (particles != null)
@@ -102,27 +102,27 @@ public class GameManager : MonoBehaviour
         NumDogsAlive = TotalNumDogs;
 
 
-    //easeLength = soundManager.GetLength(ClipType.Join);
+        //easeLength = soundManager.GetLength(ClipType.Join);
 
-    //leftSideOriginalPosition = leftSide.localPosition;
-    //    middleSideOriginalPosition = middleSide.localPosition;
-    //    rightSideOriginalPosition = rightSide.localPosition;
+        //leftSideOriginalPosition = leftSide.localPosition;
+        //    middleSideOriginalPosition = middleSide.localPosition;
+        //    rightSideOriginalPosition = rightSide.localPosition;
 
-    //    // Move the face parent to the desired vector, after that enable the buoyancy
-    //    faceParent.DOMove(new Vector3(0, -0.35f, 0), easeLength).SetDelay(0.2f).SetEase(Ease.OutBack).OnComplete(StartGame);
+        //    // Move the face parent to the desired vector, after that enable the buoyancy
+        //    faceParent.DOMove(new Vector3(0, -0.35f, 0), easeLength).SetDelay(0.2f).SetEase(Ease.OutBack).OnComplete(StartGame);
 
-    //    FaceSplit();
+        //    FaceSplit();
 
     }
 
     void StartGame()
     {
 
-       // timeManager.Initialize();
+        // timeManager.Initialize();
         canUpdate = true;
 
-       // if (buoyancy != null)
-       //     buoyancy.Float();
+        // if (buoyancy != null)
+        //     buoyancy.Float();
 
     }
 
