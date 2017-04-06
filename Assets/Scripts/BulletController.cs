@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour {
 
-    public ParticleSystem explosionParticles;
+    public GameObject hitEffect;
+    private GameObject hitObject = null;
 
     private bool hasFoundTarget = false;
 
     private float speed = 50f;
+    public float range = 0;
     private float currentLifetime = 0;
     private float lifetime = 50;
 
@@ -23,7 +25,7 @@ public class BulletController : MonoBehaviour {
 
         // Destroy the bullet if it exceeds the 
         if (currentLifetime >= lifetime) {
-            StartCoroutine(DestroyBullet(false));
+            DestroyBullet(false);
         }
 
     }
@@ -32,9 +34,19 @@ public class BulletController : MonoBehaviour {
 
         if (!hasFoundTarget)
             return;
-
-        CheckCollisions();
+        
         transform.position += transform.forward * speed * Time.deltaTime;
+        
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 1)) {
+            
+            if (hit.transform.gameObject.CompareTag("Fire")) {
+                hitObject = hit.transform.gameObject;
+            }
+            DestroyBullet(true);
+
+        }
 
     }
 
@@ -69,31 +81,21 @@ public class BulletController : MonoBehaviour {
     /// Destroys the bullet
     /// </summary>
     /// <param name="hasCollided"> True for when the bullet has collided with something </param>
-    private IEnumerator DestroyBullet(bool hasCollided) {
+    private void DestroyBullet(bool hasCollided) {
 
         if (hasCollided) {
-
-            if (explosionParticles)
-                explosionParticles.Play();
+            
+            GameObject explosionInstance = Instantiate(hitEffect, transform.position, transform.rotation);
+            
+            if (range > 0) {
+                
+                
+                
+            }
 
         }
-
-        yield return new WaitForSeconds(1f);
-
-        transform.parent = null;
+        
         Destroy(this.gameObject);
-
-    }
-
-    private void CheckCollisions() {
-
-        RaycastHit hit;
-
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 1)) {
-
-            StartCoroutine(DestroyBullet(true));
-
-        }
 
     }
 

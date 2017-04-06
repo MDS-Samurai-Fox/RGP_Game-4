@@ -28,7 +28,7 @@ public class TurretController : MonoBehaviour {
     [Range(2, 4)]
     public float bulletLifeTime = 2.5f;
 
-    [Range(55, 85)]
+    [Range(30, 85)]
     public float bulletSpeed = 70f;
 
     [Header("Model parts to rotate")]
