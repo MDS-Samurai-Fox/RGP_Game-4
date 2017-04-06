@@ -5,51 +5,44 @@ using UnityEngine;
 
 public class TurretController : MonoBehaviour {
 
-    [Header("Collision")]
-    public LayerMask collisionMask;
-    public float turretRadius;
+    // References
 
-    [Header("Bullet Information")]
-    public GameObject bulletPrefab;
-    public Vector3 bulletSpawnOffset;
+    [Header("Collision detection")]
+    public LayerMask collisionCheckLayer;
+    public float turretRadius = 40;
 
-    [Range(1, 2)]
-    public float bulletAccuracy = 1.5f;
-
-    [Range(0.5f, 2)]
-    public float bulletSpawnDelay = 1;
-
-    [Range(2, 4)]
-    public float bulletLifeTime = 2.5f;
-
-    [Range(55, 85)]
-    public float bulletSpeed = 70f;
-
-    private GameObject bullet;
-    private Transform bulletTransform;
-
+    [Header("Projectile Information")]
+    public GameObject projectilePrefab;
+    public Vector3 projectileSpawnOffset;
     private bool canShoot = true;
     private float bulletSpawnTimer = 0;
 
-    private void Awake() {
 
-
-
-    }
+    [Header("Model parts to rotate")]
+    public Transform weaponHead;
+    public Ease weaponRotationType;
+    public float weaponRotationDuration = 1;
+    public float timeToStartSeeking = 1;
+    private bool canSeek = false;
 
     // Use this for initialization
     void Start() {
+
+        StartCoroutine(EnableSeeking(timeToStartSeeking));
 
     }
 
     // Update is called once per frame
     void Update() {
 
+        if (!canSeek)
+            return;
+
         if (!canShoot) {
 
             bulletSpawnTimer += Time.deltaTime;
 
-            if (bulletSpawnTimer >= bulletSpawnDelay) {
+            if (bulletSpawnTimer >= weaponRotationDuration) {
                 canShoot = true;
                 bulletSpawnTimer = 0;
             }
@@ -59,6 +52,9 @@ public class TurretController : MonoBehaviour {
     }
 
     private void FixedUpdate() {
+
+        if (!canSeek)
+            return;
 
         if (canShoot) {
 
@@ -81,11 +77,13 @@ public class TurretController : MonoBehaviour {
     private void FindNearestEnemy() {
 
         // Get all information from the hit colliders
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, turretRadius, collisionMask);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, turretRadius, collisionCheckLayer);
 
         int i = 0;
 
         while (i < hitColliders.Length) {
+            
+            print(hitColliders[i].name);
 
             // Grab all information from it
             Vector3 catPosition = hitColliders[i].transform.position;
@@ -93,11 +91,13 @@ public class TurretController : MonoBehaviour {
 
             RaycastHit hit;
 
+            // If a cat to shoot is found
             if (Physics.Raycast(catPosition, catDirection, out hit, turretRadius)) {
+                
+                print(hit.transform.name);
+                
+                StartCoroutine(Fire(hitColliders[i].transform.GetComponent<CatController>(), catPosition, catPosition - transform.position, weaponRotationDuration));
 
-                Debug.DrawRay(catPosition, catDirection, Color.green);
-                Vector3 catVelocity = hitColliders[i].transform.GetComponent<Cat>().Velocity;
-                Fire(catPosition + (catVelocity * bulletAccuracy), catDirection);
                 break;
 
             }
@@ -114,23 +114,46 @@ public class TurretController : MonoBehaviour {
     /// <param name="position"></param>
     /// <param name="forward"></param>
     /// <param name="distance"></param>
-    private void Fire(Vector3 position, Vector3 forward) {
-
+    private IEnumerator Fire(CatController cat, Vector3 position, Vector3 forward, float delay) {
+        
+        canSeek = false;
+        
+        Vector3 catPosition = cat.transform.position;
+        
+        LockOnTarget(catPosition);
+        // Look at the cat
+        // turretGun.DOLookAt(position, delay).SetEase(turretRotationEaseType);
+        
+        yield return new WaitForSeconds(delay);
+        
+        
+        
+        // Stop shooting
         canShoot = false;
+        
+        // Create the bullet within the turret
+        GameObject projectile = Instantiate(projectilePrefab, transform.position + projectileSpawnOffset + (forward.normalized * 2), transform.rotation);
+        projectile.transform.SetParent(transform);
 
-        bullet = Instantiate(bulletPrefab);
+        projectile.GetComponent<ProjectileController> ().SetTarget(catPosition);
+        
+        // Start seeking again after the cat has been found
+        canSeek = true;
 
-        bulletTransform = bullet.transform;
+    }
 
-        Vector3 turretPos = transform.position;
-        turretPos.y++;
+    private IEnumerator EnableSeeking(float duration) {
 
-        bulletTransform.position = turretPos + bulletSpawnOffset - (forward.normalized * 2);
+        yield return new WaitForSeconds(duration);
+        canSeek = true;
+        print("Seeking");
 
-        bulletTransform.SetParent(transform);
-
-        bullet.GetComponent<BulletController>().SetTarget(this, position, bulletSpawnOffset);
-
+    }
+    
+    private void LockOnTarget(Vector3 position) {
+        
+        weaponHead.DOLookAt(position, 1).SetEase(weaponRotationType);
+        
     }
 
 }
