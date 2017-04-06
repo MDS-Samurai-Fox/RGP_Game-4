@@ -411,7 +411,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1498386270044528}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -25, y: 0, z: 25}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4755578000331360}
@@ -666,7 +666,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: f3815737a3f9c4ecda2101f49daea8a8, type: 2}
+  - {fileID: 2100000, guid: faca182eb36e14084bafece9e7fa6072, type: 2}
   - {fileID: 2100000, guid: efafe169ded454c35ac0d99a7e424cd8, type: 2}
   - {fileID: 2100000, guid: 07adfae4fb0214ab9bc8b897bd500b93, type: 2}
   - {fileID: 2100000, guid: e0c21a89f7e3047e0946bdeb1ca36c7b, type: 2}
@@ -773,13 +773,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1280
   turretRadius: 50
-  bulletPrefab: {fileID: 1529026518673486, guid: ceda708c39f736144bbd57465e3a568b,
+  projectilePrefab: {fileID: 1529026518673486, guid: ceda708c39f736144bbd57465e3a568b,
     type: 2}
-  bulletSpawnOffset: {x: 0, y: 5, z: 0}
-  bulletAccuracy: 1.5
-  bulletSpawnDelay: 1
-  bulletLifeTime: 2
-  bulletSpeed: 55
-  turretGun: {fileID: 4070734597706710}
-  turretRotationEaseType: 1
+  projectileSpawnOffset: {x: 0, y: 5, z: 0}
+  weaponHead: {fileID: 4070734597706710}
+  weaponRotationType: 0
+  weaponRotationDuration: 1
   timeToStartSeeking: 1

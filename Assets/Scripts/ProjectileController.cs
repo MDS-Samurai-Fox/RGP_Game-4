@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
-public class BulletController : MonoBehaviour {
-
+public class ProjectileController : MonoBehaviour {
+    
+    public ProjectileType projectileType;
     public GameObject hitEffect;
-    private GameObject hitObject = null;
-
-    private bool hasFoundTarget = false;
-
-    private float speed = 50f;
+    public float speed = 50f;
     public float range = 0;
+    
+    private GameObject hitObject = null;
+    private bool hasFoundTarget = false;
     private float currentLifetime = 0;
-    private float lifetime = 50;
+    private float maxLifetime = 2;
 
     // Update is called once per frame
     void Update() {
@@ -24,7 +24,7 @@ public class BulletController : MonoBehaviour {
         currentLifetime += Time.deltaTime;
 
         // Destroy the bullet if it exceeds the 
-        if (currentLifetime >= lifetime) {
+        if (currentLifetime >= maxLifetime) {
             DestroyBullet(false);
         }
 
@@ -41,6 +41,7 @@ public class BulletController : MonoBehaviour {
 
         if (Physics.Raycast(transform.position, transform.forward, out hit, 1)) {
             
+            // Determine the type of object
             if (hit.transform.gameObject.CompareTag("Fire")) {
                 hitObject = hit.transform.gameObject;
             }
@@ -66,10 +67,7 @@ public class BulletController : MonoBehaviour {
     /// <param name="tc"> The turret that holds this bullet </param>
     /// <param name="targetPosition"></param>
     /// <param name="targetPositionOffset"></param>
-    public void SetTarget(TurretController tc, Vector3 targetPosition) {
-
-        lifetime = tc.bulletLifeTime;
-        speed = tc.bulletSpeed;
+    public void SetTarget(Vector3 targetPosition) {
 
         transform.LookAt(targetPosition + new Vector3(0, 1, 0));
 

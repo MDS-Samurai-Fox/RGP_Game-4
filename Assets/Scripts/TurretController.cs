@@ -7,40 +7,23 @@ public class TurretController : MonoBehaviour {
 
     // References
 
-    [Header("Collision")]
-    public LayerMask collisionMask;
-    public float turretRadius;
+    [Header("Collision detection")]
+    public LayerMask collisionCheckLayer;
+    public float turretRadius = 40;
 
-    [Header("Bullet Information")]
-    public GameObject bulletPrefab;
-    public Vector3 bulletSpawnOffset;
-    private GameObject bullet;
-    private Transform bulletTransform;
+    [Header("Projectile Information")]
+    public GameObject projectilePrefab;
+    public Vector3 projectileSpawnOffset;
     private bool canShoot = true;
     private float bulletSpawnTimer = 0;
 
-    [Range(1, 2)]
-    public float bulletAccuracy = 1.5f;
-
-    [Range(0.1f, 2)]
-    public float bulletSpawnDelay = 1;
-
-    [Range(2, 4)]
-    public float bulletLifeTime = 2.5f;
-
-    [Range(30, 85)]
-    public float bulletSpeed = 70f;
 
     [Header("Model parts to rotate")]
-    public Transform turretGun;
-    public Ease turretRotationEaseType;
+    public Transform weaponHead;
+    public Ease weaponRotationType;
+    public float weaponRotationDuration = 1;
     public float timeToStartSeeking = 1;
     private bool canSeek = false;
-
-    private void Awake() {
-        
-
-    }
 
     // Use this for initialization
     void Start() {
@@ -59,7 +42,7 @@ public class TurretController : MonoBehaviour {
 
             bulletSpawnTimer += Time.deltaTime;
 
-            if (bulletSpawnTimer >= bulletSpawnDelay) {
+            if (bulletSpawnTimer >= weaponRotationDuration) {
                 canShoot = true;
                 bulletSpawnTimer = 0;
             }
@@ -94,11 +77,13 @@ public class TurretController : MonoBehaviour {
     private void FindNearestEnemy() {
 
         // Get all information from the hit colliders
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, turretRadius, collisionMask);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, turretRadius, collisionCheckLayer);
 
         int i = 0;
 
         while (i < hitColliders.Length) {
+            
+            print(hitColliders[i].name);
 
             // Grab all information from it
             Vector3 catPosition = hitColliders[i].transform.position;
@@ -109,7 +94,9 @@ public class TurretController : MonoBehaviour {
             // If a cat to shoot is found
             if (Physics.Raycast(catPosition, catDirection, out hit, turretRadius)) {
                 
-                StartCoroutine(Fire(hitColliders[i].transform.GetComponent<CatController>(), catPosition, catPosition - transform.position, bulletSpawnDelay));
+                print(hit.transform.name);
+                
+                StartCoroutine(Fire(hitColliders[i].transform.GetComponent<CatController>(), catPosition, catPosition - transform.position, weaponRotationDuration));
 
                 break;
 
@@ -145,12 +132,10 @@ public class TurretController : MonoBehaviour {
         canShoot = false;
         
         // Create the bullet within the turret
-        bullet = Instantiate(bulletPrefab);
-        bulletTransform = bullet.transform;
-        bulletTransform.position = transform.position + bulletSpawnOffset + (forward.normalized * 2);
-        bulletTransform.SetParent(transform);
+        GameObject projectile = Instantiate(projectilePrefab, transform.position + projectileSpawnOffset + (forward.normalized * 2), transform.rotation);
+        projectile.transform.SetParent(transform);
 
-        bullet.GetComponent<BulletController> ().SetTarget(this, catPosition);
+        projectile.GetComponent<ProjectileController> ().SetTarget(catPosition);
         
         // Start seeking again after the cat has been found
         canSeek = true;
@@ -167,7 +152,7 @@ public class TurretController : MonoBehaviour {
     
     private void LockOnTarget(Vector3 position) {
         
-        turretGun.DOLookAt(position, 1).SetEase(turretRotationEaseType);
+        weaponHead.DOLookAt(position, 1).SetEase(weaponRotationType);
         
     }
 

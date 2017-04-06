@@ -318,7 +318,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1797950314961946}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -25, y: 0, z: -25}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4586443140614494}
@@ -531,15 +531,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1280
   turretRadius: 50
-  bulletPrefab: {fileID: 1529026518673486, guid: ceda708c39f736144bbd57465e3a568b,
+  projectilePrefab: {fileID: 1529026518673486, guid: ceda708c39f736144bbd57465e3a568b,
     type: 2}
-  bulletSpawnOffset: {x: 0, y: 5, z: 0}
-  bulletAccuracy: 1.5
-  bulletSpawnDelay: 1
-  bulletLifeTime: 2
-  bulletSpeed: 55
-  turretGun: {fileID: 4582527625402780}
-  turretRotationEaseType: 1
+  projectileSpawnOffset: {x: 0, y: 5, z: 0}
+  weaponHead: {fileID: 4582527625402780}
+  weaponRotationType: 0
+  weaponRotationDuration: 1
   timeToStartSeeking: 1
 --- !u!114 &114517984654578764
 MonoBehaviour:
