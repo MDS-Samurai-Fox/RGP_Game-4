@@ -80,8 +80,8 @@ public class CatCopyWithDeath : MonoBehaviour
 
         }
 
-       // gameManager.Player1Score--;
-      //  Destroy(this.gameObject);
+        gameManager.Player1Score--;
+        Destroy(this.gameObject);
 
     }
 

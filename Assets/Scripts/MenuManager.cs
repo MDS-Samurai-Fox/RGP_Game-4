@@ -16,6 +16,9 @@ public class MenuManager : MonoBehaviour
 
     public bool canUpdate = true;
 
+    public float maxScrollResetTimer = 0.1f;
+    private bool canScroll;
+    private float scrollResetTimer = 0;
 
     void Awake()
     {
@@ -109,8 +112,7 @@ public class MenuManager : MonoBehaviour
     {
         if (canUpdate)
         {
-
-
+            
             CanvasGroup menuPanel = GameObject.Find("Menu Panel").GetComponent<CanvasGroup>();
             CanvasGroup creditsPanel = GameObject.Find("Credits Panel").GetComponent<CanvasGroup>();
             menuPanel.GetComponentsInChildren<Image>()[0].color = Color.grey;
@@ -166,51 +168,51 @@ public class MenuManager : MonoBehaviour
                     menuSelection = 0;
                 }
             }
-            if (Input.GetButtonDown("B Button"))
+
+            if (Input.GetAxisRaw("Vertical") > 0 && canScroll)
             {
-                menuSelection++;
-                if (menuSelection > 2)
-                {
-                    menuSelection = 0;
-                }
-                Debug.Log("DPad UP");
-            }
-
-
-
-            if (Input.GetAxis("DPadVertical") > 0)
-            {
-                Debug.Log("DPad UP");
-
+                print("Leftstick Up");
+                canScroll = false;
                 menuSelection--;
 
                 if (menuSelection < 0)
                 {
-                    menuSelection = 0;
+                    menuSelection = 2;
                 }
-            }
-            if (Input.GetAxis("DPadVertical") < 0)
-            {
-                //CanvasGroup creditsPanel = GameObject.Find("Credits Panel").GetComponent<CanvasGroup>();
-                //SetPanel(creditsPanel);
-                Debug.Log(menuSelection);
 
+                print("Selection: " + menuSelection);
+
+            }
+            else if (Input.GetAxisRaw("Vertical") < 0 && canScroll)
+            {
+                print("Leftstick Down");
+                canScroll = false;
                 menuSelection++;
 
                 if (menuSelection > 2)
                 {
-                    menuSelection = 2;
+                    menuSelection = 0;
                 }
 
+                print("Selection: " + menuSelection);
+
             }
-            // AddDelay (5.0f);
+
+        }
+
+        if (!canScroll)
+        {
+
+            scrollResetTimer += Time.deltaTime;
+
+            if (scrollResetTimer >= maxScrollResetTimer)
+            {
+                canScroll = true;
+                scrollResetTimer = 0;
+            }
+
         }
 
     }
-
-
-    IEnumerator AddDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-    }
+    
 }
