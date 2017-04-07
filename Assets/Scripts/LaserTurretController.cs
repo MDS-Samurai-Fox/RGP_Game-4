@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
-public class TurretController : MonoBehaviour {
+public class LaserTurretController : MonoBehaviour {
 
     [Header("Collision detection")]
     public LayerMask collisionCheckLayer;
@@ -11,14 +11,17 @@ public class TurretController : MonoBehaviour {
     public float minimumTargetDistance = 5;
 
     [Header("Projectile Information")]
-    public GameObject projectilePrefab;
-    private List<Transform> projectileSpawnLocations = new List<Transform>();
+    public LineRenderer laserRenderer;
+    private List<Transform> laserSpawnLocations = new List<Transform>();
 
-    [Range(0.1f, 2)]
-    public float projectileCreationDelay = 1;
-    private bool canShoot = true;
+    [Range(0.1f, 0.5f)]
+    public float maxlaserLifetime = 0.1f;
+    [Range(0.1f, 0.5f)]
+    public float laserShootingDelay = 0.5f;
+
+    private bool isShooting = false;
     private bool hasLockedTarget = false;
-    private float projectileSpawnTimer = 0;
+    private float laserLifetime = 0;
 
     [Header("Model parts to rotate")]
     public Transform weaponHead;
@@ -45,13 +48,29 @@ public class TurretController : MonoBehaviour {
         if (!canUpdate)
             return;
 
-        if (hasLockedTarget && !canShoot) {
+        if (hasLockedTarget && isShooting) {
 
-            projectileSpawnTimer += Time.deltaTime;
+            laserLifetime += Time.deltaTime;
 
-            if (projectileSpawnTimer >= projectileCreationDelay) {
-                canShoot = true;
-                projectileSpawnTimer = 0;
+            if (laserLifetime >= maxlaserLifetime) {
+
+                laserRenderer.gameObject.SetActive(false);
+                isShooting = false;
+                laserLifetime = 0;
+
+            }
+
+        }
+        else if (hasLockedTarget && !isShooting) {
+
+            laserLifetime += Time.deltaTime;
+
+            if (laserLifetime >= laserShootingDelay) {
+
+                laserRenderer.gameObject.SetActive(true);
+                isShooting = true;
+                laserLifetime = 0;
+
             }
 
         }
@@ -78,7 +97,7 @@ public class TurretController : MonoBehaviour {
             }
             else {
 
-                if (canShoot) {
+                if (isShooting) {
                     Fire();
                 }
 
@@ -98,7 +117,7 @@ public class TurretController : MonoBehaviour {
         Gizmos.DrawWireSphere(transform.position, minimumTargetDistance);
         if (target) {
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(projectileSpawnLocations[0].position, target.transform.position);
+            Gizmos.DrawLine(laserSpawnLocations[0].position, target.transform.position);
         }
 
     }
@@ -124,12 +143,10 @@ public class TurretController : MonoBehaviour {
 
                 if (hit.distance > minimumTargetDistance) {
 
-                    if (target) {
-                        Debug.Log("Same target: " + cat.name);
+                    if (target)
                         return;
-                    }
 
-                    Debug.Log("Found target: " + cat.name);
+                    print("Found target: " + cat.name);
                     target = cat;
                     canSeek = false;
                     return;
@@ -152,18 +169,15 @@ public class TurretController : MonoBehaviour {
     /// <param name="distance"></param>
     private void Fire() {
 
-        // Stop shooting
-        canShoot = false;
+        laserRenderer.gameObject.SetActive(true);
+        //isShooting = false;
 
         Vector3 forward = transform.position - target.transform.position;
 
-        int randomChild = Random.Range(0, projectileSpawnLocations.Count);
+        int randomChild = Random.Range(0, laserSpawnLocations.Count);
 
-        GameObject projectile = Instantiate(projectilePrefab, projectileSpawnLocations[randomChild].position, transform.rotation);
-
-        projectile.transform.SetParent(transform);
-
-        projectile.GetComponent<ProjectileController>().SetTarget(target.transform.position);
+        laserRenderer.SetPosition(0, laserSpawnLocations[randomChild].position);
+        laserRenderer.SetPosition(1, target.transform.position);
 
     }
 
@@ -186,6 +200,7 @@ public class TurretController : MonoBehaviour {
         }
 
         hasLockedTarget = true;
+        isShooting = true;
 
     }
 
@@ -206,9 +221,9 @@ public class TurretController : MonoBehaviour {
         StopAllCoroutines();
         target = null;
         canSeek = true;
-        canShoot = true;
+        isShooting = false;
         hasLockedTarget = false;
-        projectileSpawnTimer = 0;
+        laserLifetime = 0;
 
     }
 
@@ -218,7 +233,7 @@ public class TurretController : MonoBehaviour {
         int length = t.childCount;
         for (int i = 0; i < length; i++) {
 
-            projectileSpawnLocations.Add(t.GetChild(i));
+            laserSpawnLocations.Add(t.GetChild(i));
 
         }
 

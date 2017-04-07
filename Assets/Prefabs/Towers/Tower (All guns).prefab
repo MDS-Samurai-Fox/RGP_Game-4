@@ -1157,20 +1157,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3f7c13488d6c9d49a7378374acdae49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collisionMask:
+  collisionCheckLayer:
     serializedVersion: 2
-    m_Bits: 1280
+    m_Bits: 0
   turretRadius: 50
-  bulletPrefab: {fileID: 1529026518673486, guid: ceda708c39f736144bbd57465e3a568b,
-    type: 2}
-  bulletSpawnOffset: {x: 0, y: 5, z: 0}
-  bulletAccuracy: 1.5
-  bulletSpawnDelay: 1
-  bulletLifeTime: 2
-  bulletSpeed: 55
-  turretGun: {fileID: 4612222397884384}
-  turretRotationEaseType: 1
-  timeToStartSeeking: 1
+  minimumTargetDistance: 5
+  projectilePrefab: {fileID: 0}
+  weaponSpawnLocations: []
+  projectileSpawnOffset: {x: 0, y: 0, z: 0}
+  projectileCreationDelay: 1
+  weaponHead: {fileID: 0}
+  weaponRotationType: 0
+  weaponRotationDuration: 1
+  timeToBeginSeeking: 1
+  target: {fileID: 0}
 --- !u!114 &114960275892440186
 MonoBehaviour:
   m_ObjectHideFlags: 1

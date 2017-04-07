@@ -4,12 +4,12 @@ using DG.Tweening;
 using UnityEngine;
 
 public class ProjectileController : MonoBehaviour {
-    
+
     public ProjectileType projectileType;
     public GameObject hitEffect;
     public float speed = 50f;
     public float range = 0;
-    
+
     private GameObject hitObject = null;
     private bool hasFoundTarget = false;
     private float currentLifetime = 0;
@@ -34,13 +34,13 @@ public class ProjectileController : MonoBehaviour {
 
         if (!hasFoundTarget)
             return;
-        
+
         transform.position += transform.forward * speed * Time.deltaTime;
-        
+
         RaycastHit hit;
 
         if (Physics.Raycast(transform.position, transform.forward, out hit, 1)) {
-            
+
             // Determine the type of object
             if (hit.transform.gameObject.CompareTag("Fire")) {
                 hitObject = hit.transform.gameObject;
@@ -48,16 +48,6 @@ public class ProjectileController : MonoBehaviour {
             DestroyBullet(true);
 
         }
-
-    }
-
-    private void OnDrawGizmos() {
-
-        if (!transform.parent)
-            return;
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.parent.position);
 
     }
 
@@ -70,7 +60,6 @@ public class ProjectileController : MonoBehaviour {
     public void SetTarget(Vector3 targetPosition) {
 
         transform.LookAt(targetPosition + new Vector3(0, 1, 0));
-
         hasFoundTarget = true;
 
     }
@@ -82,17 +71,21 @@ public class ProjectileController : MonoBehaviour {
     private void DestroyBullet(bool hasCollided) {
 
         if (hasCollided) {
-            
-            GameObject explosionInstance = Instantiate(hitEffect, transform.position, transform.rotation);
-            
+
+            if (hitEffect) {
+
+                GameObject explosionInstance = Instantiate(hitEffect, transform.position, transform.rotation);
+
+            }
+
             if (range > 0) {
-                
-                
-                
+
+
+
             }
 
         }
-        
+
         Destroy(this.gameObject);
 
     }
