@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -214,7 +214,12 @@ Prefab:
       propertyPath: collisionMask.m_Bits
       value: 1024
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 1865055868155404, guid: 692ef52e4d34cb14abfb1920f326249b, type: 2}
+      propertyPath: m_Name
+      value: Dog
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114529252297420446, guid: 692ef52e4d34cb14abfb1920f326249b, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 692ef52e4d34cb14abfb1920f326249b, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &117778245 stripped
@@ -237,12 +242,55 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   turretRadius: 20
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 531436272}
   bulletSpawnOffset: {x: 0, y: 1, z: 0}
   bulletAccuracy: 1.5
   bulletSpawnDelay: 1
   bulletLifeTime: 2.5
   bulletSpeed: 70
+--- !u!1001 &176453948
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4877763362919582, guid: ceda708c39f736144bbd57465e3a568b, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4877763362919582, guid: ceda708c39f736144bbd57465e3a568b, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4877763362919582, guid: ceda708c39f736144bbd57465e3a568b, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4877763362919582, guid: ceda708c39f736144bbd57465e3a568b, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4877763362919582, guid: ceda708c39f736144bbd57465e3a568b, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4877763362919582, guid: ceda708c39f736144bbd57465e3a568b, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4877763362919582, guid: ceda708c39f736144bbd57465e3a568b, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4877763362919582, guid: ceda708c39f736144bbd57465e3a568b, type: 2}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114614420349144598, guid: ceda708c39f736144bbd57465e3a568b, type: 2}
+  m_ParentPrefab: {fileID: 100100000, guid: ceda708c39f736144bbd57465e3a568b, type: 2}
+  m_IsPrefabParent: 0
 --- !u!4 &198269916 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 2b127815fd0f2074eae3a0c6a4786d0b, type: 2}
@@ -704,6 +752,23 @@ Prefab:
     - {fileID: 114179299481589906, guid: 2b127815fd0f2074eae3a0c6a4786d0b, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 2b127815fd0f2074eae3a0c6a4786d0b, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &531436272 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1529026518673486, guid: ceda708c39f736144bbd57465e3a568b,
+    type: 2}
+  m_PrefabInternal: {fileID: 176453948}
+--- !u!114 &531436273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 531436272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6c2edd686923b6429cc3d91c6d0a975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionParticles: {fileID: 0}
 --- !u!1 &592241749
 GameObject:
   m_ObjectHideFlags: 0
@@ -1464,25 +1529,6 @@ Transform:
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: 2b127815fd0f2074eae3a0c6a4786d0b, type: 2}
   m_PrefabInternal: {fileID: 498573551}
---- !u!114 &1360615435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1360615434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c58c6f7c363a7f47bbbec88effa496c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dogCollisionMask:
-    serializedVersion: 2
-    m_Bits: 0
-  Velocity: {x: 0, y: 0, z: 0}
-  speed: 0.1
-  health: 100
-  damageDealt: 1
-  dttackFrequency: 1
 --- !u!114 &1360615441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1498,7 +1544,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   Velocity: {x: 0, y: 0, z: 1}
-  speed: 0.1
+  speed: 0
   health: 100
   damageDealt: 1
   dttackFrequency: 1
@@ -1922,7 +1968,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2097246765}
   m_Layer: 0
-  m_Name: Dog
+  m_Name: Dog Group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1953,7 +1999,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2100807236}
   m_Layer: 10
-  m_Name: Cat
+  m_Name: Cat Group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
