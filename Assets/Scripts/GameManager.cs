@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -74,15 +75,23 @@ public class GameManager : MonoBehaviour
         gameEndPanel.blocksRaycasts = false;
         resultPanel.DOFade(0, 0);
 
-        roundNumberPanel.GetComponentInChildren<Text>().text = "Round " + Round;
+        //roundNumberPanel.GetComponentInChildren<Text>().text = "Round " + Round;
+        roundNumberPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Round " + Round;
         //roundNumberPanel.DOFade(0, 0);
         roundNumberPanel.DOFade(1, 1).SetDelay(0);
         roundNumberPanel.DOFade(0, 1).SetDelay(1);
 
-        hudPanel.GetComponentsInChildren<Text>()[0].text = "Number of Cats Alive : " + NumCatsAlive;
-        hudPanel.GetComponentsInChildren<Text>()[1].text = "Number of Cats Alive : " + NumDogsAlive;
-        hudPanel.GetComponentsInChildren<Text>()[2].text = "Player 1 Score : " + Player1Score;
-        hudPanel.GetComponentsInChildren<Text>()[3].text = "Player 2 Score : " + Player2Score;
+        //hudPanel.GetComponentsInChildren<Text>()[0].text = "Number of Cats Alive : " + NumCatsAlive;  
+        //hudPanel.GetComponentsInChildren<Text>()[1].text = "Number of Dogs Alive : " + NumDogsAlive;
+        //hudPanel.GetComponentsInChildren<Text>()[2].text = "Player 1 Score : " + Player1Score;
+        //hudPanel.GetComponentsInChildren<Text>()[3].text = "Player 2 Score : " + Player2Score;
+
+        hudPanel.GetComponentsInChildren<TextMeshProUGUI>()[0].text = "Number of Cats Alive : " + NumCatsAlive;
+        hudPanel.GetComponentsInChildren<TextMeshProUGUI>()[1].text = "Number of Dogs Alive : " + NumDogsAlive;
+        hudPanel.GetComponentsInChildren<TextMeshProUGUI>()[2].text = "Player 1 Score : " + Player1Score;
+        hudPanel.GetComponentsInChildren<TextMeshProUGUI>()[3].text = "Player 2 Score : " + Player2Score;
+
+
         hudPanel.DOFade(0, 0);
         hudPanel.DOFade(1, 1).SetDelay(2);
 
@@ -217,17 +226,20 @@ public class GameManager : MonoBehaviour
 
         if (Player1Score >= 2)
         {
-            gameEndPanel.GetComponentInChildren<Text>().text = "CATS WON OVERALL";
+            //gameEndPanel.GetComponentInChildren<Text>().text = "CATS WON OVERALL";
+            gameEndPanel.GetComponentInChildren<TextMeshProUGUI>().text = "CATS WON OVERALL";
             gameEndPanel.DOFade(1, 1).OnComplete(EnableBlockRaycasts).OnComplete(Initialize);
         }
         else
         {
-            resultPanel.GetComponentInChildren<Text>().text = "CATS WON THIS ROUND \n Cats " + Player1Score + " : Dogs " + Player2Score;
+            //resultPanel.GetComponentInChildren<Text>().text = "CATS WON THIS ROUND \n Cats " + Player1Score + " : Dogs " + Player2Score;
+            resultPanel.GetComponentInChildren<TextMeshProUGUI>().text = "CATS WON THIS ROUND \n Cats " + Player1Score + " : Dogs " + Player2Score;
             resultPanel.DOFade(0, 0);
             resultPanel.DOFade(1, 1).SetDelay(1);
             resultPanel.DOFade(0, 1).SetDelay(3);
 
-            roundNumberPanel.GetComponentInChildren<Text>().text = "Round " + Round;
+            //roundNumberPanel.GetComponentInChildren<Text>().text = "Round " + Round;
+            roundNumberPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Round " + Round;
             roundNumberPanel.DOFade(0, 0);
             roundNumberPanel.DOFade(1, 1).SetDelay(5);
             roundNumberPanel.DOFade(0, 1).SetDelay(7).OnComplete(Initialize);
@@ -241,17 +253,20 @@ public class GameManager : MonoBehaviour
 
         if (Player2Score > 2)
         {
-            gameEndPanel.GetComponentInChildren<Text>().text = "DOGS WON OVERALL";
+            //gameEndPanel.GetComponentInChildren<Text>().text = "DOGS WON OVERALL";
+            gameEndPanel.GetComponentInChildren<TextMeshProUGUI>().text = "DOGS WON OVERALL";
             gameEndPanel.DOFade(1, 1).OnComplete(EnableBlockRaycasts);
         }
         else
         {
-            resultPanel.GetComponentInChildren<Text>().text = "DOGS WON THIS ROUND \n Cats " + Player1Score + " : Dogs " + Player2Score;
+           // resultPanel.GetComponentInChildren<Text>().text = "DOGS WON THIS ROUND \n Cats " + Player1Score + " : Dogs " + Player2Score;
+            resultPanel.GetComponentInChildren<TextMeshProUGUI>().text = "DOGS WON THIS ROUND \n Cats " + Player1Score + " : Dogs " + Player2Score;
             resultPanel.DOFade(0, 0);
             resultPanel.DOFade(1, 1).SetDelay(1);
             resultPanel.DOFade(0, 1).SetDelay(3);
 
-            roundNumberPanel.GetComponentInChildren<Text>().text = "Round " + Round;
+            //roundNumberPanel.GetComponentInChildren<Text>().text = "Round " + Round;
+            roundNumberPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Round " + Round;
             roundNumberPanel.DOFade(0, 0);
             roundNumberPanel.DOFade(1, 1).SetDelay(5);
             roundNumberPanel.DOFade(0, 1).SetDelay(7).OnComplete(Initialize);
