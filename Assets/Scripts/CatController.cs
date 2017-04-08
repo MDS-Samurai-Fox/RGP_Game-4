@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class CatController : MonoBehaviour {
 
@@ -13,32 +14,39 @@ public class CatController : MonoBehaviour {
     public float damageDealt = 1;
     public float attackFrequency = 1.0f;
 
+    private Animator animator;
     private DogController[] DogArray;
     private float attackTimer;
     private Target target;
-
+    private bool isAttacking = false;
+    private bool allDogsDead = false;
+    private NavMeshAgent agent;
+     
 
     // Use this for initialization
     void Start() {
 
         //Velocity *= speed;
         // Velocity = new Vector3(speed, 0.0f, 0.0f);
+        animator = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
     void FixedUpdate() {
-  
-        if (catType == CatType.attack)
+
+        if ((catType == CatType.attack) && (!allDogsDead))
         {
             FindNearestDog();
             CheckCollision();
+            transform.position += Velocity;
         }
         else if (catType == CatType.seek)
         {
             SeekTarget();
+            transform.position += Velocity;
         }
 
-        transform.position += Velocity;
         //transform.position += Velocity * speed;
     }
 
@@ -51,8 +59,7 @@ public class CatController : MonoBehaviour {
             Vector3 DesiredVelocity = Vector3.zero;
             DesiredVelocity = target.transform.position - gameObject.transform.position;
             DesiredVelocity = Vector3.Normalize(DesiredVelocity);
-            DesiredVelocity *= speed;
-            Velocity = DesiredVelocity;
+            Velocity = DesiredVelocity * speed;
             transform.forward = Vector3.Normalize(DesiredVelocity);
         }
         
@@ -63,6 +70,8 @@ public class CatController : MonoBehaviour {
         RaycastHit hit;
 
         if (Physics.Raycast(transform.position, transform.forward, out hit, 0.8f, dogCollisionMask)) {
+
+            isAttacking = true;
 
             Velocity = Vector3.zero;
            // print("hit");
@@ -77,11 +86,15 @@ public class CatController : MonoBehaviour {
                 {
                     attackTimer = 0;
                     DefenderDog.TakeDamage(damageDealt);
+                    animator.SetTrigger("attackTrigger");
                     Velocity = Vector3.zero;
                 }
-
             }
+        }
 
+        else
+        {
+            isAttacking = false;
         }
 
     }
@@ -108,17 +121,31 @@ public class CatController : MonoBehaviour {
             Vector3 DesiredVelocity = Vector3.zero;
             DesiredVelocity = ClosestDogPosition - gameObject.transform.position;
             DesiredVelocity = Vector3.Normalize(DesiredVelocity);
-            DesiredVelocity *= speed;
-            Velocity = DesiredVelocity;
+            Velocity = DesiredVelocity * speed;
 
             transform.forward = Vector3.Normalize(DesiredVelocity);
+
+            if (Vector3.Magnitude(ClosestDogPosition - gameObject.transform.position) < 5.0f)
+            {
+                isAttacking = true;
+            }
+
+            if (!isAttacking)
+            {
+                animator.SetTrigger("runTrigger");
+            }
         }
 
         else
         {
-            Velocity = Vector3.zero;
-            SeekTarget();
-       }
+            allDogsDead = true;
+         //   agent.velocity = Vector3.zero;
+          //  agent.Stop();
+            // Velocity = Vector3.zero;
+             agent.enabled = false;
+            // SeekTarget();
+            //  animator.SetTrigger("runTrigger");
+        }
     }
 
     private bool IsAlive() {
