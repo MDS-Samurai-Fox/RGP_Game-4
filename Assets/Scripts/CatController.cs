@@ -6,6 +6,7 @@ public class CatController : MonoBehaviour {
 
     [Header("Collision")]
     public LayerMask dogCollisionMask;
+    public CatType catType;
     public Vector3 Velocity;
     public float speed = 0.1f;
     public float health = 100;
@@ -14,31 +15,54 @@ public class CatController : MonoBehaviour {
 
     private DogController[] DogArray;
     private float attackTimer;
+    private Target target;
 
 
     // Use this for initialization
     void Start() {
 
         //Velocity *= speed;
-        Velocity = new Vector3(speed, 0.0f, 0.0f);
-
+        // Velocity = new Vector3(speed, 0.0f, 0.0f);
     }
 
     // Update is called once per frame
     void FixedUpdate() {
+  
+        if (catType == CatType.attack)
+        {
+            FindNearestDog();
+            CheckCollision();
+        }
+        else if (catType == CatType.seek)
+        {
+            SeekTarget();
+        }
 
-        //transform.position += Velocity * speed;
         transform.position += Velocity;
-        FindNearestDog();
-        CheckCollision();
+        //transform.position += Velocity * speed;
+    }
 
+    private void SeekTarget()
+    {
+        target = FindObjectOfType<Target>();
+
+        if (target)
+        {
+            Vector3 DesiredVelocity = Vector3.zero;
+            DesiredVelocity = target.transform.position - gameObject.transform.position;
+            DesiredVelocity = Vector3.Normalize(DesiredVelocity);
+            DesiredVelocity *= speed;
+            Velocity = DesiredVelocity;
+            transform.forward = Vector3.Normalize(DesiredVelocity);
+        }
+        
     }
 
     private void CheckCollision() {
 
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 0.6f, dogCollisionMask)) {
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 0.8f, dogCollisionMask)) {
 
             Velocity = Vector3.zero;
            // print("hit");
@@ -53,6 +77,7 @@ public class CatController : MonoBehaviour {
                 {
                     attackTimer = 0;
                     DefenderDog.TakeDamage(damageDealt);
+                    Velocity = Vector3.zero;
                 }
 
             }
@@ -92,6 +117,7 @@ public class CatController : MonoBehaviour {
         else
         {
             Velocity = Vector3.zero;
+            SeekTarget();
        }
     }
 
