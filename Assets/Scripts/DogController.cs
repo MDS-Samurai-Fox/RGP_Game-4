@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class DogController : MonoBehaviour {
 
+    private GameManager gm;
+
     public float health = 100;
+
+    void Awake() {
+
+        gm = FindObjectOfType<GameManager>();
+
+    }
 
     // Use this for initialization
     void Start() {
@@ -13,6 +21,9 @@ public class DogController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+
+        if (!gm.canUpdate)
+            return;
 
     }
 

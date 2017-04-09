@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class TurretController : MonoBehaviour {
 
+    private GameManager gm;
+
     [Header("Collision detection")]
     public LayerMask collisionCheckLayer;
     public float turretRadius = 40;
@@ -31,6 +33,12 @@ public class TurretController : MonoBehaviour {
     [SerializeField]
     private GameObject target = null;
 
+    private void Awake() {
+
+        gm = FindObjectOfType<GameManager>();
+
+    }
+
     // Use this for initialization
     void Start() {
 
@@ -42,7 +50,7 @@ public class TurretController : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-        if (!canUpdate)
+        if (!gm.canUpdate)
             return;
 
         if (hasLockedTarget && !canShoot) {
@@ -60,7 +68,7 @@ public class TurretController : MonoBehaviour {
 
     private void FixedUpdate() {
 
-        if (!canUpdate)
+        if (!gm.canUpdate)
             return;
 
         // Find the nearest enemy

@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class CatController : MonoBehaviour {
 
+    private GameManager gm;
+
     [Header("Collision")]
     public LayerMask dogCollisionMask;
     public CatType catType;
@@ -21,7 +23,12 @@ public class CatController : MonoBehaviour {
     private bool isAttacking = false;
     private bool allDogsDead = false;
     private NavMeshAgent agent;
-     
+
+    private void Awake() {
+
+        gm = FindObjectOfType<GameManager>();
+
+    }
 
     // Use this for initialization
     void Start() {
@@ -34,6 +41,9 @@ public class CatController : MonoBehaviour {
 
     // Update is called once per frame
     void FixedUpdate() {
+
+        if (!gm.canUpdate)
+            return;
 
         if ((catType == CatType.attack) && (!allDogsDead))
         {

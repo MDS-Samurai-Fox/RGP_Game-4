@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1973440244869510}
+  m_IsPrefabParent: 1
+--- !u!1 &1973440244869510
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4600565777364514}
+  - component: {fileID: 114493004876141206}
+  - component: {fileID: 114316335974700486}
+  m_Layer: 0
+  m_Name: Game Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4600565777364514
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1973440244869510}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 258.78134, y: 163.19879, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114316335974700486
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1973440244869510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09601df3440cb834faccacebb84a94b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canUpdate: 0
+  gameEndPanel: {fileID: 0}
+  roundNumberPanel: {fileID: 0}
+  resultPanel: {fileID: 0}
+  hudPanel: {fileID: 0}
+  Round: 1
+  Player1Score: 0
+  Player2Score: 0
+  NumCatsAlive: 3
+  NumDogsAlive: 3
+  TotalNumCats: 3
+  TotalNumDogs: 3
+  catPrefab: {fileID: 1370501809132094, guid: c2cfc644480c0d745808b9dbcf2b390a, type: 2}
+  dogPrefab: {fileID: 114697949713777876, guid: f75398d718c28c1428fefd01c5911c1f,
+    type: 2}
+  TimeToWait: 1
+--- !u!114 &114493004876141206
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1973440244869510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c41574ce64871c34da10937314051d9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canUpdate: 0
+  maxScrollResetTimer: 0.1
