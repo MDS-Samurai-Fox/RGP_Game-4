@@ -41,7 +41,7 @@ public class CatController : MonoBehaviour {
             CheckCollision();
             transform.position += Velocity;
         }
-        else if (catType == CatType.seek)
+        else //if (catType == CatType.seek)
         {
             SeekTarget();
             transform.position += Velocity;
@@ -61,6 +61,7 @@ public class CatController : MonoBehaviour {
             DesiredVelocity = Vector3.Normalize(DesiredVelocity);
             Velocity = DesiredVelocity * speed;
             transform.forward = Vector3.Normalize(DesiredVelocity);
+            animator.SetTrigger("runTrigger");
         }
         
     }
@@ -125,7 +126,10 @@ public class CatController : MonoBehaviour {
 
             transform.forward = Vector3.Normalize(DesiredVelocity);
 
-            if (Vector3.Magnitude(ClosestDogPosition - gameObject.transform.position) < 5.0f)
+           // print(Vector3.Magnitude(ClosestDogPosition - gameObject.transform.position));
+
+
+            if (Vector3.Magnitude(ClosestDogPosition - gameObject.transform.position) < 2.0f)
             {
                 isAttacking = true;
             }
@@ -142,9 +146,9 @@ public class CatController : MonoBehaviour {
          //   agent.velocity = Vector3.zero;
           //  agent.Stop();
             // Velocity = Vector3.zero;
-             agent.enabled = false;
-            // SeekTarget();
-            //  animator.SetTrigger("runTrigger");
+            // agent.enabled = false;
+             SeekTarget();
+             //animator.SetTrigger("runTrigger");
         }
     }
 

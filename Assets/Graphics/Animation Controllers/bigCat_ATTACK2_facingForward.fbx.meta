@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 2e3c83fbea28dcf4fae43f072ed82911
-timeCreated: 1491626805
+guid: ccf58ea769c04dc45b24396954d7a14b
+timeCreated: 1491706113
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -72,7 +72,7 @@ ModelImporter:
     400062: spine_3
     400064: spine_4
     4300000: Big_cat
-    7400000: Big_cat_attack
+    7400000: Big_Cat_Attack
     9500000: //RootNode
     13700000: Big_cat
   materials:
@@ -97,17 +97,17 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: Big_cat_attack
+      name: Big_Cat_Attack
       takeName: Take 001
       firstFrame: 1
-      lastFrame: 38
+      lastFrame: 25
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
