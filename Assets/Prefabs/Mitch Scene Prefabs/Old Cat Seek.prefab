@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 195678766676455678}
   - component: {fileID: 114265753476274060}
   m_Layer: 8
-  m_Name: Cat Seek
+  m_Name: Old Cat Seek
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
