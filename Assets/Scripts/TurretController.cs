@@ -194,15 +194,19 @@ public class TurretController : MonoBehaviour {
         if (weaponHead) {
             weaponHead.LookAt(target.transform.position - new Vector3(0, 3, 0));
         }
+        
+        float distance = Vector3.Distance(transform.position, target.transform.position);
 
-        if (Vector3.Distance(transform.position, target.transform.position) > turretRadius + 1) {
+        if (distance > turretRadius + 1) {
+            ResetSeekingState();
+        } else if (distance < minimumTargetDistance + 1) {
             ResetSeekingState();
         }
 
     }
 
     private void ResetSeekingState() {
-
+        
         StopAllCoroutines();
         target = null;
         canSeek = true;
