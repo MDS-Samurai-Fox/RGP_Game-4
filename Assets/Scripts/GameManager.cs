@@ -5,8 +5,6 @@ using TMPro;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public enum GameState { Placement, Play, Stop, GameOver };
-
 public class GameManager : MonoBehaviour
 {
 
@@ -31,7 +29,7 @@ public class GameManager : MonoBehaviour
     [SpaceAttribute]
     public int Round = 1;
     public int TotalTurns = 3;
-   
+    // public int GameState;
 
     [SpaceAttribute]
     public int Player1Score = 0;
@@ -60,23 +58,17 @@ public class GameManager : MonoBehaviour
     private bool bGameEnd = false;
 
     bool IsPlayer1aCat = false;
-  
-    public GameState gamestate;
 
-    Camera mainCamera;
 
     void Awake()
     {
         //soundManager = FindObjectOfType<SoundManager>();
-        mainCamera = FindObjectOfType<Camera>();
     }
 
     // Use this for initialization
     void Start()
     {
         // easeLength = soundManager.GetLength(ClipType.Join);
-
-        gamestate = GameState.Placement;
 
         GameObject cat1 = Instantiate(catPrefab, new Vector3(-12.0f, 0.0f, -3.8f), transform.rotation);
         cat1.transform.DOScale(3, 0);
@@ -144,12 +136,8 @@ public class GameManager : MonoBehaviour
 
     void Initialize()
     {
-        //gamestate = GameState.Placement;
-
         NumCatsAlive = TotalNumCats;
         NumDogsAlive = TotalNumDogs;
-
-        //This is where the spawning placement function should be
 
         //to respawn dogs every instantiation
         DogController dog1 = Instantiate(dogPrefab, new Vector3(0.0f, 0.0f, 0.0f), transform.rotation);
@@ -181,8 +169,6 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator StartGame()
     {
-       
-
         //yield return new WaitForSeconds(TimeToWait);
         // timeManager.Initialize();
 
@@ -209,12 +195,11 @@ public class GameManager : MonoBehaviour
         //GameObject dog2 = Instantiate(dogPrefab, new Vector3(3.8f, 0.0f, 8.9f), transform.rotation);
         //dog2.transform.DOScale(1, 0);
 
-        //canUpdate = true;
+        canUpdate = true;
 
         yield return new WaitForSeconds(TimeToWait);
 
         canUpdate = true;
-        gamestate = GameState.Play;
 
         yield break;
 
@@ -223,7 +208,6 @@ public class GameManager : MonoBehaviour
     public void StopGame()
     {
         canUpdate = false;
-        //gamestate = GameState.Stop;
         //FaceJoin();
         //soundManager.StopMusicSource();
 
@@ -272,7 +256,6 @@ public class GameManager : MonoBehaviour
             gameEndPanel.DOFade(1, 1).OnComplete(EnableBlockRaycasts);
 
             bGameEnd = true;
-            //gamestate = GameState.GameOver;
         }
         else
         {
@@ -320,7 +303,6 @@ public class GameManager : MonoBehaviour
             gameEndPanel.DOFade(1, 1).OnComplete(EnableBlockRaycasts);
 
             bGameEnd = true;
-            //gamestate = GameState.GameOver;
         }
         else
         {
@@ -349,7 +331,7 @@ public class GameManager : MonoBehaviour
         {
             UpdateHud();
 
-            if (NumDogsAlive == 0 || NumCatsAlive == 0) // or the cat has reached the target
+            if (NumDogsAlive == 0 || NumCatsAlive == 0)
             {
                 StopGame();
             }
@@ -362,7 +344,6 @@ public class GameManager : MonoBehaviour
                 SceneManager.LoadScene(0);
             }
         }
-
     }
 
 }

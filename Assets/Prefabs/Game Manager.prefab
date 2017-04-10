@@ -35,7 +35,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1973440244869510}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 258.78134, y: 163.19879, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -68,8 +68,7 @@ MonoBehaviour:
   catPrefab: {fileID: 1895363578489372, guid: 673c7b2bfc055e14fa794cb6e44ea80a, type: 2}
   dogPrefab: {fileID: 114697949713777876, guid: f75398d718c28c1428fefd01c5911c1f,
     type: 2}
-  TimeToWait: 2
-  gamestate: 0
+  TimeToWait: 0
 --- !u!114 &114493004876141206
 MonoBehaviour:
   m_ObjectHideFlags: 1
