@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
 
     [SpaceAttribute]
     public int Round = 1;
+    public int TotalTurns = 3;
     // public int GameState;
 
     [SpaceAttribute]
@@ -56,7 +57,7 @@ public class GameManager : MonoBehaviour
 
     private bool bGameEnd = false;
 
-    
+    bool IsPlayer1aCat = false;
 
 
     void Awake()
@@ -85,9 +86,9 @@ public class GameManager : MonoBehaviour
         cat4.transform.DOScale(3, 0);
         ///cat4.layer = LayerMask.NameToLayer("Cat");
 
-        DogController dog1 = Instantiate(dogPrefab, new Vector3(0.0f, 0.0f, 0.0f), transform.rotation);
-        dog1.transform.DOScale(1, 0);
-        dog1.health = 1;
+        //DogController dog1 = Instantiate(dogPrefab, new Vector3(0.0f, 0.0f, 0.0f), transform.rotation);
+        //dog1.transform.DOScale(1, 0);
+        //dog1.health = 1;
 
         gameEndPanel.DOFade(0, 0);
         gameEndPanel.blocksRaycasts = false;
@@ -117,17 +118,34 @@ public class GameManager : MonoBehaviour
         NumDogsAlive = DogArray.Length - TurretArray.Length - LaserTurretArray.Length;
         NumCatsAlive = CatArray.Length;
 
-        hudPanel.GetComponentsInChildren<TextMeshProUGUI>()[0].text = "Number of Cats Alive : " + NumCatsAlive;
-        hudPanel.GetComponentsInChildren<TextMeshProUGUI>()[1].text = "Number of Dogs Alive : " + NumDogsAlive;
-        hudPanel.GetComponentsInChildren<TextMeshProUGUI>()[2].text = "Player 1 Score : " + Player1Score;
-        hudPanel.GetComponentsInChildren<TextMeshProUGUI>()[3].text = "Player 2 Score : " + Player2Score;
+        if (IsPlayer1aCat)
+        {
+            hudPanel.GetComponentsInChildren<TextMeshProUGUI>()[0].text = "Number of Cats Alive : " + NumCatsAlive;
+            hudPanel.GetComponentsInChildren<TextMeshProUGUI>()[1].text = "Number of Dogs Alive : " + NumDogsAlive;
+
+        }
+        else
+        {         
+            hudPanel.GetComponentsInChildren<TextMeshProUGUI>()[0].text = "Number of Dogs Alive : " + NumDogsAlive;
+            hudPanel.GetComponentsInChildren<TextMeshProUGUI>()[1].text = "Number of Cats Alive : " + NumCatsAlive;
+        }
+
+        hudPanel.GetComponentsInChildren<TextMeshProUGUI>()[2].text = "Player A Score : " + Player1Score;
+        hudPanel.GetComponentsInChildren<TextMeshProUGUI>()[3].text = "Player B Score : " + Player2Score;        
     }
 
     void Initialize()
     {
         NumCatsAlive = TotalNumCats;
         NumDogsAlive = TotalNumDogs;
-        
+
+        //to respawn dogs every instantiation
+        DogController dog1 = Instantiate(dogPrefab, new Vector3(0.0f, 0.0f, 0.0f), transform.rotation);
+        dog1.transform.DOScale(1, 0);
+        dog1.health = 1;
+
+        SwitchPlayers();
+
         StartCoroutine(StartGame());
 
         //easeLength = soundManager.GetLength(ClipType.Join);
@@ -143,8 +161,13 @@ public class GameManager : MonoBehaviour
 
     }
 
+    void SwitchPlayers()
+    {
+        IsPlayer1aCat = !IsPlayer1aCat;
+        UpdateHud();
+    }
+
     public IEnumerator StartGame()
-   // void StartGame()
     {
         //yield return new WaitForSeconds(TimeToWait);
         // timeManager.Initialize();
@@ -172,6 +195,8 @@ public class GameManager : MonoBehaviour
         //GameObject dog2 = Instantiate(dogPrefab, new Vector3(3.8f, 0.0f, 8.9f), transform.rotation);
         //dog2.transform.DOScale(1, 0);
 
+        canUpdate = true;
+
         yield return new WaitForSeconds(TimeToWait);
 
         canUpdate = true;
@@ -189,68 +214,109 @@ public class GameManager : MonoBehaviour
         if (NumDogsAlive == 0)
         {
             //Invoke("Win", soundManager.GetLength(ClipType.Finish));
-            Invoke("Win", 0);
+            Invoke("CatsWin", 0);
         }
         if (NumCatsAlive == 0)
         {
             //Invoke("Lose", soundManager.GetLength(ClipType.Finish));
-            Invoke("Lose", 0);
+            Invoke("DogsWin", 0);
         }
 
     }
 
-    void Win()
+    void CatsWin()
     {
-        Player1Score++;
-        Round++;
-        UpdateHud();
-
-        if (Player1Score >= 2)
+        if (IsPlayer1aCat)
         {
-            gameEndPanel.GetComponentInChildren<TextMeshProUGUI>().text = "CATS WON OVERALL";
-            gameEndPanel.DOFade(1, 1).OnComplete(EnableBlockRaycasts);
-            bGameEnd = true;
+            Player1Score++;
         }
         else
         {
-            resultPanel.GetComponentInChildren<TextMeshProUGUI>().text = "CATS WON THIS ROUND \n Cats " + Player1Score + " : Dogs " + Player2Score;
-            resultPanel.DOFade(0, 0);
-            resultPanel.DOFade(1, 1).SetDelay(1);
-            resultPanel.DOFade(0, 1).SetDelay(3);
-
-            roundNumberPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Round " + Round;
-            roundNumberPanel.DOFade(0, 0);
-            roundNumberPanel.DOFade(1, 1).SetDelay(5);
-            roundNumberPanel.DOFade(0, 1).SetDelay(7).OnComplete(Initialize);
+            Player2Score++;
         }
-    }
 
-    void Lose()
-    {
-        Player2Score++;
         Round++;
         UpdateHud();
 
-        if (Player2Score > 2)
+        if (Round == TotalTurns + 1)
         {
-            gameEndPanel.GetComponentInChildren<TextMeshProUGUI>().text = "DOGS WON OVERALL";
+            if (Player1Score > Player2Score)
+            {
+                gameEndPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Cats Win. Player 1 WON OVERALL \n PlayerA  " + Player1Score + " : PlayerB  " + Player2Score;
+            }
+            else if (Player1Score > Player2Score)
+            {
+                gameEndPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Cats Win. Player 2 WON OVERALL \n PlayerA  " + Player1Score + " : PlayerB  " + Player2Score;
+            }
+            else
+            {
+                gameEndPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Cats Win. OVERALL It's a tie. \n PlayerA  " + Player1Score + " : PlayerB  " + Player2Score;
+            }          
+           
             gameEndPanel.DOFade(1, 1).OnComplete(EnableBlockRaycasts);
 
             bGameEnd = true;
         }
         else
         {
-            resultPanel.GetComponentInChildren<TextMeshProUGUI>().text = "DOGS WON THIS ROUND \n Cats " + Player1Score + " : Dogs " + Player2Score;
+            resultPanel.GetComponentInChildren<TextMeshProUGUI>().text = "CATS WON THIS ROUND \n PlayerA  " + Player1Score + " : PlayerB  " + Player2Score;
             resultPanel.DOFade(0, 0);
             resultPanel.DOFade(1, 1).SetDelay(1);
             resultPanel.DOFade(0, 1).SetDelay(3);
 
-            roundNumberPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Round " + Round;
+            roundNumberPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Round " + Round + "\n Switch Players";
             roundNumberPanel.DOFade(0, 0);
             roundNumberPanel.DOFade(1, 1).SetDelay(5);
             roundNumberPanel.DOFade(0, 1).SetDelay(7).OnComplete(Initialize);
         }
+       
+    }
 
+    void DogsWin()
+    {
+        if (IsPlayer1aCat)
+        {
+            Player2Score++;
+        }
+        else
+        {
+            Player1Score++;
+        }
+        Round++;
+        UpdateHud();
+
+        if (Round == TotalTurns + 1)
+        {
+            if (Player1Score > Player2Score)
+            {
+                gameEndPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Dogs Win. Player 1 WON OVERALL \n PlayerA  " + Player1Score + " : PlayerB  " + Player2Score;
+            }
+            else if (Player1Score > Player2Score)
+            {
+                gameEndPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Dogs Win. Player 2 WON OVERALL \n PlayerA  " + Player1Score + " : PlayerB  " + Player2Score;
+            }
+            else
+            {
+                gameEndPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Dogs Win. OVERALL It's a tie. \n PlayerA  " + Player1Score + " : PlayerB  " + Player2Score;
+            }
+
+            gameEndPanel.DOFade(1, 1).OnComplete(EnableBlockRaycasts);
+
+            bGameEnd = true;
+        }
+        else
+        {
+            resultPanel.GetComponentInChildren<TextMeshProUGUI>().text = "DOGS WON THIS ROUND \n PlayerA  " + Player1Score + " : PlayerB  " + Player2Score;
+            resultPanel.DOFade(0, 0);
+            resultPanel.DOFade(1, 1).SetDelay(1);
+            resultPanel.DOFade(0, 1).SetDelay(3);
+
+            roundNumberPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Round " + Round + "\n Switch Players";
+            roundNumberPanel.DOFade(0, 0);
+            roundNumberPanel.DOFade(1, 1).SetDelay(5);
+            roundNumberPanel.DOFade(0, 1).SetDelay(7).OnComplete(Initialize);
+        }
+        
     }
 
     void EnableBlockRaycasts()

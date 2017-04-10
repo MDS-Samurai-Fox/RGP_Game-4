@@ -58,16 +58,17 @@ MonoBehaviour:
   resultPanel: {fileID: 0}
   hudPanel: {fileID: 0}
   Round: 1
+  TotalTurns: 3
   Player1Score: 0
   Player2Score: 0
-  NumCatsAlive: 3
-  NumDogsAlive: 3
+  NumCatsAlive: 4
+  NumDogsAlive: 0
   TotalNumCats: 3
   TotalNumDogs: 3
-  catPrefab: {fileID: 1370501809132094, guid: c2cfc644480c0d745808b9dbcf2b390a, type: 2}
+  catPrefab: {fileID: 1895363578489372, guid: 673c7b2bfc055e14fa794cb6e44ea80a, type: 2}
   dogPrefab: {fileID: 114697949713777876, guid: f75398d718c28c1428fefd01c5911c1f,
     type: 2}
-  TimeToWait: 1
+  TimeToWait: 0
 --- !u!114 &114493004876141206
 MonoBehaviour:
   m_ObjectHideFlags: 1
