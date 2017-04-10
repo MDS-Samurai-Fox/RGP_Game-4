@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     [SpaceAttribute]
     public int Round = 1;
     public int TotalTurns = 3;
-    // public int GameState;
+   
 
     [SpaceAttribute]
     public int Player1Score = 0;
@@ -59,10 +59,15 @@ public class GameManager : MonoBehaviour
 
     bool IsPlayer1aCat = false;
 
+    enum GameState { Placement, Play, Stop, GameOver };
+
+    Camera mainCamera;
+
 
     void Awake()
     {
         //soundManager = FindObjectOfType<SoundManager>();
+        mainCamera = FindObjectOfType<Camera>();
     }
 
     // Use this for initialization
@@ -344,6 +349,15 @@ public class GameManager : MonoBehaviour
                 SceneManager.LoadScene(0);
             }
         }
+
+
+        if (Input.GetAxis("Vertical") > 0)
+        {
+            //mainCamera.transform.up
+
+        }
+
+
     }
 
 }
