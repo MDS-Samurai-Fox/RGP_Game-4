@@ -54,17 +54,29 @@ public class CameraController : MonoBehaviour
         }
             float maxMoveSpeed = 20;
 
-            //cursor1.transform.position = new Vector3(Mathf.Clamp(cursor1.transform.position.x, minX, maxX), 0, Mathf.Clamp(cursor1.transform.position.z, minZ, maxZ));
-            //cursor2.transform.position = new Vector3(Mathf.Clamp(cursor2.transform.position.x, minX, maxX), 0, Mathf.Clamp(cursor2.transform.position.z, minZ, maxZ));
+            cursor1.transform.position = new Vector3(Mathf.Clamp(cursor1.transform.position.x, minX, maxX), 0, Mathf.Clamp(cursor1.transform.position.z, minZ, maxZ));
+            cursor2.transform.position = new Vector3(Mathf.Clamp(cursor2.transform.position.x, minX, maxX), 0, Mathf.Clamp(cursor2.transform.position.z, minZ, maxZ));
+        
+            if ( XCI.IsPluggedIn(3))    //for the wireless controller
+            {
+                
+                cursor1.transform.DOMoveX(cursor1.transform.position.x + (XCI.GetAxis(XboxAxis.LeftStickX, XboxController.Third) * maxMoveSpeed * Time.deltaTime), 0);
+                cursor1.transform.DOMoveZ(cursor1.transform.position.z + (XCI.GetAxis(XboxAxis.LeftStickY, XboxController.Third) * maxMoveSpeed * Time.deltaTime), 0);
 
-            cursor1.transform.DOMoveX(cursor1.transform.position.x + (XCI.GetAxis(XboxAxis.LeftStickX, XboxController.First) * maxMoveSpeed * Time.deltaTime), 0);
-            cursor1.transform.DOMoveZ(cursor1.transform.position.z + (XCI.GetAxis(XboxAxis.LeftStickY, XboxController.First) * maxMoveSpeed * Time.deltaTime), 0);
+            }
+            else
+            {
+                cursor1.transform.DOMoveX(cursor1.transform.position.x + (XCI.GetAxis(XboxAxis.LeftStickX, XboxController.First) * maxMoveSpeed * Time.deltaTime), 0);
+                cursor1.transform.DOMoveZ(cursor1.transform.position.z + (XCI.GetAxis(XboxAxis.LeftStickY, XboxController.First) * maxMoveSpeed * Time.deltaTime), 0);
 
-            //cursor1.transform.DOMoveX(cursor1.transform.position.x + (XCI.GetAxis(XboxAxis.RightStickX, XboxController.Third) * maxMoveSpeed * Time.deltaTime), 0);
-            //cursor1.transform.DOMoveZ(cursor1.transform.position.z + (XCI.GetAxis(XboxAxis.RightStickY, XboxController.Third) * maxMoveSpeed * Time.deltaTime), 0);
+                //cursor1.transform.DOMoveX(cursor1.transform.position.x + (XCI.GetAxis(XboxAxis.RightStickX, XboxController.Third) * maxMoveSpeed * Time.deltaTime), 0);
+                //cursor1.transform.DOMoveZ(cursor1.transform.position.z + (XCI.GetAxis(XboxAxis.RightStickY, XboxController.Third) * maxMoveSpeed * Time.deltaTime), 0);
+            }
+
 
             cursor2.transform.DOMoveX(cursor2.transform.position.x + (XCI.GetAxis(XboxAxis.LeftStickX, XboxController.Second) * maxMoveSpeed * Time.deltaTime), 0);
             cursor2.transform.DOMoveZ(cursor2.transform.position.z + (XCI.GetAxis(XboxAxis.LeftStickY, XboxController.Second) * maxMoveSpeed * Time.deltaTime), 0);
+
 
         //cursor2.transform.DOMoveX(cursor2.transform.position.x + (XCI.GetAxis(XboxAxis.RightStickX, XboxController.Second) * maxMoveSpeed * Time.deltaTime), 0);
         //cursor2.transform.DOMoveZ(cursor2.transform.position.z + (XCI.GetAxis(XboxAxis.RightStickY, XboxController.Second) * maxMoveSpeed * Time.deltaTime), 0);
@@ -84,23 +96,26 @@ public class CameraController : MonoBehaviour
             float deltaX = cursor2pos.x - cursor1pos.x;
             float gradient = deltaX / deltaX;
 
-            float newXpos = Mathf.Min(cursor1pos.x, cursor2pos.x) - deltaX / 2;
-            float newZpos = Mathf.Min(cursor1pos.z, cursor2pos.z) - deltaZ / 2;
+            float newXpos = Mathf.Min(cursor1pos.x, cursor2pos.x) + deltaX / 2;
+            float newZpos = Mathf.Min(cursor1pos.z, cursor2pos.z) + deltaZ / 2;
 
             //replace with clamp
-            if (distanceBetweenCursors <= 10)
+            if (distanceBetweenCursors <= 20)
             {
-                distanceBetweenCursors = 10;
+                distanceBetweenCursors = 20;
             }
 
+        
             
-            
+
+            //transform.DOMoveX(newXpos, 0);
+            //transform.DOMoveY(distanceBetweenCursors, 0);
+            //transform.DOMoveZ(newZpos, 0);
+            transform.DOMove(new Vector3(newXpos, distanceBetweenCursors, newZpos), 0);
+            transform.DOLocalMoveZ(-20, 0);
+
             transform.DORotate(new Vector3(-45, 0, 0), 0);
             transform.DOLookAt(CenterOfMap, 0);
-
-            transform.DOMoveX(newXpos, 0);
-            transform.DOMoveY(distanceBetweenCursors, 0);
-            transform.DOMoveZ(newZpos, 0);
 
             //transform.local
 
