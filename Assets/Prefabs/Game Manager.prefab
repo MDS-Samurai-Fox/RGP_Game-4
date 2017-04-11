@@ -70,6 +70,7 @@ MonoBehaviour:
   dogPrefab: {fileID: 0}
   TimeToWait: 2
   gamestate: 0
+  HasCatReachedTarget: 0
 --- !u!114 &114493004876141206
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -94,9 +95,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a6faf173199c4157a7254dab450b5bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smallCatPrefab: {fileID: 1876139714583338, guid: 8bb106b9139382d4ebb6485fd4e5107b,
+  attackGrid: {fileID: 0}
+  defenseGrid: {fileID: 0}
+  attackRowSize: 8
+  attackColSize: 8
+  defenseRowSize: 8
+  defenseColSize: 8
+  timerReset: 0.15
+  SeekingCatPrefab: {fileID: 1876139714583338, guid: 8bb106b9139382d4ebb6485fd4e5107b,
     type: 2}
-  bigCatPrefab: {fileID: 1895363578489372, guid: 673c7b2bfc055e14fa794cb6e44ea80a,
+  AttackingCatPrefab: {fileID: 1895363578489372, guid: 673c7b2bfc055e14fa794cb6e44ea80a,
     type: 2}
   missileTowerPrefab: {fileID: 1498386270044528, guid: 6837c4eae0fb83f43af6d137985f0876,
     type: 2}
@@ -106,3 +114,7 @@ MonoBehaviour:
     type: 2}
   teslaTowerPrefab: {fileID: 1797950314961946, guid: 4784433dfd3e58148abea47f2ed6f1ef,
     type: 2}
+  attackerCanvas: {fileID: 0}
+  defenderCanvas: {fileID: 0}
+  maxCats: 12
+  maxDogs: 8

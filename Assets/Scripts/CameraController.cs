@@ -24,9 +24,10 @@ public class CameraController : MonoBehaviour {
     public Transform BottomRightCorner;
 
     private float minX, minZ, maxX, maxZ;
-    public Vector3 CenterOfMap = new Vector3(0, 0, 0);
     public float maxMoveSpeed = 20;
     [SerializeField] private float mapTranslationDelay = 2;
+    public Vector3 CenterOfMap;
+    public Vector3 startPosition, startRotation;
 
     private void Awake() {
 
@@ -123,8 +124,8 @@ public class CameraController : MonoBehaviour {
 
     public void MoveCameraToPlacementMode() {
         
-        transform.DOMove(new Vector3(0, 50, 0), 3).SetDelay(mapTranslationDelay).SetEase(Ease.OutQuart);
-        transform.DORotate(new Vector3(90, 0, 0), 3).SetDelay(mapTranslationDelay).SetEase(Ease.OutExpo);
+        transform.DOMove(startPosition, 3).SetDelay(mapTranslationDelay).SetEase(Ease.OutQuart);
+        transform.DORotate(startRotation, 3).SetDelay(mapTranslationDelay).SetEase(Ease.OutExpo);
         
     }
     

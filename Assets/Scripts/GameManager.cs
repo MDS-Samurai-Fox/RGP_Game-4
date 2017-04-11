@@ -44,10 +44,6 @@ public class GameManager : MonoBehaviour {
  public int TotalNumDogs = 2;
 
  [SpaceAttribute]
- public GameObject catPrefab;
- public DogController dogPrefab;
-
- [SpaceAttribute]
  public float TimeToWait = 2;
 
  private CatController[] CatArray;
