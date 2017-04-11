@@ -15,6 +15,7 @@ public class CatController : MonoBehaviour {
     public float health = 100;
     public float damageDealt = 1;
     public float attackFrequency = 1.0f;
+    public float distanceToTarget = 1000.0f;
 
     private Animator animator;
     private DogController[] DogArray;
@@ -68,6 +69,14 @@ public class CatController : MonoBehaviour {
         {
             Vector3 DesiredVelocity = Vector3.zero;
             DesiredVelocity = target.transform.position - gameObject.transform.position;
+
+            distanceToTarget = Vector3.Magnitude(DesiredVelocity);
+
+            if(distanceToTarget < 3.0f)
+            {
+                gm.HasCatReachedTarget = true;
+            }
+
             DesiredVelocity = Vector3.Normalize(DesiredVelocity);
             Velocity = DesiredVelocity * speed;
             transform.forward = Vector3.Normalize(DesiredVelocity);
