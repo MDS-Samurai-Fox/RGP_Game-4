@@ -10,57 +10,45 @@ public enum GameState { Loading, Placement, Play, Stop, GameOver };
 
 public class GameManager : MonoBehaviour {
 
-     // Classes
-     //[HideInInspector]
-     // public SoundManager soundManager;
+    private SpawnManager sm;
+    private SoundManager soundManager;
 
-     [HideInInspector]
-     public bool canUpdate = false;
+    [HideInInspector] public bool canUpdate = false;
 
-     //[HeaderAttribute("Intro Animation")]
-     //[SerializeField]
-     //private Ease easeType = Ease.InSine;
-     //private float easeLength = 0;
+    [SpaceAttribute]
+    public CanvasGroup gameEndPanel; //Panel during Game Over
+    public CanvasGroup roundNumberPanel; //Panel displaying which round the game is in
+    public CanvasGroup resultPanel; //Panel displaying the score at the end of each round
 
-     [SpaceAttribute]
-     public CanvasGroup gameEndPanel;   //Panel during Game Over
-     public CanvasGroup roundNumberPanel;   //Panel displaying which round the game is in
-     public CanvasGroup resultPanel;    //Panel displaying the score at the end of each round
-     public CanvasGroup hudPanel;   //Panel displaying the scores and number of cats and dogs during the game
+    [SpaceAttribute]
+    public int Round = 1; // the current round number
+    public int TotalTurns = 3; // the total number of rounds for the game
 
-     [SpaceAttribute]
-     public int Round = 1;  // the current round number
-     public int TotalTurns = 3; // the total number of rounds for the game
+    [SpaceAttribute]
+    public int Player1Score = 0;
+    public int Player2Score = 0;
 
-     [SpaceAttribute]
-     public int Player1Score = 0;
-     public int Player2Score = 0;
+    [SerializeField] private int NumCatsAlive = 3;
+    [SerializeField] private int NumDogsAlive = 3;
 
-     [SpaceAttribute]
-     public int NumCatsAlive = 3;   
-     public int NumDogsAlive = 3;
+    [SpaceAttribute]
+    public float TimeToWait = 2; //wait for spawning before starting the game
 
-     [SpaceAttribute]
-     public int TotalNumCats = 4;     //initial number of cats when the game starts - this needs to match to how many the Spawn Manager spawns
-     public int TotalNumDogs = 2;   //initial number of cats when the game starts - this needs to match to how many the Spawn Manager spawns
+    public bool IsPlayer1aCat = false; //used for the players switching sides
 
-     [SpaceAttribute]
-     public float TimeToWait = 2;   //wait for spawning before starting the game
+    public GameState gamestate;
 
-     public bool IsPlayer1aCat = false; //used for the players switching sides
+    public bool HasCatReachedTarget = false;
 
-     public GameState gamestate;
-
-     public bool HasCatReachedTarget = false;
-
-    private CatController[] CatArray;  //stores all the live cats in the game
-    private DogController[] DogArray;  //stores all the live dogs in the game
+    private CatController[] CatArray; //stores all the live cats in the game
+    private DogController[] DogArray; //stores all the live dogs in the game
     private TurretController[] TurretArray; //stores all the live turrets in the game
     private LaserTurretController[] LaserTurretArray; //stores all the live lasers in the game
 
     void Awake() {
-
-        //soundManager = FindObjectOfType<SoundManager>();
+        
+        sm = GetComponent<SpawnManager>();
+        soundManager = FindObjectOfType<SoundManager>();
 
     }
 
@@ -76,65 +64,25 @@ public class GameManager : MonoBehaviour {
         roundNumberPanel.GetComponentInChildren<TextMeshProUGUI> ().text = "Round " + Round;
 
         roundNumberPanel.DOFade(1, 1).SetDelay(0);
-        roundNumberPanel.DOFade(0, 1).SetDelay(1);
+        roundNumberPanel.DOFade(0, 1).SetDelay(1).OnComplete(Initialize);
 
-        UpdateHud();
-
-        hudPanel.DOFade(0, 0);
-        hudPanel.DOFade(1, 1).SetDelay(2).OnComplete(Initialize);
-
-    }
-
-    void UpdateHud() {
-        
-        CatArray = FindObjectsOfType<CatController> ();
-        DogArray = FindObjectsOfType<DogController> ();
-        TurretArray = FindObjectsOfType<TurretController> ();
-        LaserTurretArray = FindObjectsOfType<LaserTurretController> ();
-
-        //NumDogsAlive = DogArray.Length - TurretArray.Length - LaserTurretArray.Length;
-        NumDogsAlive = DogArray.Length;
-        NumCatsAlive = CatArray.Length;
-
-        if (IsPlayer1aCat) {
-            hudPanel.GetComponentsInChildren<TextMeshProUGUI> ()[0].text = "Number of Cats Alive : " + NumCatsAlive;
-            hudPanel.GetComponentsInChildren<TextMeshProUGUI> ()[1].text = "Number of Dogs Alive : " + NumDogsAlive;
-
-        } else {
-            hudPanel.GetComponentsInChildren<TextMeshProUGUI> ()[0].text = "Number of Dogs Alive : " + NumDogsAlive;
-            hudPanel.GetComponentsInChildren<TextMeshProUGUI> ()[1].text = "Number of Cats Alive : " + NumCatsAlive;
-        }
-
-        hudPanel.GetComponentsInChildren<TextMeshProUGUI> ()[2].text = "Player A Score : " + Player1Score;
-        hudPanel.GetComponentsInChildren<TextMeshProUGUI> ()[3].text = "Player B Score : " + Player2Score;
     }
 
     void Initialize() {
-        
-        gamestate = GameState.Placement;
 
-        NumCatsAlive = TotalNumCats;
-        NumDogsAlive = TotalNumDogs;
+        gamestate = GameState.Placement;
 
         HasCatReachedTarget = false;
 
         SwitchPlayers();
 
-        //This is where the spawning placement function should be
-
-        //to respawn dogs every initialization
-        // DogController dog1 = Instantiate(dogPrefab, new Vector3(0.0f, 0.0f, 0.0f), transform.rotation);
-        // dog1.transform.DOScale(1, 0);
-        // dog1.health = 1;
-
-        //after spawning is finished start the game
-        StartCoroutine(StartGame());
-
     }
 
     void SwitchPlayers() {
+        
         IsPlayer1aCat = !IsPlayer1aCat;
-        UpdateHud();
+        // UpdateHud();
+        
     }
 
     public IEnumerator StartGame() {
@@ -156,12 +104,12 @@ public class GameManager : MonoBehaviour {
         //soundManager.StopMusicSource();
 
         if (NumDogsAlive == 0 || HasCatReachedTarget) {
-            //Invoke("CatsWin", soundManager.GetLength(ClipType.Finish));
-            Invoke("CatsWin", 0);
+            CatsWin();
+            // Invoke("CatsWin", 0);
         }
         if (NumCatsAlive == 0) {
-            //Invoke("DogsWin", soundManager.GetLength(ClipType.Finish));
-            Invoke("DogsWin", 0);
+            DogsWin();
+            // Invoke("DogsWin", 0);
         }
 
     }
@@ -174,7 +122,7 @@ public class GameManager : MonoBehaviour {
         }
 
         Round++;
-        UpdateHud();
+        // UpdateHud();
 
         if (Round == TotalTurns + 1) {
             if (Player1Score > Player2Score) {
@@ -209,7 +157,7 @@ public class GameManager : MonoBehaviour {
             Player1Score++;
         }
         Round++;
-        UpdateHud();
+        // UpdateHud();
 
         if (Round == TotalTurns + 1) {
             if (Player1Score > Player2Score) {
@@ -244,7 +192,7 @@ public class GameManager : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (canUpdate) {
-            UpdateHud();
+            // UpdateHud();
 
             if (NumDogsAlive == 0 || NumCatsAlive == 0 || HasCatReachedTarget) // or the cat has reached the target
             {
@@ -253,7 +201,7 @@ public class GameManager : MonoBehaviour {
         }
 
         if (gamestate == GameState.GameOver) {
-            if (XCI.GetButtonDown(XboxButton.A)) { 
+            if (XCI.GetButtonDown(XboxButton.A)) {
                 SceneManager.LoadScene(0);
             }
         }
