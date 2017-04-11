@@ -125,7 +125,7 @@ public class CameraController : MonoBehaviour {
     public void MoveCameraToPlacementMode() {
         
         transform.DOMove(startPosition, 3).SetDelay(mapTranslationDelay).SetEase(Ease.OutQuart);
-        transform.DORotate(startRotation, 3).SetDelay(mapTranslationDelay).SetEase(Ease.OutExpo);
+        transform.DORotate(startRotation, 3).SetDelay(mapTranslationDelay).SetEase(Ease.OutQuart);
         
     }
     
