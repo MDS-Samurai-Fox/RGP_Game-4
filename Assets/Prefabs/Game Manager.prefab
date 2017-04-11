@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4600565777364514}
   - component: {fileID: 114493004876141206}
   - component: {fileID: 114316335974700486}
+  - component: {fileID: 114915636715147392}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -66,8 +67,7 @@ MonoBehaviour:
   TotalNumCats: 3
   TotalNumDogs: 3
   catPrefab: {fileID: 1895363578489372, guid: 673c7b2bfc055e14fa794cb6e44ea80a, type: 2}
-  dogPrefab: {fileID: 114697949713777876, guid: f75398d718c28c1428fefd01c5911c1f,
-    type: 2}
+  dogPrefab: {fileID: 0}
   TimeToWait: 2
   gamestate: 0
 --- !u!114 &114493004876141206
@@ -83,3 +83,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canUpdate: 0
   maxScrollResetTimer: 0.1
+--- !u!114 &114915636715147392
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1973440244869510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6faf173199c4157a7254dab450b5bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smallCatPrefab: {fileID: 1876139714583338, guid: 8bb106b9139382d4ebb6485fd4e5107b,
+    type: 2}
+  bigCatPrefab: {fileID: 1895363578489372, guid: 673c7b2bfc055e14fa794cb6e44ea80a,
+    type: 2}
+  missileTowerPrefab: {fileID: 1498386270044528, guid: 6837c4eae0fb83f43af6d137985f0876,
+    type: 2}
+  turretTowerPrefab: {fileID: 1486831983044646, guid: 4702f69a458ba8f498c83f2f16542c80,
+    type: 2}
+  plasmaTowerPrefab: {fileID: 1326217524974142, guid: f2af4dc23a1d46a47a9be1f84a2adfa8,
+    type: 2}
+  teslaTowerPrefab: {fileID: 1797950314961946, guid: 4784433dfd3e58148abea47f2ed6f1ef,
+    type: 2}

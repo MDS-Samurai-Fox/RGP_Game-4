@@ -74,36 +74,15 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        // easeLength = soundManager.GetLength(ClipType.Join);
 
         gamestate = GameState.Placement;
-
-        GameObject cat1 = Instantiate(catPrefab, new Vector3(-12.0f, 0.0f, -3.8f), transform.rotation);
-        cat1.transform.DOScale(3, 0);
-        //cat1.layer = LayerMask.NameToLayer("Cat");
-
-        GameObject cat2 = Instantiate(catPrefab, new Vector3(10.3f, 0.0f, -5.4f), transform.rotation);
-        cat2.transform.DOScale(3, 0);
-        //cat2.layer = LayerMask.NameToLayer("Cat");
-
-        GameObject cat3 = Instantiate(catPrefab, new Vector3(-20.4f, 0.0f, 2.9f), transform.rotation);
-        cat3.transform.DOScale(3, 0);
-        //cat3.layer = LayerMask.NameToLayer("Cat");
-
-        GameObject cat4 = Instantiate(catPrefab, new Vector3(-16.2f, 0.0f, 7.6f), transform.rotation);
-        cat4.transform.DOScale(3, 0);
-        ///cat4.layer = LayerMask.NameToLayer("Cat");
-
-        //DogController dog1 = Instantiate(dogPrefab, new Vector3(0.0f, 0.0f, 0.0f), transform.rotation);
-        //dog1.transform.DOScale(1, 0);
-        //dog1.health = 1;
-
+        
         gameEndPanel.DOFade(0, 0);
         gameEndPanel.blocksRaycasts = false;
         resultPanel.DOFade(0, 0);
 
         roundNumberPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Round " + Round;
-        //roundNumberPanel.DOFade(0, 0);
+        
         roundNumberPanel.DOFade(1, 1).SetDelay(0);
         roundNumberPanel.DOFade(0, 1).SetDelay(1);
 
@@ -158,7 +137,7 @@ public class GameManager : MonoBehaviour
 
         SwitchPlayers();
 
-        StartCoroutine(StartGame());
+        // StartCoroutine(StartGame());
 
         //easeLength = soundManager.GetLength(ClipType.Join);
 
