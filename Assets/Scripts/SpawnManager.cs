@@ -168,13 +168,13 @@ public class SpawnManager : MonoBehaviour {
 
         }
 
-        if ((XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player1) > 0 || Input.GetKeyDown(KeyCode.S)) && canMoveAttackX) {
+        if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player1) < 0 || Input.GetKeyDown(KeyCode.S)) && canMoveAttackX) {
 
             canMoveAttackX = false;
 
             attackCursor.DOMoveX(Mathf.Clamp(attackCursor.position.x + 1, originalAttackerCursorPosition.x, originalAttackerCursorPosition.x + attackRowSize), 0);
 
-        } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player1) < 0 || Input.GetKeyDown(KeyCode.W)) && canMoveAttackX) {
+        } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player1) > 0 || Input.GetKeyDown(KeyCode.W)) && canMoveAttackX) {
 
             canMoveAttackX = false;
 
@@ -182,13 +182,13 @@ public class SpawnManager : MonoBehaviour {
 
         }
 
-        if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player1) > 0 || Input.GetKeyDown(KeyCode.D)) && canMoveAttackZ) {
+        if ((XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player1) > 0 || Input.GetKeyDown(KeyCode.D)) && canMoveAttackZ) {
 
             canMoveAttackZ = false;
 
             attackCursor.DOMoveZ(Mathf.Clamp(attackCursor.position.z + 1, originalAttackerCursorPosition.z, originalAttackerCursorPosition.z + attackColSize), 0);
 
-        } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player1) < 0 || Input.GetKeyDown(KeyCode.A)) && canMoveAttackZ) {
+        } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player1) < 0 || Input.GetKeyDown(KeyCode.A)) && canMoveAttackZ) {
 
             canMoveAttackZ = false;
 
@@ -224,9 +224,11 @@ public class SpawnManager : MonoBehaviour {
 
         defenderCanvas.GetComponentInChildren<TextMeshProUGUI> ().text = dogType.ToString() + "";
 
-        if (XCI.GetButtonDown(XboxButton.A, cc.player2)) {
+        if (XCI.GetButtonDown(XboxButton.A, cc.player2) || Input.GetKeyDown(KeyCode.N)) {
 
             if (maxDogs <= 0) {
+                defenderCanvas.DOFade(1, 0);
+                showingDefensePanel = true; 
                 dogsReady = true;
                 return;
             }
@@ -280,13 +282,13 @@ public class SpawnManager : MonoBehaviour {
 
                 maxDogs--;
                 defenderCanvas.DOFade(0, 0.5f);
-                showingAttackPanel = false;
+                showingDefensePanel = false;
 
             }
 
         }
 
-        if (XCI.GetButtonDown(XboxButton.DPadLeft, cc.player2)) {
+        if (XCI.GetButtonDown(XboxButton.DPadLeft, cc.player2) || Input.GetKeyDown(KeyCode.U)) {
 
             DogSelector--;
 
@@ -296,7 +298,7 @@ public class SpawnManager : MonoBehaviour {
 
             dogType = (DogType) DogSelector;
 
-        } else if (XCI.GetButtonDown(XboxButton.DPadRight, cc.player2)) {
+        } else if (XCI.GetButtonDown(XboxButton.DPadRight, cc.player2) || Input.GetKeyDown(KeyCode.O)) {
 
             DogSelector++;
 
@@ -308,13 +310,13 @@ public class SpawnManager : MonoBehaviour {
 
         }
 
-        if ((XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player2) > 0 || Input.GetKeyDown(KeyCode.K)) && canMoveDefenseX) {
+        if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player2) < 0 || Input.GetKeyDown(KeyCode.K)) && canMoveDefenseX) {
 
             canMoveDefenseX = false;
 
             defenseCursor.DOMoveX(Mathf.Clamp(defenseCursor.position.x + 2, originalDefenderCursorPosition.x, originalDefenderCursorPosition.x + defenseRowSize), 0);
 
-        } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player2) < 0 || Input.GetKeyDown(KeyCode.I)) && canMoveDefenseX) {
+        } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player2) > 0 || Input.GetKeyDown(KeyCode.I)) && canMoveDefenseX) {
 
             canMoveDefenseX = false;
 
@@ -322,13 +324,13 @@ public class SpawnManager : MonoBehaviour {
 
         }
 
-        if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player2) > 0 || Input.GetKeyDown(KeyCode.L)) && canMoveDefenseZ) {
+        if ((XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player2) > 0 || Input.GetKeyDown(KeyCode.L)) && canMoveDefenseZ) {
 
             canMoveDefenseZ = false;
 
             defenseCursor.DOMoveZ(Mathf.Clamp(defenseCursor.position.z + 2, originalDefenderCursorPosition.z, originalDefenderCursorPosition.z + defenseColSize), 0);
 
-        } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player2) < 0 || Input.GetKeyDown(KeyCode.J)) && canMoveDefenseZ) {
+        } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player2) < 0 || Input.GetKeyDown(KeyCode.J)) && canMoveDefenseZ) {
 
             canMoveDefenseZ = false;
 
