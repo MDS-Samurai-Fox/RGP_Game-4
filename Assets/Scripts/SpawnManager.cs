@@ -6,6 +6,7 @@ using XboxCtrlrInput;
 
 public class SpawnManager : MonoBehaviour {
 
+    private GameManager gm;
     private CameraController cc;
 
     [HeaderAttribute("Grids")]
@@ -19,8 +20,9 @@ public class SpawnManager : MonoBehaviour {
     private List<Vector3> attackGridList = new List<Vector3> ();
     private List<Vector3> defenseGridList = new List<Vector3> ();
     private int currentAttack, currentDefense;
-    private bool canMoveAttack, canMoveDefense;
-    private float attackResetTimer, defenseResetTimer;
+    private bool canMoveAttackX, canMoveAttackZ, canMoveDefenseX, canMoveDefenseZ;
+    private float attackRTX, attackRTZ, defenseRTX, defenseRTZ;
+	[SerializeField] private float timerReset = 0.15f;
 
     // ----------------------------------
 
@@ -39,6 +41,7 @@ public class SpawnManager : MonoBehaviour {
     /// </summary>
     void Awake() {
 
+        gm = FindObjectOfType<GameManager> ();
         cc = FindObjectOfType<CameraController> ();
 
     }
@@ -76,51 +79,69 @@ public class SpawnManager : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-        // attackCursor.position = new Vector3(-23.5f, 0.6f, 3.5f) + attackGridList[currentAttack];
-        // defenseCursor.position = new Vector3(16.5f, 0.6f, 3.5f) + defenseGridList[currentDefense];
+        if (gm.gamestate == GameState.Placement) {
 
-        UpdateAttackGrid();
-        UpdateDefenseGrid();
+            UpdateAttackGrid();
+            UpdateDefenseGrid();
+
+        }
 
     }
 
     private void UpdateAttackGrid() {
+		
+		if (XCI.GetButtonDown(XboxButton.A, cc.player1)) {
+			
+			
+			
+		}
 
-        if (XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player1) > 0 && canMoveAttack) {
+        if (XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player1) > 0 && canMoveAttackX) {
 
-            canMoveAttack = false;
+            canMoveAttackX = false;
 
             attackCursor.DOMoveX(Mathf.Clamp(attackCursor.position.x + 1, -23.5f, -23.5f + attackRowSize), 0);
 
-        } else if (XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player1) < 0 && canMoveAttack) {
+        } else if (XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player1) < 0 && canMoveAttackX) {
 
-            canMoveAttack = false;
+            canMoveAttackX = false;
 
             attackCursor.DOMoveX(Mathf.Clamp(attackCursor.position.x - 1, -23.5f, -23.5f + attackRowSize), 0);
 
         }
-		
-		if (XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player1) > 0 && canMoveAttack) {
 
-            canMoveAttack = false;
-			
+        if (XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player1) > 0 && canMoveAttackZ) {
+
+            canMoveAttackZ = false;
+
             attackCursor.DOMoveZ(Mathf.Clamp(attackCursor.position.z + 1, 3.5f - attackColSize, 3.5f), 0);
 
-        } else if (XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player1) < 0 && canMoveAttack) {
+        } else if (XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player1) < 0 && canMoveAttackZ) {
 
-            canMoveAttack = false;
+            canMoveAttackZ = false;
 
             attackCursor.DOMoveZ(Mathf.Clamp(attackCursor.position.z - 1, 3.5f - attackColSize, 3.5f), 0);
 
         }
 
-        if (!canMoveAttack) {
+        if (!canMoveAttackX) {
 
-            attackResetTimer += Time.deltaTime;
+            attackRTX += Time.deltaTime;
 
-            if (attackResetTimer > 0.2f) {
-                canMoveAttack = true;
-                attackResetTimer = 0;
+            if (attackRTX > timerReset) {
+                canMoveAttackX = true;
+                attackRTX = 0;
+            }
+
+        }
+		
+		if (!canMoveAttackZ) {
+
+            attackRTZ += Time.deltaTime;
+
+            if (attackRTZ > timerReset) {
+                canMoveAttackZ = true;
+                attackRTZ = 0;
             }
 
         }
@@ -128,42 +149,53 @@ public class SpawnManager : MonoBehaviour {
     }
 
     private void UpdateDefenseGrid() {
-		
-		if (XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player2) > 0 && canMoveDefense) {
 
-            canMoveDefense = false;
+        if (XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player2) > 0 && canMoveDefenseX) {
+
+            canMoveDefenseX = false;
 
             defenseCursor.DOMoveX(Mathf.Clamp(defenseCursor.position.x + 1, 16.5f, 16.5f + defenseRowSize), 0);
 
-        } else if (XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player2) < 0 && canMoveDefense) {
+        } else if (XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player2) < 0 && canMoveDefenseX) {
 
-            canMoveDefense = false;
+            canMoveDefenseX = false;
 
             defenseCursor.DOMoveX(Mathf.Clamp(defenseCursor.position.x - 1, 16.5f, 16.5f + defenseRowSize), 0);
 
         }
-		
-		if (XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player2) > 0 && canMoveDefense) {
 
-            canMoveDefense = false;
-			
+        if (XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player2) > 0 && canMoveDefenseZ) {
+
+            canMoveDefenseZ = false;
+
             defenseCursor.DOMoveZ(Mathf.Clamp(defenseCursor.position.z + 1, 3.5f - defenseColSize, 3.5f), 0);
 
-        } else if (XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player2) < 0 && canMoveDefense) {
+        } else if (XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player2) < 0 && canMoveDefenseZ) {
 
-            canMoveDefense = false;
+            canMoveDefenseZ = false;
 
             defenseCursor.DOMoveZ(Mathf.Clamp(defenseCursor.position.z - 1, 3.5f - defenseColSize, 3.5f), 0);
 
         }
 
-        if (!canMoveDefense) {
+        if (!canMoveDefenseX) {
 
-            defenseResetTimer += Time.deltaTime;
+            defenseRTX += Time.deltaTime;
 
-            if (defenseResetTimer > 0.2f) {
-                canMoveDefense = true;
-                defenseResetTimer = 0;
+            if (defenseRTX > timerReset) {
+                canMoveDefenseX = true;
+                defenseRTX = 0;
+            }
+
+        }
+		
+		if (!canMoveDefenseZ) {
+
+            defenseRTZ += Time.deltaTime;
+
+            if (defenseRTZ > timerReset) {
+                canMoveDefenseZ = true;
+                defenseRTZ = 0;
             }
 
         }
