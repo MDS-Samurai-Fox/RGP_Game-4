@@ -63,6 +63,8 @@ public class GameManager : MonoBehaviour {
 
  Camera mainCamera;
 
+ public bool HasCatReachedTarget = false;
+
  void Awake() {
  //soundManager = FindObjectOfType<SoundManager>();
  mainCamera = FindObjectOfType<Camera> ();
@@ -120,6 +122,8 @@ public class GameManager : MonoBehaviour {
 
         NumCatsAlive = TotalNumCats;
         NumDogsAlive = TotalNumDogs;
+
+        HasCatReachedTarget = false;
 
         //This is where the spawning placement function should be
 
@@ -195,7 +199,7 @@ public class GameManager : MonoBehaviour {
         //FaceJoin();
         //soundManager.StopMusicSource();
 
-        if (NumDogsAlive == 0) {
+        if (NumDogsAlive == 0 || HasCatReachedTarget) {
             //Invoke("Win", soundManager.GetLength(ClipType.Finish));
             Invoke("CatsWin", 0);
         }
@@ -288,7 +292,7 @@ public class GameManager : MonoBehaviour {
         if (canUpdate) {
             UpdateHud();
 
-            if (NumDogsAlive == 0 || NumCatsAlive == 0) // or the cat has reached the target
+            if (NumDogsAlive == 0 || NumCatsAlive == 0 || HasCatReachedTarget) // or the cat has reached the target
             {
                 StopGame();
             }
