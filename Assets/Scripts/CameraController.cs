@@ -1,95 +1,94 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using DG.Tweening;
+using UnityEngine;
 using XboxCtrlrInput;
 
-public class CameraController : MonoBehaviour
-{
+public class CameraController : MonoBehaviour {
 
-    public Transform cursor1, cursor2;
+    private GameManager gm;
+
+    [HeaderAttribute("Controller functionality")]
+    public XboxController player1, player2;
+
+    public Transform attackCursor, defenseCursor;
+    public Transform attackPlacementCursor, defensePlacementCursor;
+    
     private Vector3 cursor1pos, cursor2pos;
 
-    [SpaceAttribute]
+    [HeaderAttribute("Map corners")]
     public Transform TopLeftCorner;
     public Transform TopRightCorner;
     public Transform BottomLeftCorner;
     public Transform BottomRightCorner;
 
-    //public XboxController controller;
-
-    private GameManager gm;
     private float minX, minZ, maxX, maxZ;
-
     public Vector3 CenterOfMap = new Vector3(0, 0, 0);
+    public float maxMoveSpeed = 20;
+    [SerializeField] private float mapTranslationDelay = 2;
 
-    private void Awake()
-    {
-        gm = FindObjectOfType<GameManager>();
+    private void Awake() {
+
+        gm = FindObjectOfType<GameManager> ();
+
     }
 
     // Use this for initialization
-    void Start()
-    {
-        cursor1pos = cursor1.position;
-        cursor2pos = cursor2.position;
+    void Start() {
+
+        cursor1pos = attackCursor.position;
+        cursor2pos = defenseCursor.position;
+        
+        attackCursor.gameObject.SetActive(false);
+        defenseCursor.gameObject.SetActive(false);
 
         minX = TopLeftCorner.transform.position.x;
         maxX = TopRightCorner.transform.position.x;
         maxZ = TopLeftCorner.transform.position.z;
         minZ = BottomLeftCorner.transform.position.z;
+
+        MoveCameraToPlacementMode();
+
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (gm.gamestate == GameState.Placement)
-        {          
-            transform.DOMoveX(0, 2);
-            transform.DOMoveY(100, 2);
-            transform.DOMoveZ(10, 2);
-            transform.DORotate(new Vector3(90, 0, 0), 2);
+    void Update() {
 
-            //transform.rotation
-        }
-            float maxMoveSpeed = 20;
+        // attackCursor.transform.position = new Vector3(Mathf.Clamp(attackCursor.transform.position.x, minX, maxX), 1, Mathf.Clamp(attackCursor.transform.position.z, minZ, maxZ));
+        // defenseCursor.transform.position = new Vector3(Mathf.Clamp(defenseCursor.transform.position.x, minX, maxX), 1, Mathf.Clamp(defenseCursor.transform.position.z, minZ, maxZ));
 
-            cursor1.transform.position = new Vector3(Mathf.Clamp(cursor1.transform.position.x, minX, maxX), 0, Mathf.Clamp(cursor1.transform.position.z, minZ, maxZ));
-            cursor2.transform.position = new Vector3(Mathf.Clamp(cursor2.transform.position.x, minX, maxX), 0, Mathf.Clamp(cursor2.transform.position.z, minZ, maxZ));
-        
-            if ( XCI.IsPluggedIn(3))    //for the wireless controller
-            {
-                
-                cursor1.transform.DOMoveX(cursor1.transform.position.x + (XCI.GetAxis(XboxAxis.LeftStickX, XboxController.Third) * maxMoveSpeed * Time.deltaTime), 0);
-                cursor1.transform.DOMoveZ(cursor1.transform.position.z + (XCI.GetAxis(XboxAxis.LeftStickY, XboxController.Third) * maxMoveSpeed * Time.deltaTime), 0);
+        // attackCursor.transform.DOMoveX(attackCursor.transform.position.x + (XCI.GetAxis(XboxAxis.LeftStickX, player1) * maxMoveSpeed * Time.deltaTime), 0);
+        // attackCursor.transform.DOMoveZ(attackCursor.transform.position.z + (XCI.GetAxis(XboxAxis.LeftStickY, player1) * maxMoveSpeed * Time.deltaTime), 0);
 
-            }
-            else
-            {
-                cursor1.transform.DOMoveX(cursor1.transform.position.x + (XCI.GetAxis(XboxAxis.LeftStickX, XboxController.First) * maxMoveSpeed * Time.deltaTime), 0);
-                cursor1.transform.DOMoveZ(cursor1.transform.position.z + (XCI.GetAxis(XboxAxis.LeftStickY, XboxController.First) * maxMoveSpeed * Time.deltaTime), 0);
+        // defenseCursor.transform.DOMoveX(defenseCursor.transform.position.x + (XCI.GetAxis(XboxAxis.LeftStickX, player2) * maxMoveSpeed * Time.deltaTime), 0);
+        // defenseCursor.transform.DOMoveZ(defenseCursor.transform.position.z + (XCI.GetAxis(XboxAxis.LeftStickY, player2) * maxMoveSpeed * Time.deltaTime), 0);
 
-                //cursor1.transform.DOMoveX(cursor1.transform.position.x + (XCI.GetAxis(XboxAxis.RightStickX, XboxController.Third) * maxMoveSpeed * Time.deltaTime), 0);
-                //cursor1.transform.DOMoveZ(cursor1.transform.position.z + (XCI.GetAxis(XboxAxis.RightStickY, XboxController.Third) * maxMoveSpeed * Time.deltaTime), 0);
-            }
+        // }
+        // if (XCI.IsPluggedIn(1)) //for the wireless controller
+        // {
 
+        //     cursor1.transform.DOMoveX(cursor1.transform.position.x + (XCI.GetAxis(XboxAxis.LeftStickX, XboxController.Third) * maxMoveSpeed * Time.deltaTime), 0);
+        //     cursor1.transform.DOMoveZ(cursor1.transform.position.z + (XCI.GetAxis(XboxAxis.LeftStickY, XboxController.Third) * maxMoveSpeed * Time.deltaTime), 0);
 
-            cursor2.transform.DOMoveX(cursor2.transform.position.x + (XCI.GetAxis(XboxAxis.LeftStickX, XboxController.Second) * maxMoveSpeed * Time.deltaTime), 0);
-            cursor2.transform.DOMoveZ(cursor2.transform.position.z + (XCI.GetAxis(XboxAxis.LeftStickY, XboxController.Second) * maxMoveSpeed * Time.deltaTime), 0);
+        // } 
+        // else {
 
+        //cursor1.transform.DOMoveX(cursor1.transform.position.x + (XCI.GetAxis(XboxAxis.RightStickX, XboxController.Third) * maxMoveSpeed * Time.deltaTime), 0);
+        //cursor1.transform.DOMoveZ(cursor1.transform.position.z + (XCI.GetAxis(XboxAxis.RightStickY, XboxController.Third) * maxMoveSpeed * Time.deltaTime), 0);
+        // }
 
         //cursor2.transform.DOMoveX(cursor2.transform.position.x + (XCI.GetAxis(XboxAxis.RightStickX, XboxController.Second) * maxMoveSpeed * Time.deltaTime), 0);
         //cursor2.transform.DOMoveZ(cursor2.transform.position.z + (XCI.GetAxis(XboxAxis.RightStickY, XboxController.Second) * maxMoveSpeed * Time.deltaTime), 0);
-
 
         // cursor1.transform.position = new Vector3(Mathf.Clamp(cursor1.transform.position.x, minX, maxX), 0, Mathf.Clamp(cursor1.transform.position.z, 0, 0));
 
         //}
 
-        if (gm.gamestate == GameState.Play)
-        {
-            cursor1pos = cursor1.transform.position;
-            cursor2pos = cursor2.transform.position;
+        if (gm.gamestate == GameState.Play) {
+
+            cursor1pos = attackCursor.transform.position;
+            cursor2pos = defenseCursor.transform.position;
 
             float distanceBetweenCursors = Vector3.Magnitude(cursor1pos - cursor2pos);
             float deltaZ = cursor2pos.z - cursor1pos.z;
@@ -100,13 +99,9 @@ public class CameraController : MonoBehaviour
             float newZpos = Mathf.Min(cursor1pos.z, cursor2pos.z) + deltaZ / 2;
 
             //replace with clamp
-            if (distanceBetweenCursors <= 20)
-            {
+            if (distanceBetweenCursors <= 20) {
                 distanceBetweenCursors = 20;
             }
-
-        
-            
 
             //transform.DOMoveX(newXpos, 0);
             //transform.DOMoveY(distanceBetweenCursors, 0);
@@ -119,12 +114,25 @@ public class CameraController : MonoBehaviour
 
             //transform.local
 
-            Debug.Log(distanceBetweenCursors);
+            // Debug.Log(distanceBetweenCursors);
 
             //transform.rotation
         }
 
+    }
 
+    public void MoveCameraToPlacementMode() {
+        
+        transform.DOMove(new Vector3(0, 50, 0), 3).SetDelay(mapTranslationDelay).SetEase(Ease.OutQuart);
+        transform.DORotate(new Vector3(90, 0, 0), 3).SetDelay(mapTranslationDelay).SetEase(Ease.OutExpo);
+        
+    }
+    
+    public void ActivateCursors() {
+        
+        attackCursor.gameObject.SetActive(true);
+        defenseCursor.gameObject.SetActive(true);
+        
     }
 
 }
