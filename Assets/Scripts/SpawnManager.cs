@@ -18,9 +18,6 @@ public class SpawnManager : MonoBehaviour {
 
     private Transform attackCursor, defenseCursor;
 
-    private List<Vector3> attackGridList = new List<Vector3> ();
-    private List<Vector3> defenseGridList = new List<Vector3> ();
-    private int currentAttack, currentDefense;
     private bool canMoveAttackX, canMoveAttackZ, canMoveDefenseX, canMoveDefenseZ;
     private float attackRTX, attackRTZ, defenseRTX, defenseRTZ;
     [SerializeField] private float timerReset = 0.15f;
@@ -29,8 +26,8 @@ public class SpawnManager : MonoBehaviour {
     // ----------------------------------
 
     [HeaderAttribute("Cat Prefabs")]
-    public GameObject smallCatPrefab;
-    public GameObject bigCatPrefab;
+    public GameObject SeekingCatPrefab;
+    public GameObject AttackingCatPrefab;
 
     [HeaderAttribute("Dog Turret Prefabs")]
     public GameObject missileTowerPrefab;
@@ -40,16 +37,14 @@ public class SpawnManager : MonoBehaviour {
 
     public CanvasGroup attackerCanvas;
     public CanvasGroup defenderCanvas;
-	
-	private CatType catType;
-    // private string[] catOptions = { "Cat Attack", "Cat Seek" };
-    public GameObject[] CatPrefabs;
-    private int CatSelector = 0;
 
-	private DogType dogType;
-    // private string[] dogOptions = { "Missile", "Turret", "Plasma", "Tesla" };
-    public GameObject[] DogPrefabs;
+    private CatType catType;
+    private int CatSelector = 0;
+    public int maxCats = 12;
+
+    private DogType dogType;
     private int DogSelector = 0;
+    public int maxDogs = 8;
 
     /// <summary>
     /// Awake is called when the script instance is being loaded.
@@ -67,28 +62,6 @@ public class SpawnManager : MonoBehaviour {
         attackCursor = cc.attackPlacementCursor;
         defenseCursor = cc.defensePlacementCursor;
 
-        // Set the attacking grid
-        for (int x = 0; x < attackRowSize; x++) {
-
-            for (int y = 0; y < attackColSize; y++) {
-
-                attackGridList.Add(new Vector3(y, 0, -x));
-
-            }
-
-        }
-
-        // Set the defense grid
-        for (int x = 0; x < attackRowSize; x++) {
-
-            for (int y = 0; y < attackColSize; y++) {
-
-                defenseGridList.Add(new Vector3(x, 0, y));
-
-            }
-
-        }
-
     }
 
     // Update is called once per frame
@@ -101,66 +74,75 @@ public class SpawnManager : MonoBehaviour {
 
         }
 
-        if (XCI.GetButtonDown(XboxButton.X, cc.player2)) {
-			
-            DogSelector++;
-
-            if (DogSelector > 3)
-                DogSelector = 0;
-
-            // defenderCanvas.GetComponentInChildren<TextMeshProUGUI> ().text = dogOptions[DogSelector];
-
-        }
-
     }
 
     private void UpdateAttackGrid() {
 
+        attackerCanvas.GetComponentInChildren<TextMeshProUGUI> ().text = catType.ToString() + "ing Cat";
+
         if (XCI.GetButtonDown(XboxButton.A, cc.player1)) {
-			
-			if (!showingAttackPanel) {
-				
-				attackerCanvas.DOFade(1, 1);
-				showingAttackPanel = true;
-				
-			} else {
-				
-				// Spawn cats
-				switch (catType)
-				{
-					case CatType.Attack:
-						{
-							
-						}
-					break;
-					case CatType.Seek:
-						{
-							
-						}
-					break;
-					default:break;
-				}
-				
-				attackerCanvas.DOFade(0, 1);
-				showingAttackPanel = false;
-				
-			}
+            
+            if (maxCats <= 0) 
+                return;
+
+            if (!showingAttackPanel) {
+
+                attackerCanvas.DOFade(1, 0.5f);
+                showingAttackPanel = true;
+
+            } else {
+
+                Quaternion orientation = Quaternion.Euler(0, 90, 0);
+
+                // Spawn cats
+                switch (catType) {
+                    case CatType.Attack:
+                        {
+
+                            GameObject cat = Instantiate(AttackingCatPrefab, attackCursor.position, orientation);
+                            cat.transform.SetParent(attackGrid);
+
+                        }
+                        break;
+                    case CatType.Seek:
+                        {
+
+                            GameObject cat = Instantiate(SeekingCatPrefab, attackCursor.position, orientation);
+                            cat.transform.SetParent(attackGrid);
+
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                
+                maxCats--;
+                attackerCanvas.DOFade(0, 0.5f);
+                showingAttackPanel = false;
+
+            }
 
         }
 
-        if (XCI.GetButtonDown(XboxButton.X, cc.player1)) {
-			
-            if (CatSelector == 0) {
-				catType = CatType.Attack;
-                CatSelector = 1;
-			}
-            else {
-				catType = CatType.Seek;
-                CatSelector = 0;
-			}
+        if (XCI.GetButtonDown(XboxButton.DPadLeft, cc.player1)) {
 
-            // attackerCanvas.GetComponentInChildren<TextMeshProUGUI> ().text = catOptions[CatSelector];
-			attackerCanvas.GetComponentInChildren<TextMeshProUGUI> ().text = catType.ToString() + "ing Cat";
+            CatSelector--;
+
+            if (CatSelector < 0) {
+                CatSelector = 1;
+            }
+
+            catType = (CatType)CatSelector;
+
+        } else if (XCI.GetButtonDown(XboxButton.DPadRight, cc.player1)) {
+
+            CatSelector++;
+
+            if (CatSelector > 1) {
+                CatSelector = 0;
+            }
+
+            catType = (CatType)CatSelector;
 
         }
 
@@ -217,6 +199,90 @@ public class SpawnManager : MonoBehaviour {
     }
 
     private void UpdateDefenseGrid() {
+        
+        defenderCanvas.GetComponentInChildren<TextMeshProUGUI> ().text = dogType.ToString() + "";
+
+        if (XCI.GetButtonDown(XboxButton.A, cc.player2)) {
+            
+            if (maxDogs <= 0) 
+                return;
+
+            if (!showingDefensePanel) {
+
+                defenderCanvas.DOFade(1, 0.5f);
+                showingDefensePanel = true;
+
+            } else {
+
+                Quaternion orientation = Quaternion.Euler(0, -90, 0);
+
+                // Spawn cats
+                switch (dogType) {
+                    case DogType.Missile:
+                        {
+
+                            GameObject dog = Instantiate(missileTowerPrefab, defenseCursor.position, orientation);
+                            dog.transform.SetParent(defenseGrid);
+
+                        }
+                        break;
+                    case DogType.Turret:
+                        {
+
+                            GameObject dog = Instantiate(turretTowerPrefab, defenseCursor.position, orientation);
+                            dog.transform.SetParent(defenseGrid);
+
+                        }
+                        break;
+                    case DogType.Plasma:
+                        {
+
+                            GameObject dog = Instantiate(plasmaTowerPrefab, defenseCursor.position, orientation);
+                            dog.transform.SetParent(defenseGrid);
+
+                        }
+                        break;
+                    case DogType.Tesla:
+                        {
+
+                            GameObject dog = Instantiate(teslaTowerPrefab, defenseCursor.position, orientation);
+                            dog.transform.SetParent(defenseGrid);
+
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+                maxDogs--;
+                defenderCanvas.DOFade(0, 0.5f);
+                showingAttackPanel = false;
+
+            }
+
+        }
+
+        if (XCI.GetButtonDown(XboxButton.DPadLeft, cc.player2)) {
+
+            DogSelector--;
+
+            if (DogSelector < 0) {
+                DogSelector = 1;
+            }
+
+            dogType = (DogType)DogSelector;
+
+        } else if (XCI.GetButtonDown(XboxButton.DPadRight, cc.player2)) {
+
+            DogSelector++;
+
+            if (DogSelector > 3) {
+                DogSelector = 0;
+            }
+            
+            dogType = (DogType)DogSelector;
+
+        }
 
         if (XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player2) > 0 && canMoveDefenseX) {
 

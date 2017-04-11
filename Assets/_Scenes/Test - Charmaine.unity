@@ -587,13 +587,27 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4786480930646130, guid: 0826ed0cdf00346928e7030cf156fb7e, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.6
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 4786480930646130, guid: 0826ed0cdf00346928e7030cf156fb7e, type: 2}
       propertyPath: m_LocalPosition.z
       value: 3.5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 4786480930646130, guid: 0826ed0cdf00346928e7030cf156fb7e, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530000125341992, guid: 0826ed0cdf00346928e7030cf156fb7e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530000125341992, guid: 0826ed0cdf00346928e7030cf156fb7e, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 65508680725561026, guid: 0826ed0cdf00346928e7030cf156fb7e, type: 2}
+    - {fileID: 65273663150333948, guid: 0826ed0cdf00346928e7030cf156fb7e, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 0826ed0cdf00346928e7030cf156fb7e, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &857904141
@@ -678,22 +692,22 @@ Prefab:
     - target: {fileID: 114915636715147392, guid: 3872d86951e16f34bb57f5a6c85e08a0,
         type: 2}
       propertyPath: attackRowSize
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 114915636715147392, guid: 3872d86951e16f34bb57f5a6c85e08a0,
         type: 2}
       propertyPath: attackColSize
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 114915636715147392, guid: 3872d86951e16f34bb57f5a6c85e08a0,
         type: 2}
       propertyPath: defenseRowSize
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 114915636715147392, guid: 3872d86951e16f34bb57f5a6c85e08a0,
         type: 2}
       propertyPath: defenseColSize
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 114915636715147392, guid: 3872d86951e16f34bb57f5a6c85e08a0,
         type: 2}
@@ -752,6 +766,18 @@ Prefab:
       propertyPath: defenderCanvas
       value: 
       objectReference: {fileID: 411182734}
+    - target: {fileID: 114915636715147392, guid: 3872d86951e16f34bb57f5a6c85e08a0,
+        type: 2}
+      propertyPath: AttackingCatPrefab
+      value: 
+      objectReference: {fileID: 1895363578489372, guid: 673c7b2bfc055e14fa794cb6e44ea80a,
+        type: 2}
+    - target: {fileID: 114915636715147392, guid: 3872d86951e16f34bb57f5a6c85e08a0,
+        type: 2}
+      propertyPath: SeekingCatPrefab
+      value: 
+      objectReference: {fileID: 1876139714583338, guid: 8bb106b9139382d4ebb6485fd4e5107b,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3872d86951e16f34bb57f5a6c85e08a0, type: 2}
   m_IsPrefabParent: 0
