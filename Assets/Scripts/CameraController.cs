@@ -93,7 +93,7 @@ public class CameraController : MonoBehaviour {
             float distanceBetweenCursors = Vector3.Magnitude(cursor1pos - cursor2pos);
             float deltaZ = cursor2pos.z - cursor1pos.z;
             float deltaX = cursor2pos.x - cursor1pos.x;
-            float gradient = deltaX / deltaX;
+            //float gradient = deltaX / deltaX;
 
             float newXpos = Mathf.Min(cursor1pos.x, cursor2pos.x) + deltaX / 2;
             float newZpos = Mathf.Min(cursor1pos.z, cursor2pos.z) + deltaZ / 2;
@@ -107,7 +107,7 @@ public class CameraController : MonoBehaviour {
             //transform.DOMoveY(distanceBetweenCursors, 0);
             //transform.DOMoveZ(newZpos, 0);
             transform.DOMove(new Vector3(newXpos, distanceBetweenCursors, newZpos), 0);
-            transform.DOLocalMoveZ(-20, 0);
+            transform.DOLocalMoveZ(-30, 0);
 
             transform.DORotate(new Vector3(-45, 0, 0), 0);
             transform.DOLookAt(CenterOfMap, 0);
