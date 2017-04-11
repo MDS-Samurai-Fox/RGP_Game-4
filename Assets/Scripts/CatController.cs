@@ -45,7 +45,7 @@ public class CatController : MonoBehaviour {
         if (!gm.canUpdate)
             return;
 
-        if ((catType == CatType.attack) && (!allDogsDead))
+        if ((catType == CatType.Attack) && (!allDogsDead))
         {
             FindNearestDog();
             CheckCollision();

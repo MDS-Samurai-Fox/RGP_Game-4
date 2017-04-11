@@ -1,5 +1,4 @@
-﻿public enum CatType
-{
-    attack,
-    seek
+﻿public enum CatType {
+    Attack,
+    Seek
 }

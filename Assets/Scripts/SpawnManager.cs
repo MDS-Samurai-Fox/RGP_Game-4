@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using XboxCtrlrInput;
 
@@ -22,7 +23,8 @@ public class SpawnManager : MonoBehaviour {
     private int currentAttack, currentDefense;
     private bool canMoveAttackX, canMoveAttackZ, canMoveDefenseX, canMoveDefenseZ;
     private float attackRTX, attackRTZ, defenseRTX, defenseRTZ;
-	[SerializeField] private float timerReset = 0.15f;
+    [SerializeField] private float timerReset = 0.15f;
+    private bool showingAttackPanel = false, showingDefensePanel = false;
 
     // ----------------------------------
 
@@ -35,6 +37,19 @@ public class SpawnManager : MonoBehaviour {
     public GameObject turretTowerPrefab;
     public GameObject plasmaTowerPrefab;
     public GameObject teslaTowerPrefab;
+
+    public CanvasGroup attackerCanvas;
+    public CanvasGroup defenderCanvas;
+	
+	private CatType catType;
+    // private string[] catOptions = { "Cat Attack", "Cat Seek" };
+    public GameObject[] CatPrefabs;
+    private int CatSelector = 0;
+
+	private DogType dogType;
+    // private string[] dogOptions = { "Missile", "Turret", "Plasma", "Tesla" };
+    public GameObject[] DogPrefabs;
+    private int DogSelector = 0;
 
     /// <summary>
     /// Awake is called when the script instance is being loaded.
@@ -86,15 +101,68 @@ public class SpawnManager : MonoBehaviour {
 
         }
 
+        if (XCI.GetButtonDown(XboxButton.X, cc.player2)) {
+			
+            DogSelector++;
+
+            if (DogSelector > 3)
+                DogSelector = 0;
+
+            // defenderCanvas.GetComponentInChildren<TextMeshProUGUI> ().text = dogOptions[DogSelector];
+
+        }
+
     }
 
     private void UpdateAttackGrid() {
-		
-		if (XCI.GetButtonDown(XboxButton.A, cc.player1)) {
+
+        if (XCI.GetButtonDown(XboxButton.A, cc.player1)) {
 			
+			if (!showingAttackPanel) {
+				
+				attackerCanvas.DOFade(1, 1);
+				showingAttackPanel = true;
+				
+			} else {
+				
+				// Spawn cats
+				switch (catType)
+				{
+					case CatType.Attack:
+						{
+							
+						}
+					break;
+					case CatType.Seek:
+						{
+							
+						}
+					break;
+					default:break;
+				}
+				
+				attackerCanvas.DOFade(0, 1);
+				showingAttackPanel = false;
+				
+			}
+
+        }
+
+        if (XCI.GetButtonDown(XboxButton.X, cc.player1)) {
 			
-			
-		}
+            if (CatSelector == 0) {
+				catType = CatType.Attack;
+                CatSelector = 1;
+			}
+            else {
+				catType = CatType.Seek;
+                CatSelector = 0;
+			}
+
+            // attackerCanvas.GetComponentInChildren<TextMeshProUGUI> ().text = catOptions[CatSelector];
+			attackerCanvas.GetComponentInChildren<TextMeshProUGUI> ().text = catType.ToString() + "ing Cat";
+
+        }
 
         if (XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player1) > 0 && canMoveAttackX) {
 
@@ -134,8 +202,8 @@ public class SpawnManager : MonoBehaviour {
             }
 
         }
-		
-		if (!canMoveAttackZ) {
+
+        if (!canMoveAttackZ) {
 
             attackRTZ += Time.deltaTime;
 
@@ -188,8 +256,8 @@ public class SpawnManager : MonoBehaviour {
             }
 
         }
-		
-		if (!canMoveDefenseZ) {
+
+        if (!canMoveDefenseZ) {
 
             defenseRTZ += Time.deltaTime;
 
