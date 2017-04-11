@@ -47,6 +47,8 @@ public class SpawnManager : MonoBehaviour {
     private int DogSelector = 0;
     public int maxDogs = 8;
 
+    private bool catsReady = false, dogsReady = false;
+
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
@@ -62,7 +64,7 @@ public class SpawnManager : MonoBehaviour {
 
         attackCursor = cc.attackPlacementCursor;
         defenseCursor = cc.defensePlacementCursor;
-        
+
         originalAttackerCursorPosition = attackCursor.position;
         originalDefenderCursorPosition = defenseCursor.position;
 
@@ -73,8 +75,19 @@ public class SpawnManager : MonoBehaviour {
 
         if (gm.gamestate == GameState.Placement) {
 
-            UpdateAttackGrid();
-            UpdateDefenseGrid();
+            if (!catsReady) {
+                UpdateAttackGrid();
+            }
+
+            if (!dogsReady) {
+                UpdateDefenseGrid();
+            }
+            
+            if (catsReady && dogsReady) {
+                
+                StartCoroutine(gm.StartGame());
+                
+            }
 
         }
 
@@ -86,8 +99,13 @@ public class SpawnManager : MonoBehaviour {
 
         if (XCI.GetButtonDown(XboxButton.A, cc.player1) || Input.GetKeyDown(KeyCode.Z)) {
 
-            if (maxCats <= 0)
+            if (maxCats <= 0) {
+                attackerCanvas.DOFade(1, 0);
+                showingAttackPanel = true;
+                attackerCanvas.GetComponentInChildren<TextMeshProUGUI> ().text = "CATS READY";
+                catsReady = true;
                 return;
+            }
 
             if (!showingAttackPanel) {
 
@@ -208,8 +226,10 @@ public class SpawnManager : MonoBehaviour {
 
         if (XCI.GetButtonDown(XboxButton.A, cc.player2)) {
 
-            if (maxDogs <= 0)
+            if (maxDogs <= 0) {
+                dogsReady = true;
                 return;
+            }
 
             if (!showingDefensePanel) {
 
