@@ -10,45 +10,45 @@ public enum GameState { Loading, Placement, Play, Stop, GameOver };
 
 public class GameManager : MonoBehaviour {
 
-    private SpawnManager sm;
-    private SoundManager soundManager;
+ private SpawnManager sm;
+ private SoundManager soundManager;
 
-    [HideInInspector] public bool canUpdate = false;
+ [HideInInspector] public bool canUpdate = false;
 
-    [SpaceAttribute]
-    public CanvasGroup gameEndPanel; //Panel during Game Over
-    public CanvasGroup roundNumberPanel; //Panel displaying which round the game is in
-    public CanvasGroup resultPanel; //Panel displaying the score at the end of each round
+ [SpaceAttribute]
+ public CanvasGroup gameEndPanel; //Panel during Game Over
+ public CanvasGroup roundNumberPanel; //Panel displaying which round the game is in
+ public CanvasGroup resultPanel; //Panel displaying the score at the end of each round
 
-    [SpaceAttribute]
-    public int Round = 1; // the current round number
-    public int TotalTurns = 3; // the total number of rounds for the game
+ [SpaceAttribute]
+ public int Round = 1; // the current round number
+ public int TotalTurns = 3; // the total number of rounds for the game
 
-    [SpaceAttribute]
-    public int Player1Score = 0;
-    public int Player2Score = 0;
+ [SpaceAttribute]
+ public int Player1Score = 0;
+ public int Player2Score = 0;
 
-    [SerializeField] private int NumCatsAlive = 3;
-    [SerializeField] private int NumDogsAlive = 3;
+ public int NumCatsAlive = 3;
+ public int NumDogsAlive = 3;
 
-    [SpaceAttribute]
-    public float TimeToWait = 2; //wait for spawning before starting the game
+ [SpaceAttribute]
+ public float TimeToWait = 2; //wait for spawning before starting the game
 
-    public bool IsPlayer1aCat = false; //used for the players switching sides
+ public bool IsPlayer1aCat = false; //used for the players switching sides
 
-    public GameState gamestate;
+ public GameState gamestate;
 
-    public bool HasCatReachedTarget = false;
+ public bool HasCatReachedTarget = false;
 
-    private CatController[] CatArray; //stores all the live cats in the game
-    private DogController[] DogArray; //stores all the live dogs in the game
-    private TurretController[] TurretArray; //stores all the live turrets in the game
-    private LaserTurretController[] LaserTurretArray; //stores all the live lasers in the game
+ private CatController[] CatArray; //stores all the live cats in the game
+ private DogController[] DogArray; //stores all the live dogs in the game
+ private TurretController[] TurretArray; //stores all the live turrets in the game
+ private LaserTurretController[] LaserTurretArray; //stores all the live lasers in the game
 
-    void Awake() {
-        
-        sm = GetComponent<SpawnManager>();
-        soundManager = FindObjectOfType<SoundManager>();
+ void Awake() {
+
+ sm = GetComponent<SpawnManager> ();
+ soundManager = FindObjectOfType<SoundManager> ();
 
     }
 
@@ -79,10 +79,10 @@ public class GameManager : MonoBehaviour {
     }
 
     void SwitchPlayers() {
-        
+
         IsPlayer1aCat = !IsPlayer1aCat;
         // UpdateHud();
-        
+
     }
 
     public IEnumerator StartGame() {
@@ -103,14 +103,14 @@ public class GameManager : MonoBehaviour {
 
         //soundManager.StopMusicSource();
 
-        if (NumDogsAlive == 0 || HasCatReachedTarget) {
-            CatsWin();
-            // Invoke("CatsWin", 0);
-        }
-        if (NumCatsAlive == 0) {
-            DogsWin();
-            // Invoke("DogsWin", 0);
-        }
+        // if (NumDogsAlive == 0 || HasCatReachedTarget) {
+        //     CatsWin();
+        //     // Invoke("CatsWin", 0);
+        // }
+        // if (NumCatsAlive == 0) {
+        //     DogsWin();
+        //     // Invoke("DogsWin", 0);
+        // }
 
     }
 
@@ -191,7 +191,9 @@ public class GameManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+
         if (canUpdate) {
+
             // UpdateHud();
 
             if (NumDogsAlive == 0 || NumCatsAlive == 0 || HasCatReachedTarget) // or the cat has reached the target

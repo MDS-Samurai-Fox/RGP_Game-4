@@ -67,6 +67,9 @@ public class SpawnManager : MonoBehaviour {
 
         originalAttackerCursorPosition = attackCursor.position;
         originalDefenderCursorPosition = defenseCursor.position;
+        
+        gm.NumCatsAlive = maxCats;
+        gm.NumDogsAlive = maxDogs;
 
     }
 
@@ -82,11 +85,11 @@ public class SpawnManager : MonoBehaviour {
             if (!dogsReady) {
                 UpdateDefenseGrid();
             }
-            
+
             if (catsReady && dogsReady) {
-                
+
                 StartCoroutine(gm.StartGame());
-                
+
             }
 
         }
@@ -107,12 +110,13 @@ public class SpawnManager : MonoBehaviour {
                 return;
             }
 
-            if (!showingAttackPanel) {
+            // if (!showingAttackPanel) {
 
-                attackerCanvas.DOFade(1, 0.5f);
-                showingAttackPanel = true;
+                // attackerCanvas.DOFade(1, 0.5f);
+                // showingAttackPanel = true;
 
-            } else {
+            // } 
+            // else {
 
                 Quaternion orientation = Quaternion.Euler(0, 90, 0);
 
@@ -121,16 +125,24 @@ public class SpawnManager : MonoBehaviour {
                     case CatType.Attack:
                         {
 
-                            GameObject cat = Instantiate(AttackingCatPrefab, attackCursor.position, orientation);
-                            cat.transform.SetParent(attackGrid);
+                            for (int i = 0; i < 2; i++) {
+
+                                GameObject cat = Instantiate(AttackingCatPrefab, attackCursor.position, orientation);
+                                cat.transform.SetParent(attackGrid);
+
+                            }
 
                         }
                         break;
                     case CatType.Seek:
                         {
 
-                            GameObject cat = Instantiate(SeekingCatPrefab, attackCursor.position, orientation);
-                            cat.transform.SetParent(attackGrid);
+                            for (int i = 0; i < 4; i++) {
+
+                                GameObject cat = Instantiate(SeekingCatPrefab, attackCursor.position, orientation);
+                                cat.transform.SetParent(attackGrid);
+
+                            }
 
                         }
                         break;
@@ -139,10 +151,10 @@ public class SpawnManager : MonoBehaviour {
                 }
 
                 maxCats--;
-                attackerCanvas.DOFade(0, 0.5f);
+                // attackerCanvas.DOFade(0, 0.5f);
                 showingAttackPanel = false;
 
-            }
+            // }
 
         }
 
@@ -228,17 +240,18 @@ public class SpawnManager : MonoBehaviour {
 
             if (maxDogs <= 0) {
                 defenderCanvas.DOFade(1, 0);
-                showingDefensePanel = true; 
+                defenderCanvas.GetComponentInChildren<TextMeshProUGUI> ().text = "DOGS READY";
+                showingDefensePanel = true;
                 dogsReady = true;
                 return;
             }
 
-            if (!showingDefensePanel) {
+            // if (!showingDefensePanel) {
 
-                defenderCanvas.DOFade(1, 0.5f);
-                showingDefensePanel = true;
+                // defenderCanvas.DOFade(1, 0.5f);
+                // showingDefensePanel = true;
 
-            } else {
+            // } else {
 
                 Quaternion orientation = Quaternion.Euler(0, -90, 0);
 
@@ -281,10 +294,10 @@ public class SpawnManager : MonoBehaviour {
                 }
 
                 maxDogs--;
-                defenderCanvas.DOFade(0, 0.5f);
+                // defenderCanvas.DOFade(0, 0.5f);
                 showingDefensePanel = false;
 
-            }
+            // }
 
         }
 
@@ -314,13 +327,13 @@ public class SpawnManager : MonoBehaviour {
 
             canMoveDefenseX = false;
 
-            defenseCursor.DOMoveX(Mathf.Clamp(defenseCursor.position.x + 2, originalDefenderCursorPosition.x, originalDefenderCursorPosition.x + defenseRowSize), 0);
+            defenseCursor.DOMoveX(Mathf.Clamp(defenseCursor.position.x + 3, originalDefenderCursorPosition.x, originalDefenderCursorPosition.x + defenseRowSize), 0);
 
         } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player2) > 0 || Input.GetKeyDown(KeyCode.I)) && canMoveDefenseX) {
 
             canMoveDefenseX = false;
 
-            defenseCursor.DOMoveX(Mathf.Clamp(defenseCursor.position.x - 2, originalDefenderCursorPosition.x, originalDefenderCursorPosition.x + defenseRowSize), 0);
+            defenseCursor.DOMoveX(Mathf.Clamp(defenseCursor.position.x - 3, originalDefenderCursorPosition.x, originalDefenderCursorPosition.x + defenseRowSize), 0);
 
         }
 
@@ -328,13 +341,13 @@ public class SpawnManager : MonoBehaviour {
 
             canMoveDefenseZ = false;
 
-            defenseCursor.DOMoveZ(Mathf.Clamp(defenseCursor.position.z + 2, originalDefenderCursorPosition.z, originalDefenderCursorPosition.z + defenseColSize), 0);
+            defenseCursor.DOMoveZ(Mathf.Clamp(defenseCursor.position.z + 3, originalDefenderCursorPosition.z, originalDefenderCursorPosition.z + defenseColSize), 0);
 
         } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player2) < 0 || Input.GetKeyDown(KeyCode.J)) && canMoveDefenseZ) {
 
             canMoveDefenseZ = false;
 
-            defenseCursor.DOMoveZ(Mathf.Clamp(defenseCursor.position.z - 2, originalDefenderCursorPosition.z, originalDefenderCursorPosition.z + defenseColSize), 0);
+            defenseCursor.DOMoveZ(Mathf.Clamp(defenseCursor.position.z - 3, originalDefenderCursorPosition.z, originalDefenderCursorPosition.z + defenseColSize), 0);
 
         }
 
