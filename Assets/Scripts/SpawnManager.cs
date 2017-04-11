@@ -186,13 +186,13 @@ public class SpawnManager : MonoBehaviour {
 
             canMoveAttackZ = false;
 
-            attackCursor.DOMoveZ(Mathf.Clamp(attackCursor.position.z + 1, originalAttackerCursorPosition.z - attackColSize, originalAttackerCursorPosition.z), 0);
+            attackCursor.DOMoveZ(Mathf.Clamp(attackCursor.position.z + 1, originalAttackerCursorPosition.z, originalAttackerCursorPosition.z + attackColSize), 0);
 
         } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player1) < 0 || Input.GetKeyDown(KeyCode.A)) && canMoveAttackZ) {
 
             canMoveAttackZ = false;
 
-            attackCursor.DOMoveZ(Mathf.Clamp(attackCursor.position.z - 1, originalAttackerCursorPosition.z - attackColSize, originalAttackerCursorPosition.z), 0);
+            attackCursor.DOMoveZ(Mathf.Clamp(attackCursor.position.z - 1, originalAttackerCursorPosition.z, originalAttackerCursorPosition.z + attackColSize), 0);
 
         }
 
@@ -308,31 +308,31 @@ public class SpawnManager : MonoBehaviour {
 
         }
 
-        if (XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player2) > 0 && canMoveDefenseX) {
+        if ((XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player2) > 0 || Input.GetKeyDown(KeyCode.K)) && canMoveDefenseX) {
 
             canMoveDefenseX = false;
 
-            defenseCursor.DOMoveX(Mathf.Clamp(defenseCursor.position.x + 1, originalDefenderCursorPosition.x, originalDefenderCursorPosition.x + defenseRowSize), 0);
+            defenseCursor.DOMoveX(Mathf.Clamp(defenseCursor.position.x + 2, originalDefenderCursorPosition.x, originalDefenderCursorPosition.x + defenseRowSize), 0);
 
-        } else if (XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player2) < 0 && canMoveDefenseX) {
+        } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player2) < 0 || Input.GetKeyDown(KeyCode.I)) && canMoveDefenseX) {
 
             canMoveDefenseX = false;
 
-            defenseCursor.DOMoveX(Mathf.Clamp(defenseCursor.position.x - 1, originalDefenderCursorPosition.x, originalDefenderCursorPosition.x + defenseRowSize), 0);
+            defenseCursor.DOMoveX(Mathf.Clamp(defenseCursor.position.x - 2, originalDefenderCursorPosition.x, originalDefenderCursorPosition.x + defenseRowSize), 0);
 
         }
 
-        if (XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player2) > 0 && canMoveDefenseZ) {
+        if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player2) > 0 || Input.GetKeyDown(KeyCode.L)) && canMoveDefenseZ) {
 
             canMoveDefenseZ = false;
 
-            defenseCursor.DOMoveZ(Mathf.Clamp(defenseCursor.position.z + 1, originalDefenderCursorPosition.z - defenseColSize, originalDefenderCursorPosition.z), 0);
+            defenseCursor.DOMoveZ(Mathf.Clamp(defenseCursor.position.z + 2, originalDefenderCursorPosition.z, originalDefenderCursorPosition.z + defenseColSize), 0);
 
-        } else if (XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player2) < 0 && canMoveDefenseZ) {
+        } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player2) < 0 || Input.GetKeyDown(KeyCode.J)) && canMoveDefenseZ) {
 
             canMoveDefenseZ = false;
 
-            defenseCursor.DOMoveZ(Mathf.Clamp(defenseCursor.position.z - 1, originalDefenderCursorPosition.z - defenseColSize, originalDefenderCursorPosition.z), 0);
+            defenseCursor.DOMoveZ(Mathf.Clamp(defenseCursor.position.z - 2, originalDefenderCursorPosition.z, originalDefenderCursorPosition.z + defenseColSize), 0);
 
         }
 
