@@ -92,7 +92,8 @@ public class GameManager : MonoBehaviour {
         TurretArray = FindObjectsOfType<TurretController> ();
         LaserTurretArray = FindObjectsOfType<LaserTurretController> ();
 
-        NumDogsAlive = DogArray.Length - TurretArray.Length - LaserTurretArray.Length;
+        //NumDogsAlive = DogArray.Length - TurretArray.Length - LaserTurretArray.Length;
+        NumDogsAlive = DogArray.Length;
         NumCatsAlive = CatArray.Length;
 
         if (IsPlayer1aCat) {
