@@ -459,6 +459,7 @@ GameObject:
   - component: {fileID: 54642095231848004}
   - component: {fileID: 195212910594439146}
   - component: {fileID: 114661791289631344}
+  - component: {fileID: 65422678070211514}
   m_Layer: 8
   m_Name: Cat Attack
   m_TagString: Untagged
@@ -990,6 +991,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &65422678070211514
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1895363578489372}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &95306907890918248
 Animator:
   serializedVersion: 3
@@ -1027,6 +1040,7 @@ MonoBehaviour:
   health: 100
   damageDealt: 1
   attackFrequency: 1
+  distanceToTarget: 1000
 --- !u!137 &137459816007747408
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

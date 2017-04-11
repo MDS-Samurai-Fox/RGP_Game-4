@@ -14,19 +14,6 @@ public class DogController : MonoBehaviour {
 
     }
 
-    // Use this for initialization
-    void Start() {
-
-    }
-
-    // Update is called once per frame
-    void Update() {
-
-        if (!gm.canUpdate)
-            return;
-
-    }
-
     public void TakeDamage(float damage) {
 
         health -= damage;

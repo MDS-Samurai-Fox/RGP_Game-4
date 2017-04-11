@@ -268,7 +268,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4620900183976106}
   - component: {fileID: 114248197502693316}
-  - component: {fileID: 95957377737453820}
   - component: {fileID: 114382814613115944}
   m_Layer: 9
   m_Name: Missile Tower
@@ -1106,23 +1105,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1150914207534312}
   m_Mesh: {fileID: 4300018, guid: ddfd4a31863874efea99ada652efec1e, type: 3}
---- !u!95 &95957377737453820
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1498386270044528}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: ddfd4a31863874efea99ada652efec1e, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114248197502693316
 MonoBehaviour:
   m_ObjectHideFlags: 1

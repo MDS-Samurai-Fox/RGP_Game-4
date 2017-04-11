@@ -36,7 +36,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4867837358244978}
   - component: {fileID: 114643506080176456}
-  - component: {fileID: 95120908767097460}
   - component: {fileID: 114546979070175900}
   m_Layer: 9
   m_Name: Plasma Tower
@@ -674,23 +673,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1656405098275376}
   m_Mesh: {fileID: 4300016, guid: ddfd4a31863874efea99ada652efec1e, type: 3}
---- !u!95 &95120908767097460
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1326217524974142}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: ddfd4a31863874efea99ada652efec1e, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114546979070175900
 MonoBehaviour:
   m_ObjectHideFlags: 1
