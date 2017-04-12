@@ -89,6 +89,11 @@ public class SpawnManager : MonoBehaviour {
             if (catsReady && dogsReady) {
 
                 StartCoroutine(gm.StartGame());
+                attackerCanvas.alpha = 0;
+                defenderCanvas.alpha = 0;
+                
+                cc.attackPlacementCursor.gameObject.SetActive(false);
+                cc.defensePlacementCursor.gameObject.SetActive(false);
 
             }
 
@@ -125,19 +130,19 @@ public class SpawnManager : MonoBehaviour {
                     case CatType.Attack:
                         {
 
-                            for (int i = 0; i < 2; i++) {
+                            // for (int i = 0; i < 1; i++) {
 
                                 GameObject cat = Instantiate(AttackingCatPrefab, attackCursor.position, orientation);
                                 cat.transform.SetParent(attackGrid);
 
-                            }
+                            // }
 
                         }
                         break;
                     case CatType.Seek:
                         {
 
-                            for (int i = 0; i < 4; i++) {
+                            for (int i = 0; i < 2; i++) {
 
                                 GameObject cat = Instantiate(SeekingCatPrefab, attackCursor.position, orientation);
                                 cat.transform.SetParent(attackGrid);
@@ -306,7 +311,7 @@ public class SpawnManager : MonoBehaviour {
             DogSelector--;
 
             if (DogSelector < 0) {
-                DogSelector = 1;
+                DogSelector = 3;
             }
 
             dogType = (DogType) DogSelector;

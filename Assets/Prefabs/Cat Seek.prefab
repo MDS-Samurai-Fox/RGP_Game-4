@@ -888,7 +888,7 @@ MonoBehaviour:
     m_Bits: 512
   catType: 1
   Velocity: {x: 0, y: 0, z: 0}
-  speed: 0.1
+  speed: 0.3
   health: 100
   damageDealt: 1
   attackFrequency: 1

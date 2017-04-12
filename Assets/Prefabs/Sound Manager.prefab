@@ -213,16 +213,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c90dee17454684b4698e25443baa8796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  music: {fileID: 0}
-  sfx: {fileID: 0}
-  click: {fileID: 0}
+  music: {fileID: 82591047049901174}
+  sfx: {fileID: 82250301119694584}
+  click: {fileID: 8300000, guid: 6bf9046a08f524aa4a4bc2e9be777cb0, type: 3}
   gridMove: {fileID: 8300000, guid: 4bf8e1a437912491188f257a99a3c662, type: 3}
   select: {fileID: 8300000, guid: 6270fff6964514bb5b16d498caf3baf2, type: 3}
-  catAttack1: {fileID: 0}
-  catAttack2: {fileID: 0}
-  catAttack3: {fileID: 0}
-  catAttack4: {fileID: 0}
+  catAttack1: {fileID: 8300000, guid: 981e734be47f34d61bd5c74a0a2414dd, type: 3}
+  catAttack2: {fileID: 8300000, guid: 40a405c01014d4b05b9ce168612ba74c, type: 3}
+  catAttack3: {fileID: 8300000, guid: 9288b8b1206c1423b90f95863ed9cd88, type: 3}
+  catAttack4: {fileID: 8300000, guid: 188c2dd3e7634412fa0a2cbd05b84ffe, type: 3}
   missileShoot: {fileID: 0}
   turretShoot: {fileID: 0}
-  plasmaShoot: {fileID: 0}
-  teslaShoot: {fileID: 0}
+  plasmaShoot: {fileID: 8300000, guid: 7630e75f0b255420f9b672aecf5bfbfb, type: 3}
+  teslaShoot: {fileID: 8300000, guid: f5db264a8f87048d58150c7a1bdd3ed9, type: 3}

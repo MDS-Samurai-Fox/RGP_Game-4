@@ -1,0 +1,196 @@
+fileFormatVersion: 2
+guid: 385a0c9365b944421848d18439010b27
+timeCreated: 1491961340
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Caetle_Walls
+    100002: //RootNode
+    100004: Castle_Gate
+    100006: Cat_Food
+    100008: Corner_Towers
+    100010: Flags
+    100012: Ramparts
+    100014: Ramparts1
+    100016: Ramparts2
+    100018: Ramparts3
+    100020: Ramparts4
+    100022: Ramparts5
+    100024: Ramparts6
+    100026: Ring_of_Death
+    100028: Round_Tower_01
+    100030: Round_Tower_02
+    100032: Round_Tower_03
+    100034: Round_Tower_04
+    100036: Spike_Wall
+    100038: Spikes1
+    100040: Spikes2
+    100042: Spikes3
+    100044: Spikes4
+    100046: Spikes5
+    100048: Wall_01
+    100050: Wall_02
+    100052: Wall_03
+    400000: Caetle_Walls
+    400002: //RootNode
+    400004: Castle_Gate
+    400006: Cat_Food
+    400008: Corner_Towers
+    400010: Flags
+    400012: Ramparts
+    400014: Ramparts1
+    400016: Ramparts2
+    400018: Ramparts3
+    400020: Ramparts4
+    400022: Ramparts5
+    400024: Ramparts6
+    400026: Ring_of_Death
+    400028: Round_Tower_01
+    400030: Round_Tower_02
+    400032: Round_Tower_03
+    400034: Round_Tower_04
+    400036: Spike_Wall
+    400038: Spikes1
+    400040: Spikes2
+    400042: Spikes3
+    400044: Spikes4
+    400046: Spikes5
+    400048: Wall_01
+    400050: Wall_02
+    400052: Wall_03
+    2300000: Castle_Gate
+    2300002: Cat_Food
+    2300004: Flags
+    2300006: Ramparts1
+    2300008: Ramparts2
+    2300010: Ramparts3
+    2300012: Ramparts4
+    2300014: Ramparts5
+    2300016: Ramparts6
+    2300018: Ring_of_Death
+    2300020: Round_Tower_01
+    2300022: Round_Tower_02
+    2300024: Round_Tower_03
+    2300026: Round_Tower_04
+    2300028: Spikes1
+    2300030: Spikes2
+    2300032: Spikes3
+    2300034: Spikes4
+    2300036: Spikes5
+    2300038: Wall_01
+    2300040: Wall_02
+    2300042: Wall_03
+    3300000: Castle_Gate
+    3300002: Cat_Food
+    3300004: Flags
+    3300006: Ramparts1
+    3300008: Ramparts2
+    3300010: Ramparts3
+    3300012: Ramparts4
+    3300014: Ramparts5
+    3300016: Ramparts6
+    3300018: Ring_of_Death
+    3300020: Round_Tower_01
+    3300022: Round_Tower_02
+    3300024: Round_Tower_03
+    3300026: Round_Tower_04
+    3300028: Spikes1
+    3300030: Spikes2
+    3300032: Spikes3
+    3300034: Spikes4
+    3300036: Spikes5
+    3300038: Wall_01
+    3300040: Wall_02
+    3300042: Wall_03
+    4300000: Ring_of_Death
+    4300002: Flags
+    4300004: Cat_Food
+    4300006: Castle_Gate
+    4300008: Round_Tower_04
+    4300010: Round_Tower_03
+    4300012: Round_Tower_02
+    4300014: Round_Tower_01
+    4300016: Wall_01
+    4300018: Wall_02
+    4300020: Wall_03
+    4300022: Ramparts1
+    4300024: Ramparts2
+    4300026: Ramparts3
+    4300028: Ramparts4
+    4300030: Ramparts5
+    4300032: Ramparts6
+    4300034: Spikes1
+    4300036: Spikes2
+    4300038: Spikes3
+    4300040: Spikes4
+    4300042: Spikes5
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.01
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

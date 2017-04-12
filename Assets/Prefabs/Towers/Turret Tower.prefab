@@ -158,6 +158,7 @@ GameObject:
   - component: {fileID: 4491744537371812}
   - component: {fileID: 114888511666122092}
   - component: {fileID: 114125932949926024}
+  - component: {fileID: 65148036476072960}
   m_Layer: 9
   m_Name: Turret Tower
   m_TagString: Untagged
@@ -801,6 +802,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1499198271885604}
   m_Mesh: {fileID: 4300004, guid: ddfd4a31863874efea99ada652efec1e, type: 3}
+--- !u!65 &65148036476072960
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1486831983044646}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114125932949926024
 MonoBehaviour:
   m_ObjectHideFlags: 1

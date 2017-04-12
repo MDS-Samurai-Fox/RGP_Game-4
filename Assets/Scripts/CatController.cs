@@ -27,7 +27,7 @@ public class CatController : MonoBehaviour {
 
     private void Awake() {
 
-        gm = FindObjectOfType<GameManager>();
+        gm = FindObjectOfType<GameManager> ();
 
     }
 
@@ -36,8 +36,8 @@ public class CatController : MonoBehaviour {
 
         //Velocity *= speed;
         // Velocity = new Vector3(speed, 0.0f, 0.0f);
-        animator = GetComponent<Animator>();
-        agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator> ();
+        agent = GetComponent<NavMeshAgent> ();
     }
 
     // Update is called once per frame
@@ -46,13 +46,11 @@ public class CatController : MonoBehaviour {
         if (!gm.canUpdate)
             return;
 
-        if ((catType == CatType.Attack) && (!allDogsDead))
-        {
+        if ((catType == CatType.Attack) && (!allDogsDead)) {
             FindNearestDog();
             CheckCollision();
             transform.position += Velocity;
-        }
-        else //if (catType == CatType.seek)
+        } else //if (catType == CatType.seek)
         {
             SeekTarget();
             transform.position += Velocity;
@@ -61,19 +59,18 @@ public class CatController : MonoBehaviour {
         //transform.position += Velocity * speed;
     }
 
-    private void SeekTarget()
-    {
-        target = FindObjectOfType<Target>();
+    private void SeekTarget() {
+        target = FindObjectOfType<Target> ();
 
-        if (target)
-        {
+        if (target) {
             Vector3 DesiredVelocity = Vector3.zero;
             DesiredVelocity = target.transform.position - gameObject.transform.position;
 
             distanceToTarget = Vector3.Magnitude(DesiredVelocity);
 
-            if(distanceToTarget < 3.0f)
-            {
+            if (distanceToTarget < 10.0f) {
+                print("REACHED THE TARGET");
+                gm.StopGame();
                 gm.HasCatReachedTarget = true;
             }
 
@@ -82,60 +79,48 @@ public class CatController : MonoBehaviour {
             transform.forward = Vector3.Normalize(DesiredVelocity);
             animator.SetTrigger("runTrigger");
         }
-        
+
     }
 
     private void CheckCollision() {
 
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 3.0f, dogCollisionMask)) {
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 5.0f, dogCollisionMask)) {
 
             isAttacking = true;
 
-         //   print("Cat is attacking");
-
             Velocity = Vector3.zero;
-           // print("hit");
 
-            DogController DefenderDog = hit.transform.GetComponent<DogController>();
+            DogController DefenderDog = hit.transform.GetComponent<DogController> ();
 
-            if (DefenderDog)
-            {
+            if (DefenderDog) {
                 attackTimer += Time.deltaTime;
 
-                if (attackTimer >= attackFrequency)
-                {
+                if (attackTimer >= attackFrequency) {
                     attackTimer = 0;
                     DefenderDog.TakeDamage(damageDealt);
                     animator.SetTrigger("attackTrigger");
-                 //   print("attack anim trigger");
+                    //   print("attack anim trigger");
                     Velocity = Vector3.zero;
                 }
             }
-        }
-
-        else
-        {
+        } else {
             isAttacking = false;
         }
 
     }
 
-    private void FindNearestDog()
-    {
-        DogArray = FindObjectsOfType<DogController>();
+    private void FindNearestDog() {
+        DogArray = FindObjectsOfType<DogController> ();
         float distance = 10000.0f;
         Vector3 ClosestDogPosition = Vector3.zero;
 
-        if (DogArray.Length > 0)
-        {
-            foreach (DogController dog in DogArray)
-            {
+        if (DogArray.Length > 0) {
+            foreach(DogController dog in DogArray) {
                 float tempDistance = Vector3.Magnitude(dog.transform.position - gameObject.transform.position);
 
-                if (tempDistance < distance)
-                {
+                if (tempDistance < distance) {
                     distance = tempDistance;
                     ClosestDogPosition = dog.transform.position;
                 }
@@ -148,29 +133,23 @@ public class CatController : MonoBehaviour {
 
             transform.forward = Vector3.Normalize(DesiredVelocity);
 
-           // print(Vector3.Magnitude(ClosestDogPosition - gameObject.transform.position));
+            // print(Vector3.Magnitude(ClosestDogPosition - gameObject.transform.position));
 
-
-            if (Vector3.Magnitude(ClosestDogPosition - gameObject.transform.position) < 3.0f)
-            {
+            if (Vector3.Magnitude(ClosestDogPosition - gameObject.transform.position) < 5.0f) {
                 isAttacking = true;
             }
 
-            if (!isAttacking)
-            {
+            if (!isAttacking) {
                 animator.SetTrigger("runTrigger");
             }
-        }
-
-        else
-        {
+        } else {
             allDogsDead = true;
-         //   agent.velocity = Vector3.zero;
-          //  agent.Stop();
+            //   agent.velocity = Vector3.zero;
+            //  agent.Stop();
             // Velocity = Vector3.zero;
             // agent.enabled = false;
-             SeekTarget();
-             //animator.SetTrigger("runTrigger");
+            SeekTarget();
+            //animator.SetTrigger("runTrigger");
         }
     }
 

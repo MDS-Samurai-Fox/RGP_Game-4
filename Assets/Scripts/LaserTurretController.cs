@@ -203,7 +203,7 @@ public class LaserTurretController : MonoBehaviour {
     private IEnumerator LockOnTarget() {
 
         if (weaponHead) {
-            weaponHead.DOLookAt(target.transform.position - new Vector3(0, 3, 0), weaponRotationDuration).SetEase(weaponRotationType);
+            weaponHead.DOLookAt(target.transform.position, weaponRotationDuration).SetEase(weaponRotationType);
             yield return new WaitForSeconds(weaponRotationDuration);
         }
 
@@ -215,7 +215,7 @@ public class LaserTurretController : MonoBehaviour {
     private void SeekTarget() {
 
         if (weaponHead) {
-            weaponHead.LookAt(target.transform.position - new Vector3(0, 3, 0));
+            weaponHead.LookAt(target.transform.position + new Vector3(0, 5, 0));
         }
 
         if (Vector3.Distance(transform.position, target.transform.position) > turretRadius + 1) {

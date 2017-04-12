@@ -64,43 +64,43 @@ public class CameraController : MonoBehaviour {
 
         if (gm.gamestate == GameState.Play)
         {
-            attackCursor.transform.position = new Vector3(Mathf.Clamp(attackCursor.transform.position.x, minX, maxX), 1, Mathf.Clamp(attackCursor.transform.position.z, minZ, maxZ));
-            defenseCursor.transform.position = new Vector3(Mathf.Clamp(defenseCursor.transform.position.x, minX, maxX), 1, Mathf.Clamp(defenseCursor.transform.position.z, minZ, maxZ));
+            // attackCursor.transform.position = new Vector3(Mathf.Clamp(attackCursor.transform.position.x, minX, maxX), 1, Mathf.Clamp(attackCursor.transform.position.z, minZ, maxZ));
+            // defenseCursor.transform.position = new Vector3(Mathf.Clamp(defenseCursor.transform.position.x, minX, maxX), 1, Mathf.Clamp(defenseCursor.transform.position.z, minZ, maxZ));
 
-            attackCursor.transform.DOMoveX(attackCursor.transform.position.x + (XCI.GetAxis(XboxAxis.LeftStickX, player1) * maxMoveSpeed * Time.deltaTime), 0);
-            attackCursor.transform.DOMoveZ(attackCursor.transform.position.z + (XCI.GetAxis(XboxAxis.LeftStickY, player1) * maxMoveSpeed * Time.deltaTime), 0);
+            // attackCursor.transform.DOMoveX(attackCursor.transform.position.x + (XCI.GetAxis(XboxAxis.LeftStickX, player1) * maxMoveSpeed * Time.deltaTime), 0);
+            // attackCursor.transform.DOMoveZ(attackCursor.transform.position.z + (XCI.GetAxis(XboxAxis.LeftStickY, player1) * maxMoveSpeed * Time.deltaTime), 0);
 
-            defenseCursor.transform.DOMoveX(defenseCursor.transform.position.x + (XCI.GetAxis(XboxAxis.LeftStickX, player2) * maxMoveSpeed * Time.deltaTime), 0);
-            defenseCursor.transform.DOMoveZ(defenseCursor.transform.position.z + (XCI.GetAxis(XboxAxis.LeftStickY, player2) * maxMoveSpeed * Time.deltaTime), 0);
+            // defenseCursor.transform.DOMoveX(defenseCursor.transform.position.x + (XCI.GetAxis(XboxAxis.LeftStickX, player2) * maxMoveSpeed * Time.deltaTime), 0);
+            // defenseCursor.transform.DOMoveZ(defenseCursor.transform.position.z + (XCI.GetAxis(XboxAxis.LeftStickY, player2) * maxMoveSpeed * Time.deltaTime), 0);
 
-            //if (XCI.IsPluggedIn(3)) //for wireless controller testing
-            //{
-            //    cursor1.transform.DOMoveX(cursor1.transform.position.x + (XCI.GetAxis(XboxAxis.LeftStickX, XboxController.Third) * maxMoveSpeed * Time.deltaTime), 0);
-            //    cursor1.transform.DOMoveZ(cursor1.transform.position.z + (XCI.GetAxis(XboxAxis.LeftStickY, XboxController.Third) * maxMoveSpeed * Time.deltaTime), 0);
-            //}
-            //else
-            //{
-            //    cursor1.transform.DOMoveX(cursor1.transform.position.x + (XCI.GetAxis(XboxAxis.LeftStickX, XboxController.First) * maxMoveSpeed * Time.deltaTime), 0);
-            //    cursor1.transform.DOMoveZ(cursor1.transform.position.z + (XCI.GetAxis(XboxAxis.LeftStickX, XboxController.First) * maxMoveSpeed * Time.deltaTime), 0);
-            //}
+            // //if (XCI.IsPluggedIn(3)) //for wireless controller testing
+            // //{
+            // //    cursor1.transform.DOMoveX(cursor1.transform.position.x + (XCI.GetAxis(XboxAxis.LeftStickX, XboxController.Third) * maxMoveSpeed * Time.deltaTime), 0);
+            // //    cursor1.transform.DOMoveZ(cursor1.transform.position.z + (XCI.GetAxis(XboxAxis.LeftStickY, XboxController.Third) * maxMoveSpeed * Time.deltaTime), 0);
+            // //}
+            // //else
+            // //{
+            // //    cursor1.transform.DOMoveX(cursor1.transform.position.x + (XCI.GetAxis(XboxAxis.LeftStickX, XboxController.First) * maxMoveSpeed * Time.deltaTime), 0);
+            // //    cursor1.transform.DOMoveZ(cursor1.transform.position.z + (XCI.GetAxis(XboxAxis.LeftStickX, XboxController.First) * maxMoveSpeed * Time.deltaTime), 0);
+            // //}
 
-            cursor1pos = attackCursor.transform.position;
-            cursor2pos = defenseCursor.transform.position;
+            // cursor1pos = attackCursor.transform.position;
+            // cursor2pos = defenseCursor.transform.position;
 
-            float distanceBetweenCursors = Mathf.Max(Vector3.Magnitude(cursor1pos - cursor2pos), 20);
-            float deltaZ = cursor2pos.z - cursor1pos.z;
-            float deltaX = cursor2pos.x - cursor1pos.x;
-            //float gradient = deltaX / deltaX;
+            // float distanceBetweenCursors = Mathf.Max(Vector3.Magnitude(cursor1pos - cursor2pos), 20);
+            // float deltaZ = cursor2pos.z - cursor1pos.z;
+            // float deltaX = cursor2pos.x - cursor1pos.x;
+            // //float gradient = deltaX / deltaX;
 
-            float newXpos = Mathf.Min(cursor1pos.x, cursor2pos.x) + deltaX / 2;
-            float newZpos = Mathf.Min(cursor1pos.z, cursor2pos.z) + deltaZ / 2;
+            // float newXpos = Mathf.Min(cursor1pos.x, cursor2pos.x) + deltaX / 2;
+            // float newZpos = Mathf.Min(cursor1pos.z, cursor2pos.z) + deltaZ / 2;
 
 
-            transform.DOMove(new Vector3(newXpos, distanceBetweenCursors, newZpos), 0);
-            transform.DOLocalMoveZ(-30, 0);
+            // transform.DOMove(new Vector3(newXpos, distanceBetweenCursors, newZpos), 0);
+            // transform.DOLocalMoveZ(-30, 0);
 
-            transform.DORotate(new Vector3(-45, 0, 0), 0);
-            transform.DOLookAt(CenterOfMap, 0);
+            // transform.DORotate(new Vector3(-45, 0, 0), 0);
+            // transform.DOLookAt(CenterOfMap, 0);
 
         }
 
@@ -110,6 +110,13 @@ public class CameraController : MonoBehaviour {
         
         transform.DOMove(startPosition, 3).SetDelay(mapTranslationDelay).SetEase(Ease.OutQuart);
         transform.DORotate(startRotation, 3).SetDelay(mapTranslationDelay).SetEase(Ease.OutQuart);
+        
+    }
+    
+    public void Game() {
+        
+        transform.DOMove(new Vector3(76, 29, 167), 3).SetDelay(mapTranslationDelay).SetEase(Ease.OutQuart);
+        transform.DORotate(new Vector3(33, 213, 0), 3).SetDelay(mapTranslationDelay).SetEase(Ease.OutQuart);
         
     }
     

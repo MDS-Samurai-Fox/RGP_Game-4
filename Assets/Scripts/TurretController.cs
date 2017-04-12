@@ -133,11 +133,9 @@ public class TurretController : MonoBehaviour {
                 if (hit.distance > minimumTargetDistance) {
 
                     if (target) {
-                        Debug.Log("Same target: " + cat.name);
                         return;
                     }
 
-                    Debug.Log("Found target: " + cat.name);
                     target = cat;
                     canSeek = false;
                     return;
@@ -189,7 +187,7 @@ public class TurretController : MonoBehaviour {
     private IEnumerator LockOnTarget() {
 
         if (weaponHead) {
-            weaponHead.DOLookAt(target.transform.position - new Vector3(0, 3, 0), weaponRotationDuration).SetEase(weaponRotationType);
+            weaponHead.DOLookAt(target.transform.position, weaponRotationDuration).SetEase(weaponRotationType);
             yield return new WaitForSeconds(weaponRotationDuration);
         }
 
@@ -200,7 +198,7 @@ public class TurretController : MonoBehaviour {
     private void SeekTarget() {
 
         if (weaponHead) {
-            weaponHead.LookAt(target.transform.position - new Vector3(0, 3, 0));
+            weaponHead.LookAt(target.transform.position);
         }
         
         float distance = Vector3.Distance(transform.position, target.transform.position);

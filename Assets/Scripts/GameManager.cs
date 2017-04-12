@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour {
  public CanvasGroup gameEndPanel; //Panel during Game Over
  public CanvasGroup roundNumberPanel; //Panel displaying which round the game is in
  public CanvasGroup resultPanel; //Panel displaying the score at the end of each round
+ 
  public CanvasGroup splitPanel; //Panel displaying the score at the end of each round
 
  [SpaceAttribute]
@@ -72,6 +73,8 @@ public class GameManager : MonoBehaviour {
     void Initialize() {
 
         gamestate = GameState.Placement;
+        
+        splitPanel.DOFade(1, 1).SetDelay(2);
 
         HasCatReachedTarget = false;
 
@@ -93,6 +96,7 @@ public class GameManager : MonoBehaviour {
         canUpdate = true;
         gamestate = GameState.Play;
         splitPanel.DOFade(0, 0);
+        FindObjectOfType<CameraController>().Game();
 
         yield break;
 
