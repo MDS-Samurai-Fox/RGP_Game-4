@@ -83,7 +83,7 @@ public class CameraController : MonoBehaviour {
             else
             {
                 attackCursor.transform.DOMoveX(attackCursor.transform.position.x + (XCI.GetAxis(XboxAxis.LeftStickX, XboxController.First) * maxMoveSpeed * Time.deltaTime), 0);
-                attackCursor.transform.DOMoveZ(attackCursor.transform.position.z + (XCI.GetAxis(XboxAxis.LeftStickX, XboxController.First) * maxMoveSpeed * Time.deltaTime), 0);
+                attackCursor.transform.DOMoveZ(attackCursor.transform.position.z + (XCI.GetAxis(XboxAxis.LeftStickY, XboxController.First) * maxMoveSpeed * Time.deltaTime), 0);
             }
 
             cursor1pos = attackCursor.transform.position;
