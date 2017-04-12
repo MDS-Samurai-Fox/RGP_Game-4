@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour {
  public CanvasGroup gameEndPanel; //Panel during Game Over
  public CanvasGroup roundNumberPanel; //Panel displaying which round the game is in
  public CanvasGroup resultPanel; //Panel displaying the score at the end of each round
+ public CanvasGroup splitPanel; //Panel displaying the score at the end of each round
 
  [SpaceAttribute]
  public int Round = 1; // the current round number
@@ -91,6 +92,7 @@ public class GameManager : MonoBehaviour {
 
         canUpdate = true;
         gamestate = GameState.Play;
+        splitPanel.DOFade(0, 0);
 
         yield break;
 
@@ -103,14 +105,16 @@ public class GameManager : MonoBehaviour {
 
         //soundManager.StopMusicSource();
 
-        // if (NumDogsAlive == 0 || HasCatReachedTarget) {
-        //     CatsWin();
-        //     // Invoke("CatsWin", 0);
-        // }
-        // if (NumCatsAlive == 0) {
-        //     DogsWin();
-        //     // Invoke("DogsWin", 0);
-        // }
+        if (NumDogsAlive == 0 || HasCatReachedTarget)
+        {
+            CatsWin();
+            // Invoke("CatsWin", 0);
+        }
+        if (NumCatsAlive == 0)
+        {
+            DogsWin();
+            // Invoke("DogsWin", 0);
+        }
 
     }
 
@@ -195,6 +199,12 @@ public class GameManager : MonoBehaviour {
         if (canUpdate) {
 
             // UpdateHud();
+
+            CatArray = FindObjectsOfType<CatController>();
+            DogArray = FindObjectsOfType<DogController>();
+
+            NumCatsAlive = CatArray.Length;
+            NumDogsAlive = DogArray.Length;
 
             if (NumDogsAlive == 0 || NumCatsAlive == 0 || HasCatReachedTarget) // or the cat has reached the target
             {
