@@ -68,9 +68,9 @@ public class CatController : MonoBehaviour {
 
             distanceToTarget = Vector3.Magnitude(DesiredVelocity);
 
-            if (distanceToTarget < 10.0f) {
+            if (distanceToTarget < 7.0f) {
                 print("REACHED THE TARGET");
-                gm.StopGame();
+            //    gm.StopGame();
                 gm.HasCatReachedTarget = true;
             }
 
