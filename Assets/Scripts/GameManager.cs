@@ -80,8 +80,7 @@ public class GameManager : MonoBehaviour {
 
         SwitchPlayers();
 
-        sm.catsReady = false;
-        sm.dogsReady = false;
+        sm.Initialize();
 
         splitPanel.DOFade(1, 1);
     }
@@ -122,6 +121,18 @@ public class GameManager : MonoBehaviour {
         {
             DogsWin();
             // Invoke("DogsWin", 0);
+        }
+
+        //var objects = GameObject.FindObjectsOfType(CatController);
+        CatArray = FindObjectsOfType<CatController>();
+        DogArray = FindObjectsOfType<DogController>();
+        foreach(CatController cat in CatArray)
+        {
+            Destroy(cat.gameObject);
+        }
+        foreach (DogController dog in DogArray)
+        {
+            Destroy(dog.gameObject);
         }
 
     }

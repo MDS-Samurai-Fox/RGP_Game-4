@@ -163,7 +163,10 @@ public class CatController : MonoBehaviour {
 
         health -= damageDealt;
 
-        if (IsAlive()) {
+        if (health <= 0)
+        {
+
+            Destroy(this.gameObject);
 
         }
 

@@ -73,6 +73,21 @@ public class SpawnManager : MonoBehaviour {
 
     }
 
+    public void Initialize()
+    {
+        catsReady = false;
+        dogsReady = false;
+
+        maxCats = 12;
+        maxDogs = 8;
+
+        attackerCanvas.alpha = 1;
+        defenderCanvas.alpha = 1;
+
+        cc.attackPlacementCursor.gameObject.SetActive(true);
+        cc.defensePlacementCursor.gameObject.SetActive(true);
+    }
+
     // Update is called once per frame
     void Update() {
 
@@ -80,6 +95,7 @@ public class SpawnManager : MonoBehaviour {
 
             if (!catsReady) {
                 UpdateAttackGrid();
+                
             }
 
             if (!dogsReady) {
@@ -130,12 +146,8 @@ public class SpawnManager : MonoBehaviour {
                     case CatType.Attack:
                         {
 
-                            // for (int i = 0; i < 1; i++) {
-
-                                GameObject cat = Instantiate(AttackingCatPrefab, attackCursor.position, orientation);
-                                cat.transform.SetParent(attackGrid);
-
-                            // }
+                            GameObject cat = Instantiate(AttackingCatPrefab, attackCursor.position, orientation);
+                            cat.transform.SetParent(attackGrid);
 
                         }
                         break;
