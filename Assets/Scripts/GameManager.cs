@@ -75,9 +75,11 @@ void Awake() {
 
     void Initialize() {
 
+       // gamestate = GameState.Play;
+       // splitPanel.DOFade(0, 0);
+
         gamestate = GameState.Placement;
 
-        
         splitPanel.DOFade(1, 1).SetDelay(2);
 
         HasCatReachedTarget = false;
@@ -86,7 +88,7 @@ void Awake() {
 
         sm.Initialize();
 
-        splitPanel.DOFade(1, 1);
+        //splitPanel.DOFade(1, 1);
 
         if (IsPlayer1aCat)
         {
