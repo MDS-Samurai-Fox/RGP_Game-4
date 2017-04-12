@@ -72,6 +72,9 @@ public class GameManager : MonoBehaviour {
 
     void Initialize() {
 
+       // gamestate = GameState.Play;
+       // splitPanel.DOFade(0, 0);
+
         gamestate = GameState.Placement;
 
         splitPanel.DOFade(1, 1).SetDelay(2);
@@ -82,7 +85,7 @@ public class GameManager : MonoBehaviour {
 
         sm.Initialize();
 
-        splitPanel.DOFade(1, 1);
+        //splitPanel.DOFade(1, 1);
 
         if (IsPlayer1aCat) {
             left.GetComponent<RectTransform> ().DOLocalMoveX(-480, 2);
