@@ -89,9 +89,11 @@ public class CatController : MonoBehaviour {
 
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 0.8f, dogCollisionMask)) {
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 3.0f, dogCollisionMask)) {
 
             isAttacking = true;
+
+         //   print("Cat is attacking");
 
             Velocity = Vector3.zero;
            // print("hit");
@@ -107,6 +109,7 @@ public class CatController : MonoBehaviour {
                     attackTimer = 0;
                     DefenderDog.TakeDamage(damageDealt);
                     animator.SetTrigger("attackTrigger");
+                 //   print("attack anim trigger");
                     Velocity = Vector3.zero;
                 }
             }
@@ -148,7 +151,7 @@ public class CatController : MonoBehaviour {
            // print(Vector3.Magnitude(ClosestDogPosition - gameObject.transform.position));
 
 
-            if (Vector3.Magnitude(ClosestDogPosition - gameObject.transform.position) < 2.0f)
+            if (Vector3.Magnitude(ClosestDogPosition - gameObject.transform.position) < 3.0f)
             {
                 isAttacking = true;
             }

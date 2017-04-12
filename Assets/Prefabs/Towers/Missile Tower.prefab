@@ -269,6 +269,7 @@ GameObject:
   - component: {fileID: 4620900183976106}
   - component: {fileID: 114248197502693316}
   - component: {fileID: 114382814613115944}
+  - component: {fileID: 65426622661244834}
   m_Layer: 9
   m_Name: Missile Tower
   m_TagString: Untagged
@@ -1105,6 +1106,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1150914207534312}
   m_Mesh: {fileID: 4300018, guid: ddfd4a31863874efea99ada652efec1e, type: 3}
+--- !u!65 &65426622661244834
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1498386270044528}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114248197502693316
 MonoBehaviour:
   m_ObjectHideFlags: 1
