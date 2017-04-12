@@ -57,20 +57,19 @@ MonoBehaviour:
   gameEndPanel: {fileID: 0}
   roundNumberPanel: {fileID: 0}
   resultPanel: {fileID: 0}
-  hudPanel: {fileID: 0}
+  splitPanel: {fileID: 0}
   Round: 1
   TotalTurns: 3
   Player1Score: 0
   Player2Score: 0
   NumCatsAlive: 4
   NumDogsAlive: 0
-  TotalNumCats: 3
-  TotalNumDogs: 3
-  catPrefab: {fileID: 1895363578489372, guid: 673c7b2bfc055e14fa794cb6e44ea80a, type: 2}
-  dogPrefab: {fileID: 0}
   TimeToWait: 2
+  IsPlayer1aCat: 0
   gamestate: 0
   HasCatReachedTarget: 0
+  left: {fileID: 0}
+  right: {fileID: 0}
 --- !u!114 &114493004876141206
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -97,10 +96,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackGrid: {fileID: 0}
   defenseGrid: {fileID: 0}
-  attackRowSize: 8
-  attackColSize: 8
-  defenseRowSize: 8
-  defenseColSize: 8
+  attackRowSize: 12
+  attackColSize: 12
+  defenseRowSize: 33
+  defenseColSize: 33
   timerReset: 0.15
   SeekingCatPrefab: {fileID: 1876139714583338, guid: 8bb106b9139382d4ebb6485fd4e5107b,
     type: 2}
@@ -118,3 +117,6 @@ MonoBehaviour:
   defenderCanvas: {fileID: 0}
   maxCats: 12
   maxDogs: 8
+  catsReady: 0
+  dogsReady: 0
+  player: 0
