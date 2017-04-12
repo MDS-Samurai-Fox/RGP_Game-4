@@ -3,57 +3,54 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using XboxCtrlrInput;
-
-public enum GameState { Loading, Placement, Play, Stop, GameOver };
 
 public class GameManager : MonoBehaviour {
 
- private SpawnManager sm;
- private SoundManager soundManager;
+    [HideInInspector] public SpawnManager sm;
+    [HideInInspector] public SoundManager soundManager;
 
- [HideInInspector] public bool canUpdate = false;
+    [HideInInspector] public bool canUpdate = false;
 
- [SpaceAttribute]
- public CanvasGroup gameEndPanel; //Panel during Game Over
- public CanvasGroup roundNumberPanel; //Panel displaying which round the game is in
- public CanvasGroup resultPanel; //Panel displaying the score at the end of each round
- 
- public CanvasGroup splitPanel; //Panel displaying the score at the end of each round
+    [SpaceAttribute]
+    public CanvasGroup gameEndPanel; //Panel during Game Over
+    public CanvasGroup roundNumberPanel; //Panel displaying which round the game is in
+    public CanvasGroup resultPanel; //Panel displaying the score at the end of each round
 
- [SpaceAttribute]
- public int Round = 1; // the current round number
- public int TotalTurns = 3; // the total number of rounds for the game
+    public CanvasGroup splitPanel; //Panel displaying the score at the end of each round
 
- [SpaceAttribute]
- public int Player1Score = 0;
- public int Player2Score = 0;
+    [SpaceAttribute]
+    public int Round = 1; // the current round number
+    public int TotalTurns = 3; // the total number of rounds for the game
 
- public int NumCatsAlive = 3;
- public int NumDogsAlive = 3;
+    [SpaceAttribute]
+    public int Player1Score = 0;
+    public int Player2Score = 0;
 
- [SpaceAttribute]
- public float TimeToWait = 2; //wait for spawning before starting the game
+    public int NumCatsAlive = 3;
+    public int NumDogsAlive = 3;
 
- public bool IsPlayer1aCat = false; //used for the players switching sides
+    [SpaceAttribute]
+    public float TimeToWait = 2; //wait for spawning before starting the game
 
- public GameState gamestate;
+    public bool IsPlayer1aCat = false; //used for the players switching sides
 
- public bool HasCatReachedTarget = false;
+    public GameState gamestate;
 
- private CatController[] CatArray; //stores all the live cats in the game
- private DogController[] DogArray; //stores all the live dogs in the game
- private TurretController[] TurretArray; //stores all the live turrets in the game
- private LaserTurretController[] LaserTurretArray; //stores all the live lasers in the game
+    public bool HasCatReachedTarget = false;
 
-public CanvasRenderer left;
-public CanvasRenderer right;
+    private CatController[] CatArray; //stores all the live cats in the game
+    private DogController[] DogArray; //stores all the live dogs in the game
+    private TurretController[] TurretArray; //stores all the live turrets in the game
+    private LaserTurretController[] LaserTurretArray; //stores all the live lasers in the game
 
-void Awake() {
+    public CanvasRenderer left;
+    public CanvasRenderer right;
 
- sm = GetComponent<SpawnManager> ();
- soundManager = FindObjectOfType<SoundManager> ();
+    void Awake() {
+
+        sm = GetComponent<SpawnManager> ();
+        soundManager = FindObjectOfType<SoundManager> ();
 
     }
 
@@ -77,7 +74,6 @@ void Awake() {
 
         gamestate = GameState.Placement;
 
-        
         splitPanel.DOFade(1, 1).SetDelay(2);
 
         HasCatReachedTarget = false;
@@ -88,15 +84,12 @@ void Awake() {
 
         splitPanel.DOFade(1, 1);
 
-        if (IsPlayer1aCat)
-        {
-            left.GetComponent<RectTransform>().DOLocalMoveX(-480, 2);
-            right.GetComponent<RectTransform>().DOLocalMoveX(480, 2);
-        }
-        else
-        {
-            left.GetComponent<RectTransform>().DOLocalMoveX(480, 2);
-            right.GetComponent<RectTransform>().DOLocalMoveX(-480, 2);
+        if (IsPlayer1aCat) {
+            left.GetComponent<RectTransform> ().DOLocalMoveX(-480, 2);
+            right.GetComponent<RectTransform> ().DOLocalMoveX(480, 2);
+        } else {
+            left.GetComponent<RectTransform> ().DOLocalMoveX(480, 2);
+            right.GetComponent<RectTransform> ().DOLocalMoveX(-480, 2);
         }
     }
 
@@ -114,7 +107,7 @@ void Awake() {
         canUpdate = true;
         gamestate = GameState.Play;
         splitPanel.DOFade(0, 0);
-        FindObjectOfType<CameraController>().Game();
+        FindObjectOfType<CameraController> ().Game();
 
         yield break;
 
@@ -127,26 +120,22 @@ void Awake() {
 
         //soundManager.StopMusicSource();
 
-        if (NumDogsAlive == 0 || HasCatReachedTarget)
-        {
+        if (NumDogsAlive == 0 || HasCatReachedTarget) {
             CatsWin();
             // Invoke("CatsWin", 0);
         }
-        if (NumCatsAlive == 0)
-        {
+        if (NumCatsAlive == 0) {
             DogsWin();
             // Invoke("DogsWin", 0);
         }
 
         //var objects = GameObject.FindObjectsOfType(CatController);
-        CatArray = FindObjectsOfType<CatController>();
-        DogArray = FindObjectsOfType<DogController>();
-        foreach(CatController cat in CatArray)
-        {
+        CatArray = FindObjectsOfType<CatController> ();
+        DogArray = FindObjectsOfType<DogController> ();
+        foreach(CatController cat in CatArray) {
             Destroy(cat.gameObject);
         }
-        foreach (DogController dog in DogArray)
-        {
+        foreach(DogController dog in DogArray) {
             Destroy(dog.gameObject);
         }
 
@@ -234,8 +223,8 @@ void Awake() {
 
             // UpdateHud();
 
-            CatArray = FindObjectsOfType<CatController>();
-            DogArray = FindObjectsOfType<DogController>();
+            CatArray = FindObjectsOfType<CatController> ();
+            DogArray = FindObjectsOfType<DogController> ();
 
             NumCatsAlive = CatArray.Length;
             NumDogsAlive = DogArray.Length;

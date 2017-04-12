@@ -98,6 +98,7 @@ public class CatController : MonoBehaviour {
                 attackTimer += Time.deltaTime;
 
                 if (attackTimer >= attackFrequency) {
+                    gm.soundManager.PlayCatAttack();
                     attackTimer = 0;
                     DefenderDog.TakeDamage(damageDealt);
                     animator.SetTrigger("attackTrigger");

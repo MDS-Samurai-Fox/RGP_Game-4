@@ -1146,6 +1146,7 @@ MonoBehaviour:
     m_Bits: 1280
   turretRadius: 40
   minimumTargetDistance: 8.5
+  projectileType: 1
   projectilePrefab: {fileID: 1529026518673486, guid: ceda708c39f736144bbd57465e3a568b,
     type: 2}
   projectileCreationDelay: 0.723

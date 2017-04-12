@@ -13,6 +13,7 @@ public class TurretController : MonoBehaviour {
     public float minimumTargetDistance = 5;
 
     [Header("Projectile Information")]
+    public ProjectileType projectileType;
     public GameObject projectilePrefab;
     private List<Transform> projectileSpawnLocations = new List<Transform>();
 
@@ -170,6 +171,20 @@ public class TurretController : MonoBehaviour {
         projectile.transform.SetParent(transform);
 
         projectile.GetComponent<ProjectileController>().SetTarget(target.transform.position);
+        
+        switch (projectileType) {
+            
+            case ProjectileType.missile:
+                gm.soundManager.PlaySound(gm.soundManager.missileShoot);
+            break;
+            case ProjectileType.bullet:
+                gm.soundManager.PlaySound(gm.soundManager.turretShoot);
+            break;
+            default:
+            
+            break;
+            
+        }
 
     }
 

@@ -702,6 +702,7 @@ MonoBehaviour:
     m_Bits: 1280
   turretRadius: 35
   minimumTargetDistance: 13
+  projectileType: 3
   laserRenderer: {fileID: 120746054303319090}
   maxlaserLifetime: 0.1
   laserShootingDelay: 0.5

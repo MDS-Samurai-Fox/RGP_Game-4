@@ -13,6 +13,7 @@ public class LaserTurretController : MonoBehaviour {
     public float minimumTargetDistance = 5;
 
     [Header("Projectile Information")]
+    public ProjectileType projectileType;
     public LineRenderer laserRenderer;
     private List<Transform> laserSpawnLocations = new List<Transform>();
 
@@ -178,7 +179,6 @@ public class LaserTurretController : MonoBehaviour {
     private void Fire() {
 
         laserRenderer.gameObject.SetActive(true);
-        //isShooting = false;
 
         Vector3 forward = transform.position - target.transform.position;
 
@@ -186,6 +186,20 @@ public class LaserTurretController : MonoBehaviour {
 
         laserRenderer.SetPosition(0, laserSpawnLocations[randomChild].position);
         laserRenderer.SetPosition(1, target.transform.position);
+        
+        switch (projectileType) {
+            
+            case ProjectileType.plasma:
+                gm.soundManager.PlaySound(gm.soundManager.plasmaShoot);
+            break;
+            case ProjectileType.tesla:
+                gm.soundManager.PlaySound(gm.soundManager.teslaShoot);
+            break;
+            default:
+            
+            break;
+            
+        }
 
     }
 

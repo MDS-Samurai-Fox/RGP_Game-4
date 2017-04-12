@@ -135,6 +135,8 @@ public class SpawnManager : MonoBehaviour {
         }
 
         if (XCI.GetButtonDown(XboxButton.A, player) || Input.GetKeyDown(KeyCode.Z)) {
+            
+            gm.soundManager.PlaySound(gm.soundManager.select);
 
             if (maxCats <= 0) {
                 attackerCanvas.DOFade(1, 0);
@@ -211,12 +213,16 @@ public class SpawnManager : MonoBehaviour {
         }
 
         if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, player) < 0 || Input.GetKeyDown(KeyCode.S)) && canMoveAttackX) {
+            
+            gm.soundManager.PlaySound(gm.soundManager.gridMove);
 
             canMoveAttackX = false;
 
             attackCursor.DOMoveX(Mathf.Clamp(attackCursor.position.x + 1, originalAttackerCursorPosition.x, originalAttackerCursorPosition.x + attackRowSize), 0);
 
         } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, player) > 0 || Input.GetKeyDown(KeyCode.W)) && canMoveAttackX) {
+            
+            gm.soundManager.PlaySound(gm.soundManager.gridMove);
 
             canMoveAttackX = false;
 
@@ -225,12 +231,16 @@ public class SpawnManager : MonoBehaviour {
         }
 
         if ((XCI.GetAxisRaw(XboxAxis.LeftStickX, player) > 0 || Input.GetKeyDown(KeyCode.D)) && canMoveAttackZ) {
+            
+            gm.soundManager.PlaySound(gm.soundManager.gridMove);
 
             canMoveAttackZ = false;
 
             attackCursor.DOMoveZ(Mathf.Clamp(attackCursor.position.z + 1, originalAttackerCursorPosition.z, originalAttackerCursorPosition.z + attackColSize), 0);
 
         } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickX, player) < 0 || Input.GetKeyDown(KeyCode.A)) && canMoveAttackZ) {
+            
+            gm.soundManager.PlaySound(gm.soundManager.gridMove);
 
             canMoveAttackZ = false;
 
@@ -276,6 +286,8 @@ public class SpawnManager : MonoBehaviour {
         defenderCanvas.GetComponentInChildren<TextMeshProUGUI> ().text = dogType.ToString() + "";
 
         if (XCI.GetButtonDown(XboxButton.A, player) || Input.GetKeyDown(KeyCode.N)) {
+            
+            gm.soundManager.PlaySound(gm.soundManager.select);
 
             if (maxDogs <= 0) {
                 defenderCanvas.DOFade(1, 0);
@@ -363,12 +375,16 @@ public class SpawnManager : MonoBehaviour {
         }
 
         if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, player) < 0 || Input.GetKeyDown(KeyCode.K)) && canMoveDefenseX) {
+            
+            gm.soundManager.PlaySound(gm.soundManager.gridMove);
 
             canMoveDefenseX = false;
 
             defenseCursor.DOMoveX(Mathf.Clamp(defenseCursor.position.x + 3, originalDefenderCursorPosition.x, originalDefenderCursorPosition.x + defenseRowSize), 0);
 
         } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, player) > 0 || Input.GetKeyDown(KeyCode.I)) && canMoveDefenseX) {
+            
+            gm.soundManager.PlaySound(gm.soundManager.gridMove);
 
             canMoveDefenseX = false;
 
@@ -377,12 +393,16 @@ public class SpawnManager : MonoBehaviour {
         }
 
         if ((XCI.GetAxisRaw(XboxAxis.LeftStickX, player) > 0 || Input.GetKeyDown(KeyCode.L)) && canMoveDefenseZ) {
+            
+            gm.soundManager.PlaySound(gm.soundManager.gridMove);
 
             canMoveDefenseZ = false;
 
             defenseCursor.DOMoveZ(Mathf.Clamp(defenseCursor.position.z + 3, originalDefenderCursorPosition.z, originalDefenderCursorPosition.z + defenseColSize), 0);
 
         } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickX, player) < 0 || Input.GetKeyDown(KeyCode.J)) && canMoveDefenseZ) {
+            
+            gm.soundManager.PlaySound(gm.soundManager.gridMove);
 
             canMoveDefenseZ = false;
 

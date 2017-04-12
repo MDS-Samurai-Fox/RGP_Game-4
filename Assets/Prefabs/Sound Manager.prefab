@@ -133,9 +133,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 975fc34273c544593b658431600e7dfa, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -222,7 +222,7 @@ MonoBehaviour:
   catAttack2: {fileID: 8300000, guid: 40a405c01014d4b05b9ce168612ba74c, type: 3}
   catAttack3: {fileID: 8300000, guid: 9288b8b1206c1423b90f95863ed9cd88, type: 3}
   catAttack4: {fileID: 8300000, guid: 188c2dd3e7634412fa0a2cbd05b84ffe, type: 3}
-  missileShoot: {fileID: 0}
-  turretShoot: {fileID: 0}
+  missileShoot: {fileID: 8300000, guid: 5411121b0ce0846f89584cbb5fabac22, type: 3}
+  turretShoot: {fileID: 8300000, guid: f214ac94cc90141668c66da3f6184d1a, type: 3}
   plasmaShoot: {fileID: 8300000, guid: 7630e75f0b255420f9b672aecf5bfbfb, type: 3}
   teslaShoot: {fileID: 8300000, guid: f5db264a8f87048d58150c7a1bdd3ed9, type: 3}
