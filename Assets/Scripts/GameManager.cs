@@ -77,6 +77,10 @@ public class GameManager : MonoBehaviour {
 
         SwitchPlayers();
 
+        sm.catsReady = false;
+        sm.dogsReady = false;
+
+        splitPanel.DOFade(1, 1);
     }
 
     void SwitchPlayers() {

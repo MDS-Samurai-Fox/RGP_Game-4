@@ -47,7 +47,7 @@ public class SpawnManager : MonoBehaviour {
     private int DogSelector = 0;
     public int maxDogs = 8;
 
-    private bool catsReady = false, dogsReady = false;
+    public bool catsReady = false, dogsReady = false;
 
     /// <summary>
     /// Awake is called when the script instance is being loaded.

@@ -64,6 +64,8 @@ public class CameraController : MonoBehaviour {
 
         if (gm.gamestate == GameState.Play)
         {
+            ActivateCursors();
+
             attackCursor.transform.position = new Vector3(Mathf.Clamp(attackCursor.transform.position.x, minX, maxX), 1, Mathf.Clamp(attackCursor.transform.position.z, minZ, maxZ));
             defenseCursor.transform.position = new Vector3(Mathf.Clamp(defenseCursor.transform.position.x, minX, maxX), 1, Mathf.Clamp(defenseCursor.transform.position.z, minZ, maxZ));
 
