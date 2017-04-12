@@ -49,6 +49,8 @@ public class SpawnManager : MonoBehaviour {
 
     public bool catsReady = false, dogsReady = false;
 
+    public XboxController player;
+
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
@@ -86,6 +88,8 @@ public class SpawnManager : MonoBehaviour {
 
         cc.attackPlacementCursor.gameObject.SetActive(true);
         cc.defensePlacementCursor.gameObject.SetActive(true);
+
+        cc.MoveCameraToPlacementMode();
     }
 
     // Update is called once per frame
@@ -120,8 +124,17 @@ public class SpawnManager : MonoBehaviour {
     private void UpdateAttackGrid() {
 
         attackerCanvas.GetComponentInChildren<TextMeshProUGUI> ().text = catType.ToString() + "ing Cat";
+        
+        if (gm.IsPlayer1aCat)
+        {
+            player = cc.player1;
+        }
+        else
+        {
+            player = cc.player2;
+        }
 
-        if (XCI.GetButtonDown(XboxButton.A, cc.player1) || Input.GetKeyDown(KeyCode.Z)) {
+        if (XCI.GetButtonDown(XboxButton.A, player) || Input.GetKeyDown(KeyCode.Z)) {
 
             if (maxCats <= 0) {
                 attackerCanvas.DOFade(1, 0);
@@ -175,7 +188,7 @@ public class SpawnManager : MonoBehaviour {
 
         }
 
-        if (XCI.GetButtonDown(XboxButton.DPadLeft, cc.player1) || Input.GetKeyDown(KeyCode.Q)) {
+        if (XCI.GetButtonDown(XboxButton.DPadLeft, player) || Input.GetKeyDown(KeyCode.Q)) {
 
             CatSelector--;
 
@@ -185,7 +198,7 @@ public class SpawnManager : MonoBehaviour {
 
             catType = (CatType) CatSelector;
 
-        } else if (XCI.GetButtonDown(XboxButton.DPadRight, cc.player1) || Input.GetKeyDown(KeyCode.E)) {
+        } else if (XCI.GetButtonDown(XboxButton.DPadRight, player) || Input.GetKeyDown(KeyCode.E)) {
 
             CatSelector++;
 
@@ -197,13 +210,13 @@ public class SpawnManager : MonoBehaviour {
 
         }
 
-        if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player1) < 0 || Input.GetKeyDown(KeyCode.S)) && canMoveAttackX) {
+        if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, player) < 0 || Input.GetKeyDown(KeyCode.S)) && canMoveAttackX) {
 
             canMoveAttackX = false;
 
             attackCursor.DOMoveX(Mathf.Clamp(attackCursor.position.x + 1, originalAttackerCursorPosition.x, originalAttackerCursorPosition.x + attackRowSize), 0);
 
-        } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player1) > 0 || Input.GetKeyDown(KeyCode.W)) && canMoveAttackX) {
+        } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, player) > 0 || Input.GetKeyDown(KeyCode.W)) && canMoveAttackX) {
 
             canMoveAttackX = false;
 
@@ -211,13 +224,13 @@ public class SpawnManager : MonoBehaviour {
 
         }
 
-        if ((XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player1) > 0 || Input.GetKeyDown(KeyCode.D)) && canMoveAttackZ) {
+        if ((XCI.GetAxisRaw(XboxAxis.LeftStickX, player) > 0 || Input.GetKeyDown(KeyCode.D)) && canMoveAttackZ) {
 
             canMoveAttackZ = false;
 
             attackCursor.DOMoveZ(Mathf.Clamp(attackCursor.position.z + 1, originalAttackerCursorPosition.z, originalAttackerCursorPosition.z + attackColSize), 0);
 
-        } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player1) < 0 || Input.GetKeyDown(KeyCode.A)) && canMoveAttackZ) {
+        } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickX, player) < 0 || Input.GetKeyDown(KeyCode.A)) && canMoveAttackZ) {
 
             canMoveAttackZ = false;
 
@@ -251,9 +264,18 @@ public class SpawnManager : MonoBehaviour {
 
     private void UpdateDefenseGrid() {
 
+        if (gm.IsPlayer1aCat)
+        {
+            player = cc.player2;
+        }
+        else
+        {
+            player = cc.player1;
+        }
+
         defenderCanvas.GetComponentInChildren<TextMeshProUGUI> ().text = dogType.ToString() + "";
 
-        if (XCI.GetButtonDown(XboxButton.A, cc.player2) || Input.GetKeyDown(KeyCode.N)) {
+        if (XCI.GetButtonDown(XboxButton.A, player) || Input.GetKeyDown(KeyCode.N)) {
 
             if (maxDogs <= 0) {
                 defenderCanvas.DOFade(1, 0);
@@ -318,7 +340,7 @@ public class SpawnManager : MonoBehaviour {
 
         }
 
-        if (XCI.GetButtonDown(XboxButton.DPadLeft, cc.player2) || Input.GetKeyDown(KeyCode.U)) {
+        if (XCI.GetButtonDown(XboxButton.DPadLeft, player) || Input.GetKeyDown(KeyCode.U)) {
 
             DogSelector--;
 
@@ -328,7 +350,7 @@ public class SpawnManager : MonoBehaviour {
 
             dogType = (DogType) DogSelector;
 
-        } else if (XCI.GetButtonDown(XboxButton.DPadRight, cc.player2) || Input.GetKeyDown(KeyCode.O)) {
+        } else if (XCI.GetButtonDown(XboxButton.DPadRight, player) || Input.GetKeyDown(KeyCode.O)) {
 
             DogSelector++;
 
@@ -340,13 +362,13 @@ public class SpawnManager : MonoBehaviour {
 
         }
 
-        if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player2) < 0 || Input.GetKeyDown(KeyCode.K)) && canMoveDefenseX) {
+        if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, player) < 0 || Input.GetKeyDown(KeyCode.K)) && canMoveDefenseX) {
 
             canMoveDefenseX = false;
 
             defenseCursor.DOMoveX(Mathf.Clamp(defenseCursor.position.x + 3, originalDefenderCursorPosition.x, originalDefenderCursorPosition.x + defenseRowSize), 0);
 
-        } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, cc.player2) > 0 || Input.GetKeyDown(KeyCode.I)) && canMoveDefenseX) {
+        } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickY, player) > 0 || Input.GetKeyDown(KeyCode.I)) && canMoveDefenseX) {
 
             canMoveDefenseX = false;
 
@@ -354,13 +376,13 @@ public class SpawnManager : MonoBehaviour {
 
         }
 
-        if ((XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player2) > 0 || Input.GetKeyDown(KeyCode.L)) && canMoveDefenseZ) {
+        if ((XCI.GetAxisRaw(XboxAxis.LeftStickX, player) > 0 || Input.GetKeyDown(KeyCode.L)) && canMoveDefenseZ) {
 
             canMoveDefenseZ = false;
 
             defenseCursor.DOMoveZ(Mathf.Clamp(defenseCursor.position.z + 3, originalDefenderCursorPosition.z, originalDefenderCursorPosition.z + defenseColSize), 0);
 
-        } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickX, cc.player2) < 0 || Input.GetKeyDown(KeyCode.J)) && canMoveDefenseZ) {
+        } else if ((XCI.GetAxisRaw(XboxAxis.LeftStickX, player) < 0 || Input.GetKeyDown(KeyCode.J)) && canMoveDefenseZ) {
 
             canMoveDefenseZ = false;
 

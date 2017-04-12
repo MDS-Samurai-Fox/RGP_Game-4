@@ -47,7 +47,10 @@ public class GameManager : MonoBehaviour {
  private TurretController[] TurretArray; //stores all the live turrets in the game
  private LaserTurretController[] LaserTurretArray; //stores all the live lasers in the game
 
- void Awake() {
+public CanvasRenderer left;
+public CanvasRenderer right;
+
+void Awake() {
 
  sm = GetComponent<SpawnManager> ();
  soundManager = FindObjectOfType<SoundManager> ();
@@ -73,6 +76,7 @@ public class GameManager : MonoBehaviour {
     void Initialize() {
 
         gamestate = GameState.Placement;
+
         
         splitPanel.DOFade(1, 1).SetDelay(2);
 
@@ -83,6 +87,17 @@ public class GameManager : MonoBehaviour {
         sm.Initialize();
 
         splitPanel.DOFade(1, 1);
+
+        if (IsPlayer1aCat)
+        {
+            left.GetComponent<RectTransform>().DOLocalMoveX(-480, 2);
+            right.GetComponent<RectTransform>().DOLocalMoveX(480, 2);
+        }
+        else
+        {
+            left.GetComponent<RectTransform>().DOLocalMoveX(480, 2);
+            right.GetComponent<RectTransform>().DOLocalMoveX(-480, 2);
+        }
     }
 
     void SwitchPlayers() {
