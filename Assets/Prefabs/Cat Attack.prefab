@@ -1041,6 +1041,11 @@ MonoBehaviour:
   damageDealt: 1
   attackFrequency: 1
   distanceToTarget: 1000
+  PrepTargets:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  finalTarget: {fileID: 0}
 --- !u!137 &137459816007747408
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

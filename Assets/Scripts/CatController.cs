@@ -23,7 +23,12 @@ public class CatController : MonoBehaviour {
     private Target target;
     private bool isAttacking = false;
     private bool allDogsDead = false;
+    private bool isPrepped = false;
     private NavMeshAgent agent;
+    int randomtarget;
+
+    public GameObject[] PrepTargets;
+    public Transform finalTarget;
 
     private void Awake() {
 
@@ -38,6 +43,8 @@ public class CatController : MonoBehaviour {
         // Velocity = new Vector3(speed, 0.0f, 0.0f);
         animator = GetComponent<Animator> ();
         agent = GetComponent<NavMeshAgent> ();
+        PrepTargets = GameObject.FindGameObjectsWithTag("Goal");
+        randomtarget = Random.Range(0, PrepTargets.Length);
     }
 
     // Update is called once per frame
@@ -55,29 +62,38 @@ public class CatController : MonoBehaviour {
             SeekTarget();
             transform.position += Velocity;
         }
-
-        //transform.position += Velocity * speed;
     }
 
     private void SeekTarget() {
-        target = FindObjectOfType<Target> ();
+        if (isPrepped)
+        {
+            target = FindObjectOfType<Target>();
 
-        if (target) {
-            Vector3 DesiredVelocity = Vector3.zero;
-            DesiredVelocity = target.transform.position - gameObject.transform.position;
+            if (target)
+            {
+                float distanceToTarget = Vector3.Magnitude(target.transform.position - gameObject.transform.position);
 
-            distanceToTarget = Vector3.Magnitude(DesiredVelocity);
-
-            if (distanceToTarget < 7.0f) {
-                print("REACHED THE TARGET");
-            //    gm.StopGame();
-                gm.HasCatReachedTarget = true;
+                if (distanceToTarget < 7.0f)
+                {
+                    print("REACHED THE TARGET");
+                    //    gm.StopGame();
+                    gm.HasCatReachedTarget = true;
+                }
+                agent.destination = target.transform.position;
+                animator.SetTrigger("runTrigger");
             }
-
-            DesiredVelocity = Vector3.Normalize(DesiredVelocity);
-            Velocity = DesiredVelocity * speed;
-            transform.forward = Vector3.Normalize(DesiredVelocity);
+        }
+        else
+        {
+            agent.destination = PrepTargets[randomtarget].transform.position;
             animator.SetTrigger("runTrigger");
+
+            float distanceToTarget = Vector3.Magnitude(PrepTargets[randomtarget].transform.position - gameObject.transform.position);
+            if (distanceToTarget < 7.0f)
+            {
+                print("REACHED THE TARGET");
+                isPrepped = true;
+            }
         }
 
     }
@@ -127,12 +143,7 @@ public class CatController : MonoBehaviour {
                 }
             }
 
-            Vector3 DesiredVelocity = Vector3.zero;
-            DesiredVelocity = ClosestDogPosition - gameObject.transform.position;
-            DesiredVelocity = Vector3.Normalize(DesiredVelocity);
-            Velocity = DesiredVelocity * speed;
-
-            transform.forward = Vector3.Normalize(DesiredVelocity);
+            agent.destination = ClosestDogPosition;
 
             // print(Vector3.Magnitude(ClosestDogPosition - gameObject.transform.position));
 
